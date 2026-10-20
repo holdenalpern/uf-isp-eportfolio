@@ -1,0 +1,262 @@
+{
+  "masthead": "UNIVERSITY OF FLORIDA • INTERNATIONAL SCHOLARS PROGRAM • CAPSTONE FOLIO",
+  "folioTitle": "The Holden Field & Historical Folio",
+  "name": "Holden",
+  "graduation": "2026 Graduating International Scholar",
+  "majors": "B.S. Geology & B.S. Microbiology and Cell Science",
+  "minor": "Minor in History",
+  "tagline": "Bridging Earth Systems, Microbial Ecology, and Human History Across Borders.",
+  "homeIntro": "Earth and life sciences do not exist in a vacuum—they unfold inside human histories, languages, and cultures. From climbing the sandstone cliffs of Suesca and sharing family meals in Bogotá, Colombia, to presenting undergraduate scientific research in Reykjavik, Iceland, my time in the UF International Scholars Program shaped my mission: to pair rigorous geobiological inquiry with tangible cross-cultural service.",
+  "homeQuote": "\"I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things.\" — Reflection before a waterfall outside Reykjavik, Iceland",
+  "aboutTitle": "The Geoscientist Who Reads History",
+  "aboutBio": "I am a senior at the University of Florida double-majoring in Geology and Microbiology & Cell Science with a minor in History. While my laboratory and field training focus on hydrology, earth materials, and microbial systems, my humanities coursework and international experiences taught me that scientific challenges are inseparable from the people who live on the landscape.\n\nOutside the lab, you can find me rock climbing, exploring global history, practicing Spanish, or planning my next field expedition. After graduation, I aim to pursue applied scientific research and serve in the Peace Corps—using science to build cross-cultural trust and tangible community resilience.",
+  "scientificLens": "Investigating how geological substrates, hydrology, and microbial ecosystems interact under climate and anthropogenic stress—from invasive plant transpiration in South African reservoirs to geothermal microbiology.",
+  "humanitiesLens": "Understanding colonial history, diaspora resilience, and lived community realities so scientific solutions serve people directly rather than remaining isolated in academia.",
+  "hobbies": [
+    "Rock Climbing (Suesca & Crags)",
+    "Hydrology & Geobiology",
+    "Latin American & Global History",
+    "Spanish Language & Immersion",
+    "Peace Corps Preparation"
+  ],
+  "poster": {
+    "plateNumber": "PLATE 01 • REYKJAVIK, ICELAND CONFERENCE PRESENTATION",
+    "title": "Integrating Geological Substrates & Microbial Dynamics",
+    "subtitle": "Presented at the International Research Conference • Reykjavik, Iceland (2025)",
+    "authors": "Holden et al. — University of Florida (Dept. of Geological Sciences & Microbiology)",
+    "abstract": "Click here in Edit Mode to paste your Reykjavik conference abstract, or upload your poster image/PDF into the project. This interactive plate allows advisors and reviewers to inspect each section of your research.",
+    "imageUrl": "",
+    "sections": [
+      {
+        "id": "sec-1",
+        "label": "01. Abstract & Hypothesis",
+        "detail": "Investigating the coupled interactions between mineralogical substrates, hydrological flow paths, and microbial community function."
+      },
+      {
+        "id": "sec-2",
+        "label": "02. Field & Lab Methodology",
+        "detail": "Geochemical characterization paired with microbiological assays and analytical microscopy."
+      },
+      {
+        "id": "sec-3",
+        "label": "03. Key Findings & Figures",
+        "detail": "Demonstrated measurable correlations between geological micro-environments and microbial resilience."
+      },
+      {
+        "id": "sec-4",
+        "label": "04. Global & Career Impact",
+        "detail": "Presenting in Reykjavik catalyzed my realization that scientific discovery reaches its highest value when connected to human communities."
+      }
+    ]
+  },
+  "resume": [
+    {
+      "id": "edu-uf",
+      "category": "Education",
+      "role": "B.S. Geology & B.S. Microbiology | Minor in History",
+      "org": "University of Florida • International Scholars Program",
+      "period": "2022 – 2026",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Dual STEM degree pairing Earth systems and hydrology with microbial ecology, complemented by historical analysis.",
+        "International Scholars Program (ISP) Senior Capstone Candidate."
+      ]
+    },
+    {
+      "id": "res-iceland",
+      "category": "Research & Fieldwork",
+      "role": "Undergraduate Researcher & International Conference Presenter",
+      "org": "University of Florida & Reykjavik Research Conference",
+      "period": "2024 – 2026",
+      "location": "Gainesville, FL & Reykjavik, Iceland",
+      "highlights": [
+        "Conducted interdisciplinary research bridging geological sciences and microbiology.",
+        "Selected to present research findings to an international scientific audience in Reykjavik, Iceland."
+      ]
+    },
+    {
+      "id": "exp-colombia",
+      "category": "Global Engagement",
+      "role": "Cross-Cultural Immersion & Historical Field Inquiry",
+      "org": "Bogotá & Suesca, Colombia | UF Center for African & Latin American Studies",
+      "period": "2025 – 2026",
+      "location": "Bogotá, Colombia / Gainesville, FL",
+      "highlights": [
+        "Completed immersive cultural and linguistic stay in Bogotá and Suesca, Colombia.",
+        "Synthesized global colloquia on South African hydrology, Afro-Brazilian history, and comparative political sociology."
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "global-engagement",
+      "badgeCode": "NACE COMPETENCY 01",
+      "competency": "Global & Cultural Engagement",
+      "contextTitle": "Cross-Cultural Immersion with Lucia’s Family in Bogotá & Suesca, Colombia",
+      "star": {
+        "situation": "In June 2025, after briefly meeting Lucia and her family at the Estéreo Picnic festival in March, I was invited to stay for a full week at their home and finca in Bogotá, Colombia—my first time traveling abroad independently without my own family.",
+        "task": "Navigate an unfamiliar cultural environment, communicate across a language barrier in Spanish, and engage thoughtfully with Colombia’s complex social and political history.",
+        "action": "Immersed myself fully in daily family life—sharing home-cooked meals and coffee, playing dominoes with Lucia’s brother and grandfather at their finca, rock climbing in Suesca, and touring historic sites like the Virgilio Barco Library while discussing Colombia’s civil conflict.",
+        "resolution": "Emerged with vastly improved conversational Spanish, a deep appreciation for Colombian warmth and hospitality over guarded individualism, and a life-changing commitment to join the Peace Corps after graduation."
+      }
+    },
+    {
+      "id": "critical-thinking",
+      "badgeCode": "NACE COMPETENCY 02",
+      "competency": "Critical Thinking",
+      "contextTitle": "Synthesizing Hydrogeology & Invasion Biology (South Africa Day Zero Case Study)",
+      "star": {
+        "situation": "Attended Dr. Tatenda Dalu’s Center for African Studies lecture on invasive alien plants and water-fire risks in Cape Town, South Africa, while pursuing dual majors in Geology and Microbiology.",
+        "task": "Evaluate how biological invasions act as multipliers for hydrological scarcity and wildfire hazards across global watersheds.",
+        "action": "Connected Dr. Dalu’s data on invasive pine and Red Gum transpiration near South African reservoirs ($400B+ global agricultural/economic cost) to my coursework in hydrology and microbial/plant ecology.",
+        "resolution": "Developed an integrated geobiological framework for evaluating watershed restoration through native bush (fynbos) re-establishment, reinforcing my goal to work at the intersection of hydrology and biology."
+      }
+    },
+    {
+      "id": "communication",
+      "badgeCode": "NACE COMPETENCY 03",
+      "competency": "Communication Skills (Written & Verbal)",
+      "contextTitle": "International Scientific Presentation in Reykjavik & Cross-Cultural Dialogue",
+      "star": {
+        "situation": "Presented specialized undergraduate scientific research at an international conference in Reykjavik, Iceland, immediately following my cultural immersion in Bogotá, Colombia.",
+        "task": "Communicate complex geological and microbiological methods clearly to international scientists while bridging linguistic and disciplinary boundaries.",
+        "action": "Synthesized technical data into a structured visual research poster and adapted my verbal explanations for peers from diverse academic and cultural backgrounds.",
+        "resolution": "Successfully defended my research internationally while crystallizing my core philosophy: scientific communication must ultimately inspire and serve people across cultures."
+      }
+    },
+    {
+      "id": "career-self-dev",
+      "badgeCode": "NACE COMPETENCY 04",
+      "competency": "Career & Self-Development",
+      "contextTitle": "Aligning Pure Scientific Inquiry with Human-Centered Global Service",
+      "star": {
+        "situation": "As a double STEM major in Geology and Microbiology, I initially viewed scientific research primarily through an academic lens, separate from my History minor and global interests.",
+        "task": "Define a post-graduation career path that unites rigorous empirical research with direct human connection and ethical responsibility.",
+        "action": "Reflected deeply in front of an Icelandic waterfall after my Reykjavik conference, contrasting isolated academic prestige with the human warmth I experienced in Colombia and the human stories I studied at the Harn Museum.",
+        "resolution": "Pivoted my post-graduation trajectory toward joining the Peace Corps and pursuing applied environmental science that produces tangible positive impacts for global communities."
+      }
+    }
+  ],
+  "experiences": [
+    {
+      "id": "colombia-bogota",
+      "title": "Bogotá & Suesca, Colombia: Hospitality, History & Sandstone Crags",
+      "subtitle": "Weeklong Cultural Immersion with Lucia’s Family & Estéreo Picnic Connection",
+      "category": "International Travel & Immersion",
+      "location": "Bogotá & Suesca, Colombia",
+      "coordinates": "4.7110° N, 74.0721° W",
+      "date": "March & June 2025",
+      "hasPersonalPhotos": true,
+      "photoSlotLabels": [
+        "Suesca Sandstone Climbing",
+        "Family Finca Dominoes & Coffee",
+        "Virgilio Barco Library & Bogotá"
+      ],
+      "photoUrls": ["", "", ""],
+      "curatedVisualTheme": "andes-climbing",
+      "tags": ["Colombia Immersion", "Spanish Language", "History Minor", "Rock Climbing"],
+      "body": "In June of 2025, I went to Bogotá, Colombia, where I spent the week with my friend Lucia and her family. To give some context, I first came to Colombia in March of that same year, for my cousin’s bachelor party (he’s half Colombian) at the music festival Estéreo Picnic. While I wouldn’t consider that an educational experience in the same way I would this, it was certainly cross-cultural. I met Lucia at the festival, and for that weekend, both of our families moved together in a pack. It was both incredibly fun and novel for me—culturally I see American families as much more guarded, and thus I was surprised at how open and accepting they were, given we had all just met a few days ago. After the festival, Lucia and I kept in touch, and she invited me to come stay the week a few months later (after I had finished my semester).\n\nThe following week I remember incredibly vividly. We toured Bogotá, played Dominoes with her brother and grandfather at their finca, and went rock climbing in Suesca. The number one thing that comes to mind is the kindness that family showed me. It wasn’t my first time spending a week away from home, but everything before had been with family or a long-time ex-girlfriend. This was different—I spent two days with them at a music festival. In spite of this, they took me into their home and went out of their way to make me feel comfortable. During (incredibly delicious) meals, I sat with them and discussed life, work, politics, and everything in between. Each meal came with a coffee, which I was a huge fan of. Also something about the way they cooked and seasoned their rice has not been replicated by my taste buds since. I came out of the experience with vastly improved Spanish and an abundance of meal ideas.\n\nI enjoyed spending time with everyone, but I also was enthralled with the culture and history of the country as a history minor. Lucia, who studies journalism and loves history too, spared no expense in educating me. She told me about the Civil War, which only ended a decade ago, between government and guerrilla forces, and how the current president at the time was part of the guerrilla forces, as well as how the conflict represented the contradicting interests of the different social classes. In my Bogotá tour, I visited historic sites like the Virgilio Barco library and drank classic drinks like coca leaf tea, all while learning the history of the city.\n\nOverall, my experience in Colombia made me more independent, more accepting, and more open-minded as a person. Seeing how accepting Lucia and her family were made me rethink my own biases toward relative strangers and the focus on safety/status-quo that Americans have. After leaving, I went to Reykjavik, Iceland to present my research at a conference. There, I distinctly remember staring at a waterfall and thinking about academia. I love science and research, but in that moment, I reflected on Colombia and realized that I didn’t want a career without a human element, even if I could make the most profound discoveries imaginable. I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things. Since then, I’ve been intent on joining the Peace Corps to build up a tangible positive impact on the world, something I never would’ve dreamed of without Lucia and her family."
+    },
+    {
+      "id": "iceland-reykjavik",
+      "title": "Reykjavik, Iceland: International Research Conference & Waterfall Epistemology",
+      "subtitle": "Presenting Scientific Research Abroad & Redefining Purpose in Science",
+      "category": "International Research & Coursework",
+      "location": "Reykjavik, Iceland",
+      "coordinates": "64.1466° N, 21.9426° W",
+      "date": "Summer 2025",
+      "hasPersonalPhotos": true,
+      "photoSlotLabels": [
+        "Reykjavik Conference Poster Hall",
+        "Icelandic Waterfall Reflection",
+        "Volcanic & Glacial Landscape"
+      ],
+      "photoUrls": ["", "", ""],
+      "curatedVisualTheme": "iceland-glacier",
+      "tags": ["International Research", "Geology & Microbiology", "Reykjavik Poster", "Career Turning Point"],
+      "body": "Immediately after departing Colombia in the summer of 2025, I traveled to Reykjavik, Iceland to present my undergraduate scientific research at an international conference. Surrounded by basalt columns, geothermal landscapes, and researchers from around the world, the conference was a milestone in my development as a Geology and Microbiology double major.\n\nYet the most transformative moment of my trip occurred outside the conference hall, standing in front of an Icelandic waterfall. Looking at the sheer geological scale of the landscape while still carrying the vivid memory of Lucia’s family and their generosity in Bogotá, I experienced a profound shift in how I viewed academia. I realized that even the most prestigious scientific discoveries would feel incomplete to me if they lacked a direct human element.\n\n[Click here in Edit Mode to expand on your specific Reykjavik conference presentation, interactions with international scientists, and geological observations in Iceland.]"
+    },
+    {
+      "id": "uf-south-africa-hydrology",
+      "title": "Day Zero Lessons: Invasive Alien Plants as Water–Fire Risk Multipliers",
+      "subtitle": "Center for African Studies Speaker — Dr. Tatenda Dalu (Stellenbosch University)",
+      "category": "Global Campus Activity",
+      "location": "Gainesville, FL → Cape Town, South Africa",
+      "coordinates": "33.9321° S, 18.8602° E",
+      "date": "September 17, 2026",
+      "hasPersonalPhotos": false,
+      "photoSlotLabels": [],
+      "photoUrls": [],
+      "curatedVisualTheme": "hydrology-pine",
+      "tags": ["Hydrology", "Geosciences & Biology", "South Africa", "Water Security"],
+      "body": "This event was super interesting—the focus on invasive plants combined my love of geology and microbiology (my two majors) with an understanding of the significant issues facing South Africa (and the whole world for that matter, but the presentation mainly focused on South Africa).\n\nAs the Director for the Centre for Invasion Biology at Stellenbosch University in Cape Town, South Africa, Dr. Tatenda Dalu provided a unique perspective on this issue, focusing on its worldwide economic cost and practical measures to combat alien plants at each stage. One thing I learned is that the economic cost of these invasive plants totals to over $400 billion worldwide, which I thought was huge, but sensible given the economic behemoth that is agriculture.\n\nHowever, I didn't know that one of the main risks of invasive plant infestations was the negative effect on water reservoirs. One example Dr. Dalu used was the pine, which when established next to water reservoirs, would consume significant amounts of water, to the point where it could not be sequestered to feed an ever-growing population. Another invasive tree he mentioned was the Red Gum, which I am curious to learn more about. Concerning the pine, he mentioned that positive results had been seen by cutting down pine in areas near reservoirs and reestablishing the native bush population. Overall, this talk connected with my professional interests of integrating the geosciences (hydrology in this case) and the biological sciences, and it was super fun and interesting to listen to."
+    },
+    {
+      "id": "uf-harn-one-world",
+      "title": "One World: Photographs from a Shared Planet Exhibit",
+      "subtitle": "Harn Museum of Art Global Documentary Photography Reflection",
+      "category": "Global Campus Activity",
+      "location": "Harn Museum of Art, UF (Global Scope)",
+      "coordinates": "29.6370° N, 82.3703° W",
+      "date": "September 18, 2026",
+      "hasPersonalPhotos": false,
+      "photoSlotLabels": [],
+      "photoUrls": [],
+      "curatedVisualTheme": "harn-aperture",
+      "tags": ["Visual Anthropology", "Human Rights", "Global Empathy", "Harn Museum"],
+      "body": "I visited the Harn Museum mainly to explore the \"One World\" Global Photography exhibit. This exhibit appealed to me because of its personal focus on stories separated temporally and geographically. In times as divisive as these, I wanted to take a look at these photos to see what makes us human; not just the qualities valued by my culture, but the values innate to us as a species. One modern anxiety is the fear of being replaced by machines. Through this exhibit, I wanted to see if there was such a thing as the \"indomitable human spirit,\" or if it is just wishful thinking by people wanting to feel important.\n\nEach photo was unique, but there were of course some that especially stood out to me. One was a large portrait of a soldier with his head on the side of a table. His wide eyes were clear, giving the classic \"thousand-yard stare\", but I wonder if what he really felt in that moment was confusion, as he was complying with an odd request and likely had a camera right in his face. Nevertheless, it was an interesting photo, as he had most definitely seen things. Some of the other photos showed crowds of civilians in Afghanistan, and I wondered if they had ever met this soldier.\n\nThis was the beginning of the connections I made between the pieces, and between the history shown within them and the events going on today. For example, a 2006 photograph showed a Palestinian man and his kids in the rubble of their former home. I realized the kids were now adults, and the man was now old. I wondered what lives they had lived since then and if they were still alive. Another striking photograph showed a lone boy on the top of a train, likely aiming to cross the US-Mexico border. I wondered if he had made it, and if he was still here, or deported. It is one thing to hear about death and deportation on the news, but it is another thing to look into the eyes of the people affected by that news.\n\nThese people were more than just victims though. I saw an old man in a UN refugee camp. When I looked at him, I saw a strong sense of defiant pride, resonating from every wrinkle on his face. I knew he had lived a life four times as long as mine, and that there was so much more to him than that one emotion, and yet in that image, that pride was all I could see. To me, that is how he would be remembered. Another photo that struck me was a lone man standing in front of several armored cars and armed personnel, protesting the Dakota Access Pipeline which was being built on Reservation land. I wondered how the men thought of themselves, facing a lone man with all that protection. How could they not see themselves as cowards? If you are armed facing the unarmed and courageous, how can you still think you are right? In the picture, it seems obvious, but maybe I'm oversimplifying.\n\nAnyways, I still don't know if there is an indomitable human spirit, but I know that there is a shared human world. These photos aren't isolated—they overlap each other and my own life. Many of the conflicts and situations shown in the photos continue to this day. New photos are being taken, capturing flashes of lives just as rich as mine. However, I will never meet these people, and I will never be able to see their lives, only these brief flashes. If anything, this makes me feel isolated. We're all connected, and yet I'm exposed to a tiny fraction of it all, and I worry about a lot of stupid things that only affect me. Viewing this exhibit motivates me to travel the world and gain new perspectives and hopefully make a tangible difference in the lives of others."
+    },
+    {
+      "id": "uf-brazil-quilombos",
+      "title": "COLOQUIO: Rethinking Human Rights through the African Diaspora",
+      "subtitle": "A Brazilian Perspective — Dr. Sant’Ana",
+      "category": "Global Campus Activity",
+      "location": "Gainesville, FL → Brazil",
+      "coordinates": "12.9777° S, 38.5016° W",
+      "date": "September 11, 2026",
+      "hasPersonalPhotos": false,
+      "photoSlotLabels": [],
+      "photoUrls": [],
+      "curatedVisualTheme": "afro-brazil-archive",
+      "tags": ["History Minor", "Brazil", "African Diaspora", "Human Rights"],
+      "body": "I attended this event because of my history minor. I learned a bit about Brazilian history in my senior year of high school, where my IB history course briefly covered the country's economy and how it changed during WWII. This talk provided the opportunity to learn more about Brazilian history, Brazilian figures, and how it is overall intertwined with the history of Africa.\n\nDuring the talk, Dr. Sant'Ana discussed the history of slavery in Brazil. I knew slavery was common in Latin America, as it was in North America, especially during the Spanish colonial era. However, I learned that Brazil was actually the last (or maybe one of the last) Latin American countries to eradicate slavery (in 1888). This followed the 1871 Law of the Free Womb, which meant that people born to slaves were considered free. However, Dr. Sant'Ana discussed how this initial step left many still reliant on their would-be masters because they lacked the means to live independently in a system based on slavery. She also discussed the establishment of hidden settlements in remote areas known as quilombos, where anti-slavery thought brewed. Finally, she went over four important thinkers who dismantled the framework of slavery that ran through Brazil, indicating the persistence of a racial caste system far after slavery itself was abolished.\n\nOverall, the activity connected to my wish to understand different cultures and their unique histories. It served to broaden my horizons beyond my geographic and cultural bubble in Florida, and for that, I am grateful."
+    },
+    {
+      "id": "uf-brazil-populism",
+      "title": "COLOQUIO: The People in the Kaleidoscope — Bolsonarist Discourse",
+      "subtitle": "Contemporary Populist Theories in Brazil — Dr. Luz",
+      "category": "Global Campus Activity",
+      "location": "Gainesville, FL → Brasília, Brazil",
+      "coordinates": "15.7975° S, 47.8919° W",
+      "date": "September 25, 2026",
+      "hasPersonalPhotos": false,
+      "photoSlotLabels": [],
+      "photoUrls": [],
+      "curatedVisualTheme": "populism-kaleidoscope",
+      "tags": ["Political Sociology", "Brazil & US Parallels", "Critical Analysis"],
+      "body": "This talk discussed the rise of far-right populism in Brazil, in the context of former President Jair Bolsonaro. Dr. Luz brought up the common traits of populism—a common enemy, pitting the masses against the elites, and positioning oneself as an outsider. Bolsonaro's rise contained all of these features. Despite his history in legislation, he used social media to position himself as an outsider to a Brazilian political institution widely considered corrupt. He pushed the idea that most Brazilians were pious, hardworking people that were being oppressed by an elite political class that only he could combat. With this us vs. them mentality, a clear enemy, an image as an outsider, and a strong command of social media, Bolsonaro won the election in 2018.\n\nI thought the talk was interesting because I definitely see parallels in the US, specifically with the rise of Trump and a lot of the left as well, regarding the populist rhetoric. In the end, I came to see populism as not a good or bad thing, but a tool. In some cases, the tool can be used to manipulate people tired of a corrupt system to accept a system just-as or even more corrupt, but that is not necessarily the case. To speak in generalities, as populists often do, is to lack nuance, glossing over the humanity of the \"enemy.\" Nevertheless, for people who are oppressed, the message of populism is strong and righteous, and who are we to argue that they shouldn't stand up. One must simply be careful who to trust, no matter how compelling their message. Otherwise, we may not know if we are standing up for ourselves, or using our strength to push up another for their own gain."
+    }
+  ],
+  "reflection": {
+    "title": "So What? Now What? — Science With a Human Pulse",
+    "wordCountTarget": "700+ Word Capstone Synthesis (Click Any Paragraph in Edit Mode to Write/Edit)",
+    "leadPullQuote": "In front of a waterfall in Iceland, reflecting back on a week of kindness and coffee in Bogotá, I realized I did not want a scientific career detached from the people living on the landscapes I study.",
+    "pillars": [
+      {
+        "id": "pil-1",
+        "heading": "I. Stepping Outside the Geographic & Disciplinary Bubble",
+        "body": "When I began my journey at the University of Florida as a Geology and Microbiology double major, it was easy to treat science as a self-contained puzzle of rocks, water tables, and microbes. Adding a History minor and engaging with the International Scholars Program challenged me to look up from the microscope. Attending colloquia on Afro-Brazilian quilombos and post-1888 abolition, analyzing populist rhetoric in Brazil alongside U.S. political currents, and learning how invasive pines threaten South African water reservoirs taught me that ecological and historical systems are deeply intertwined. Every landscape carries a human memory, and every environmental crisis carries a human cost."
+      },
+      {
+        "id": "pil-2",
+        "heading": "II. Two Moments of Clarity: Bogotá’s Table & Reykjavik’s Waterfall",
+        "body": "The contrast between my week in Bogotá, Colombia, and my research conference in Reykjavik, Iceland, became the defining inflection point of my undergraduate years. In Colombia, Lucia and her family welcomed me—someone they had met for only two days at a music festival—into their home and finca with extraordinary warmth. Over home-cooked rice, Colombian coffee, games of dominoes, rock climbing in Suesca, and candid conversations about Colombia’s civil conflict, I saw how human generosity dissolves cultural guardedness. Weeks later, standing before a waterfall in Iceland after presenting my scientific research, I thought about academia. I loved the rigor of research, yet looking at that waterfall, I realized that even the most profound scientific discoveries would feel hollow to me without a human element."
+      },
+      {
+        "id": "pil-3",
+        "heading": "III. Now What? From the Lab Bench to the Peace Corps",
+        "body": "As I graduate from UF, the question of 'Now What?' has a clear answer. Just as the photographs in the Harn Museum’s 'One World' exhibit reminded me that we inhabit a single shared human world, my experiences in Colombia and Iceland convinced me to dedicate my post-graduation path to the Peace Corps and applied geobiological research. Rather than pursuing science in isolation, I want to bring hydrological and microbiological problem-solving directly to communities abroad—listening first, learning in their language, and using science to inspire people across cultures to do great things."
+      }
+    ]
+  }
+}
