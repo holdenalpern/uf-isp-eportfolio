@@ -20,6 +20,7 @@ import initialPortfolioData from '../data/portfolioContent.json';
 import { RUBRIC_SECTIONS } from '../data/shellData';
 import { ExperienceVisualHeader } from '../components/CuratedVisuals';
 import { countWords, EditableText } from '../components/EditableText';
+import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider';
 
 export type PortfolioContent = typeof initialPortfolioData;
 
@@ -238,6 +239,52 @@ export const Concept4MuseumFolio: React.FC = () => {
                   className="font-mono-tech text-xs text-amber-900"
                 />
               </div>
+
+              {/* 21st.dev Infinite Auto-Slider placed directly between Degree and Main Title */}
+              <ImageAutoSlider
+                images={content.heroSliderImages || initialPortfolioData.heroSliderImages}
+                editMode={editMode}
+                onReplaceImage={(idx) =>
+                  handleImageFileUpload((dataUrl) => {
+                    const captionPrompt = window.prompt(
+                      'Optional slide caption:',
+                      (content.heroSliderImages || initialPortfolioData.heroSliderImages)[idx]?.caption || ''
+                    );
+                    updateContent((p) => {
+                      const currentList = [
+                        ...(p.heroSliderImages || initialPortfolioData.heroSliderImages),
+                      ];
+                      currentList[idx] = {
+                        url: dataUrl,
+                        caption: captionPrompt ?? currentList[idx]?.caption ?? '',
+                      };
+                      return { ...p, heroSliderImages: currentList };
+                    });
+                  })
+                }
+                onAddImage={() =>
+                  handleImageFileUpload((dataUrl) => {
+                    const caption =
+                      window.prompt('Caption for this new slide:', 'Colombia / Iceland Field Photo') ||
+                      'Field Photo';
+                    updateContent((p) => ({
+                      ...p,
+                      heroSliderImages: [
+                        ...(p.heroSliderImages || initialPortfolioData.heroSliderImages),
+                        { url: dataUrl, caption },
+                      ],
+                    }));
+                  })
+                }
+                onRemoveImage={(idx) =>
+                  updateContent((p) => ({
+                    ...p,
+                    heroSliderImages: (
+                      p.heroSliderImages || initialPortfolioData.heroSliderImages
+                    ).filter((_, i) => i !== idx),
+                  }))
+                }
+              />
 
               <EditableText
                 as="h1"
