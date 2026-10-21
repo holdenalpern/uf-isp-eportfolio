@@ -1493,13 +1493,12 @@ export const Concept4MuseumFolio: React.FC = () => {
                         variant="museum"
                       />
 
-                      {/* Uploaded Personal / Exhibition Photos Gallery for Iceland, Colombia & Harn One World */}
-                      {exp.hasPersonalPhotos && (
+                      {/* Photo gallery for Iceland & Colombia (above the essay). One World gallery renders below the essay. */}
+                      {exp.hasPersonalPhotos && exp.id !== 'uf-harn-one-world' && (
                         <div className="space-y-3">
                           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {(exp.photoSlotLabels || []).map((slotLabel, pIdx) => {
                               const existingUrl = exp.photoUrls?.[pIdx] || '';
-                              const isHarnGallery = exp.id === 'uf-harn-one-world';
                               return (
                                 <div
                                   key={pIdx}
@@ -1541,11 +1540,7 @@ export const Concept4MuseumFolio: React.FC = () => {
                                         <img
                                           src={existingUrl}
                                           alt={slotLabel}
-                                          className={`w-full transition-transform duration-300 group-hover:scale-[1.03] ${
-                                            isHarnGallery
-                                              ? 'h-56 object-contain bg-stone-950/90 p-1'
-                                              : 'h-48 object-cover'
-                                          }`}
+                                          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                                         />
                                       </div>
                                     ) : (
@@ -1588,9 +1583,7 @@ export const Concept4MuseumFolio: React.FC = () => {
                                           handleImageFileUpload((dataUrl) =>
                                             updateContent((p) => {
                                               const next = [...p.experiences];
-                                              const nextUrls = [
-                                                ...(next[idx].photoUrls || []),
-                                              ];
+                                              const nextUrls = [...(next[idx].photoUrls || [])];
                                               nextUrls[pIdx] = dataUrl;
                                               next[idx] = { ...next[idx], photoUrls: nextUrls };
                                               return { ...p, experiences: next };
@@ -1627,6 +1620,119 @@ export const Concept4MuseumFolio: React.FC = () => {
                         }
                         className="text-base text-stone-800 leading-relaxed font-serif-editorial text-[19px]"
                       />
+
+                      {/* One World Harn exhibition gallery — below the main reflection text */}
+                      {exp.hasPersonalPhotos && exp.id === 'uf-harn-one-world' && (
+                        <div className="space-y-3 pt-2 border-t border-stone-300">
+                          <div className="font-mono-tech text-[11px] uppercase tracking-widest text-amber-900">
+                            Exhibition Photo Gallery • Harn Museum of Art
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {(exp.photoSlotLabels || []).map((slotLabel, pIdx) => {
+                              const existingUrl = exp.photoUrls?.[pIdx] || '';
+                              return (
+                                <div
+                                  key={pIdx}
+                                  className="rounded-lg border border-stone-300 bg-[#F4F0EA]/80 p-3 flex flex-col justify-between gap-2.5 shadow-2xs"
+                                >
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between text-[10px] font-mono-tech uppercase text-amber-900">
+                                      <span>PLATE 0{pIdx + 1}</span>
+                                      {existingUrl && (
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setLightboxMedia({
+                                              title: exp.title,
+                                              subtitle: `PLATE 0${pIdx + 1} • ${exp.location}`,
+                                              imageUrl: existingUrl,
+                                              caption: slotLabel,
+                                            })
+                                          }
+                                          className="inline-flex items-center gap-1 text-stone-600 hover:text-amber-900 cursor-pointer"
+                                        >
+                                          <Maximize2 className="h-3 w-3" /> Enlarge
+                                        </button>
+                                      )}
+                                    </div>
+
+                                    {existingUrl ? (
+                                      <div
+                                        onClick={() =>
+                                          setLightboxMedia({
+                                            title: exp.title,
+                                            subtitle: `PLATE 0${pIdx + 1} • ${exp.location}`,
+                                            imageUrl: existingUrl,
+                                            caption: slotLabel,
+                                          })
+                                        }
+                                        className="overflow-hidden rounded border border-stone-300 bg-stone-900/5 cursor-pointer group"
+                                      >
+                                        <img
+                                          src={existingUrl}
+                                          alt={slotLabel}
+                                          className="w-full h-56 object-contain bg-stone-950/90 p-1 transition-transform duration-300 group-hover:scale-[1.03]"
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="h-44 rounded border border-dashed border-stone-400 bg-stone-200/50 flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 font-mono-tech">
+                                        <span>Photo Plate 0{pIdx + 1}</span>
+                                        <span className="text-[10px] opacity-75 mt-1">
+                                          Click Upload below to attach photo
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="flex items-start justify-between gap-2 pt-1">
+                                    <div className="flex-1">
+                                      <EditableText
+                                        as="p"
+                                        multiline
+                                        value={slotLabel}
+                                        editMode={editMode}
+                                        onChange={(v) =>
+                                          updateContent((p) => {
+                                            const next = [...p.experiences];
+                                            const nextLabels = [
+                                              ...(next[idx].photoSlotLabels || []),
+                                            ];
+                                            nextLabels[pIdx] = v;
+                                            next[idx] = {
+                                              ...next[idx],
+                                              photoSlotLabels: nextLabels,
+                                            };
+                                            return { ...p, experiences: next };
+                                          })
+                                        }
+                                        className="text-xs text-stone-700 leading-relaxed"
+                                      />
+                                    </div>
+                                    {editMode && (
+                                      <button
+                                        onClick={() =>
+                                          handleImageFileUpload((dataUrl) =>
+                                            updateContent((p) => {
+                                              const next = [...p.experiences];
+                                              const nextUrls = [...(next[idx].photoUrls || [])];
+                                              nextUrls[pIdx] = dataUrl;
+                                              next[idx] = { ...next[idx], photoUrls: nextUrls };
+                                              return { ...p, experiences: next };
+                                            })
+                                          )
+                                        }
+                                        className="inline-flex items-center gap-1 rounded bg-amber-900/10 px-2 py-1 text-[10px] font-mono-tech text-amber-900 hover:bg-amber-900 hover:text-white cursor-pointer shrink-0"
+                                      >
+                                        <ImagePlus className="h-3 w-3" /> Upload
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
