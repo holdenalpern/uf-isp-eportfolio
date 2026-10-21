@@ -469,20 +469,20 @@ export const Concept4MuseumFolio: React.FC = () => {
                   )}
                 </div>
 
-                {/* High-Resolution Poster Image at Top of Column 1 */}
+                {/* High-Resolution Poster Image at Top of Column 1 (Vertical 3:4 aspect ratio, zoomed in) */}
                 <div
                   onClick={() => setLightboxMedia('poster')}
-                  className="group relative overflow-hidden rounded-lg border border-stone-300 bg-white p-2 cursor-pointer shadow-xs"
+                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-lg border border-stone-300 bg-white cursor-pointer shadow-xs"
                   title="Click to inspect full-resolution poster in Lightbox"
                 >
                   <img
                     src={content.poster.imageUrl || '/images/research/poster.jpg'}
                     alt={content.poster.title}
-                    className="h-72 sm:h-80 w-full object-contain mx-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                    className="h-full w-full object-cover object-top scale-[1.04] transition-transform duration-300 group-hover:scale-[1.07]"
                   />
-                  <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-stone-950/80 via-stone-950/30 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-white">
+                  <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-stone-950/85 via-stone-950/35 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-white">
                     <span>Click to Expand High-Resolution Poster</span>
-                    <Maximize2 className="h-4 w-4" />
+                    <Maximize2 className="h-4 w-4 shrink-0" />
                   </div>
                 </div>
 
@@ -616,20 +616,20 @@ export const Concept4MuseumFolio: React.FC = () => {
                   )}
                 </div>
 
-                {/* IMPRESS Cover Artwork at Top of Column 2 */}
+                {/* IMPRESS Cover Artwork at Top of Column 2 (Matching vertical 3:4 aspect ratio, zoomed out to show full cover art) */}
                 <div
                   onClick={() => setLightboxMedia('impress')}
-                  className="group relative overflow-hidden rounded-lg border border-stone-300 bg-stone-950 cursor-pointer shadow-xs"
+                  className="group relative aspect-[3/4] w-full overflow-hidden rounded-lg border border-stone-300 bg-stone-950 cursor-pointer shadow-xs"
                   title="Click to inspect IMPRESS cover artwork in Lightbox"
                 >
                   <img
                     src={impressPaper.imageUrl || '/images/research/impress-cover.jpg'}
                     alt={impressPaper.title}
-                    className="h-72 sm:h-80 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                   <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/35 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-amber-100">
                     <span>Astrobiology Cover Artwork • Planetary Penetrator Swarm</span>
-                    <Maximize2 className="h-4 w-4" />
+                    <Maximize2 className="h-4 w-4 shrink-0" />
                   </div>
                 </div>
 
