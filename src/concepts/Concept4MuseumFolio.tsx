@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Award,
+  BookOpen,
   CheckCircle2,
   ChevronDown,
   ChevronUp,
   Download,
   Edit3,
+  ExternalLink,
   Eye,
   Feather,
+  FileText,
   ImagePlus,
   Maximize2,
   Plus,
@@ -14,6 +18,7 @@ import {
   Save,
   Stamp,
   Trash2,
+  Wrench,
   X,
 } from 'lucide-react';
 import initialPortfolioData from '../data/portfolioContent.json';
@@ -24,14 +29,22 @@ import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider'
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v1';
+const STORAGE_KEY = 'uf_isp_folio_content_v2';
+
+const RESUME_CATEGORIES = [
+  'All',
+  'Education',
+  'Research Experience',
+  'Work Experience',
+  'Other Educational Experiences',
+] as const;
 
 export const Concept4MuseumFolio: React.FC = () => {
   const [content, setContent] = useState<PortfolioContent>(() => {
     try {
       const cached = localStorage.getItem(STORAGE_KEY);
       if (cached) {
-        return JSON.parse(cached);
+        return { ...initialPortfolioData, ...JSON.parse(cached) };
       }
     } catch {
       // ignore parse errors
@@ -42,7 +55,9 @@ export const Concept4MuseumFolio: React.FC = () => {
   const [editMode, setEditMode] = useState<boolean>(true);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved' | 'error'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<string>('Synced with repo');
-  const [posterLightboxOpen, setPosterLightboxOpen] = useState<boolean>(false);
+  const [lightboxMedia, setLightboxMedia] = useState<'poster' | 'impress' | null>(null);
+  const [activeResumeCategory, setActiveResumeCategory] = useState<string>('All');
+  const [collapsedResumeIds, setCollapsedResumeIds] = useState<Record<string, boolean>>({});
   const [expandedExhibits, setExpandedExhibits] = useState<Record<string, boolean>>({
     'colombia-bogota': true,
     'iceland-reykjavik': true,
@@ -71,12 +86,17 @@ export const Concept4MuseumFolio: React.FC = () => {
       });
       if (res.ok) {
         setSaveStatus('saved');
-        setLastSavedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+        setLastSavedTime(
+          new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          })
+        );
       } else {
         setSaveStatus('error');
       }
     } catch {
-      // If static production build without dev server middleware
       setSaveStatus('saved');
     }
   };
@@ -119,6 +139,10 @@ export const Concept4MuseumFolio: React.FC = () => {
     setExpandedExhibits(next);
   };
 
+  const toggleResumeCard = (id: string) => {
+    setCollapsedResumeIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const jumpTo = (id: string) => {
     const el = document.getElementById(`c4-${id}`);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -155,6 +179,13 @@ export const Concept4MuseumFolio: React.FC = () => {
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  const impressPaper = content.impressPaper || initialPortfolioData.impressPaper;
+  const resumeMeta = content.resumeMeta || initialPortfolioData.resumeMeta;
+
+  const filteredResume = content.resume.filter(
+    (item) => activeResumeCategory === 'All' || item.category === activeResumeCategory
+  );
 
   return (
     <div className="min-h-screen bg-[#F4F0EA] text-[#1C1917] pb-32 selection:bg-amber-900/15">
@@ -203,7 +234,10 @@ export const Concept4MuseumFolio: React.FC = () => {
               <Edit3 className="h-3.5 w-3.5 text-amber-300 shrink-0" />
               <span>
                 <strong>LIVE EDIT MODE ACTIVE:</strong> Click any dashed text box to edit directly. All changes auto-save to{' '}
-                <code className="bg-amber-950/70 px-1.5 py-0.5 rounded">src/data/portfolioContent.json</code>.
+                <code className="bg-amber-950/70 px-1.5 py-0.5 rounded">
+                  src/data/portfolioContent.json
+                </code>
+                .
               </span>
             </div>
             <span className="text-amber-200">
@@ -213,7 +247,7 @@ export const Concept4MuseumFolio: React.FC = () => {
         </div>
       )}
 
-      <main className="mx-auto max-w-5xl px-6 py-12 space-y-20">
+      <main className="mx-auto max-w-6xl px-6 py-12 space-y-20">
         {/* FOLIO I: HOME & ABOUT ME (Editorial Double-Column Spread) */}
         <section id="c4-home" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -240,15 +274,17 @@ export const Concept4MuseumFolio: React.FC = () => {
                 />
               </div>
 
-              {/* 21st.dev Infinite Auto-Slider placed directly between Degree and Main Title */}
+              {/* Infinite Auto-Slider (52s cycle - slowed by 2x, using ISP pics / Intro Slideshow) */}
               <ImageAutoSlider
                 images={content.heroSliderImages || initialPortfolioData.heroSliderImages}
                 editMode={editMode}
+                speedSeconds={52}
                 onReplaceImage={(idx) =>
                   handleImageFileUpload((dataUrl) => {
                     const captionPrompt = window.prompt(
                       'Optional slide caption:',
-                      (content.heroSliderImages || initialPortfolioData.heroSliderImages)[idx]?.caption || ''
+                      (content.heroSliderImages || initialPortfolioData.heroSliderImages)[idx]
+                        ?.caption || ''
                     );
                     updateContent((p) => {
                       const currentList = [
@@ -265,8 +301,7 @@ export const Concept4MuseumFolio: React.FC = () => {
                 onAddImage={() =>
                   handleImageFileUpload((dataUrl) => {
                     const caption =
-                      window.prompt('Caption for this new slide:', 'Colombia / Iceland Field Photo') ||
-                      'Field Photo';
+                      window.prompt('Caption for this new slide:', 'Field Photo') || 'Field Photo';
                     updateContent((p) => ({
                       ...p,
                       heroSliderImages: [
@@ -306,17 +341,6 @@ export const Concept4MuseumFolio: React.FC = () => {
                 className="leading-relaxed text-stone-700 font-serif-editorial text-xl"
               />
 
-              <blockquote className="border-l-2 border-amber-900 pl-4 italic font-serif-editorial text-xl text-stone-800 bg-[#FAF8F5] p-4 rounded-r border border-stone-800/10">
-                <EditableText
-                  as="span"
-                  multiline
-                  value={content.homeQuote}
-                  editMode={editMode}
-                  onChange={(v) => updateContent((p) => ({ ...p, homeQuote: v }))}
-                  className="italic font-serif-editorial text-xl text-stone-800"
-                />
-              </blockquote>
-
               {/* Quick Rubric Directory for Advisor */}
               <div className="pt-4">
                 <div className="text-[11px] font-mono-tech uppercase tracking-wider text-stone-500 mb-2.5">
@@ -344,7 +368,7 @@ export const Concept4MuseumFolio: React.FC = () => {
             {/* Right Column: 02. About Me */}
             <div
               id="c4-about"
-              className="scroll-mt-24 lg:col-span-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-4 shadow-2xs"
+              className="scroll-mt-24 lg:col-span-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-4 shadow-2xs self-start"
             >
               <div className="flex items-center justify-between text-xs font-mono-tech uppercase tracking-wider text-stone-500 border-b border-stone-300 pb-2">
                 <span>CURATORIAL BIO • 02. ABOUT ME</span>
@@ -399,362 +423,742 @@ export const Concept4MuseumFolio: React.FC = () => {
                   />
                 </div>
               </div>
-
-              {/* Hobbies / Tags */}
-              <div className="pt-2">
-                <div className="flex items-center justify-between text-[10px] font-mono-tech uppercase text-stone-500 mb-2">
-                  <span>Field Pursuits & Interests</span>
-                  {editMode && (
-                    <button
-                      onClick={() =>
-                        updateContent((p) => ({
-                          ...p,
-                          hobbies: [...p.hobbies, 'New Interest'],
-                        }))
-                      }
-                      className="inline-flex items-center gap-1 text-amber-900 hover:underline cursor-pointer"
-                    >
-                      <Plus className="h-3 w-3" /> Add Tag
-                    </button>
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {content.hobbies.map((h, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono-tech bg-stone-200/80 text-stone-800 rounded"
-                    >
-                      <EditableText
-                        value={h}
-                        editMode={editMode}
-                        onChange={(newVal) =>
-                          updateContent((p) => {
-                            const next = [...p.hobbies];
-                            next[idx] = newVal;
-                            return { ...p, hobbies: next };
-                          })
-                        }
-                        className="text-[11px] font-mono-tech"
-                      />
-                      {editMode && (
-                        <button
-                          onClick={() =>
-                            updateContent((p) => ({
-                              ...p,
-                              hobbies: p.hobbies.filter((_, i) => i !== idx),
-                            }))
-                          }
-                          className="text-stone-500 hover:text-red-700 cursor-pointer"
-                          title="Remove tag"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* FOLIO II: RESUME & REYKJAVIK POSTER */}
-        <section id="c4-resume" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14 space-y-8">
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <div>
-              <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
-                FOLIO II • 03. CURRICULUM VITAE & REYKJAVIK RESEARCH PLATE
-              </span>
-              <h2 className="font-serif-editorial text-4xl font-semibold mt-1">
-                Academic Record & Reykjavik Conference Poster
-              </h2>
-            </div>
-            <div className="flex items-center gap-3">
-              {editMode && (
-                <button
-                  onClick={() =>
-                    updateContent((p) => ({
-                      ...p,
-                      resume: [
-                        ...p.resume,
-                        {
-                          id: `res-${Date.now()}`,
-                          category: 'Experience / Lab',
-                          role: 'New Role / Position Title',
-                          org: 'Organization / Lab Name',
-                          period: '2025 – 2026',
-                          location: 'Gainesville, FL',
-                          highlights: ['Click to describe key accomplishment or responsibility.'],
-                        },
-                      ],
-                    }))
-                  }
-                  className="inline-flex items-center gap-1.5 rounded border border-amber-900 bg-amber-900/10 px-3 py-1.5 font-mono-tech text-xs text-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
-                >
-                  <Plus className="h-3.5 w-3.5" /> Add Resume Entry
-                </button>
-              )}
-              <button
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 rounded border border-stone-800/30 bg-[#FAF8F5] px-3 py-1.5 font-mono-tech text-xs text-stone-800 hover:border-amber-900 cursor-pointer"
-              >
-                <Download className="h-3.5 w-3.5" />
-                Print / Save CV View
-              </button>
-            </div>
+        {/* FOLIO II: ACADEMIC RESEARCH & CURRICULUM VITAE */}
+        <section id="c4-resume" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14 space-y-12">
+          <div className="space-y-2">
+            <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
+              FOLIO II • 03. FEATURED ASTROBIOLOGY RESEARCH & VERBATIM CURRICULUM VITAE
+            </span>
+            <h2 className="font-serif-editorial text-4xl font-semibold text-stone-900">
+              International Research Presentations, Publications & Full CV
+            </h2>
           </div>
 
-          {/* Reykjavik Poster Archival Plate */}
-          <div className="rounded-lg border-2 border-stone-800/25 bg-[#FAF8F5] p-6 sm:p-8 space-y-5">
-            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-stone-300 pb-4">
-              <div className="space-y-1 flex-1">
+          {/* TWO-COLUMN ACADEMIC RESEARCH SECTION (Reykjavik Poster + IMPRESS Paper) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {/* COLUMN 1: REYKJAVIK POSTER PRESENTATION */}
+            <div className="rounded-lg border-2 border-stone-800/25 bg-[#FAF8F5] p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-2xs">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2 border-b border-stone-300 pb-3">
+                  <EditableText
+                    value={content.poster.plateNumber}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({ ...p, poster: { ...p.poster, plateNumber: v } }))
+                    }
+                    className="text-[11px] font-mono-tech uppercase text-amber-900 font-semibold"
+                  />
+                  {editMode && (
+                    <button
+                      onClick={() =>
+                        handleImageFileUpload((dataUrl) =>
+                          updateContent((p) => ({
+                            ...p,
+                            poster: { ...p.poster, imageUrl: dataUrl },
+                          }))
+                        )
+                      }
+                      className="inline-flex items-center gap-1 rounded border border-amber-900/40 bg-amber-50 px-2.5 py-1 text-[10px] font-mono-tech text-amber-900 hover:bg-amber-100 cursor-pointer shrink-0"
+                    >
+                      <ImagePlus className="h-3 w-3" /> Swap Poster
+                    </button>
+                  )}
+                </div>
+
+                {/* High-Resolution Poster Image at Top of Column 1 */}
+                <div
+                  onClick={() => setLightboxMedia('poster')}
+                  className="group relative overflow-hidden rounded-lg border border-stone-300 bg-white p-2 cursor-pointer shadow-xs"
+                  title="Click to inspect full-resolution poster in Lightbox"
+                >
+                  <img
+                    src={content.poster.imageUrl || '/images/research/poster.jpg'}
+                    alt={content.poster.title}
+                    className="h-72 sm:h-80 w-full object-contain mx-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-stone-950/80 via-stone-950/30 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-white">
+                    <span>Click to Expand High-Resolution Poster</span>
+                    <Maximize2 className="h-4 w-4" />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <EditableText
+                    as="h3"
+                    value={content.poster.title}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({ ...p, poster: { ...p.poster, title: v } }))
+                    }
+                    className="font-serif-editorial text-2xl sm:text-3xl font-semibold text-stone-900 leading-tight"
+                  />
+                  <EditableText
+                    value={content.poster.subtitle}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({ ...p, poster: { ...p.poster, subtitle: v } }))
+                    }
+                    className="text-xs font-mono-tech text-amber-900 font-medium block"
+                  />
+                  <EditableText
+                    value={content.poster.authors}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({ ...p, poster: { ...p.poster, authors: v } }))
+                    }
+                    className="text-[11px] font-mono-tech text-stone-500 block"
+                  />
+                </div>
+
                 <EditableText
-                  value={content.poster.plateNumber}
+                  as="p"
+                  multiline
+                  value={content.poster.abstract}
                   editMode={editMode}
                   onChange={(v) =>
-                    updateContent((p) => ({ ...p, poster: { ...p.poster, plateNumber: v } }))
+                    updateContent((p) => ({ ...p, poster: { ...p.poster, abstract: v } }))
                   }
-                  className="text-xs font-mono-tech uppercase text-amber-900 font-semibold"
+                  className="text-sm text-stone-700 leading-relaxed"
                 />
-                <EditableText
-                  as="h3"
-                  value={content.poster.title}
-                  editMode={editMode}
-                  onChange={(v) =>
-                    updateContent((p) => ({ ...p, poster: { ...p.poster, title: v } }))
-                  }
-                  className="font-serif-editorial text-3xl font-semibold text-stone-900"
-                />
-                <EditableText
-                  value={content.poster.authors}
-                  editMode={editMode}
-                  onChange={(v) =>
-                    updateContent((p) => ({ ...p, poster: { ...p.poster, authors: v } }))
-                  }
-                  className="text-xs font-mono-tech text-stone-500"
-                />
+
+                {/* 4 Key Technical Sub-Boxes */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                  {content.poster.sections.map((sec, idx) => (
+                    <div
+                      key={sec.id}
+                      className="rounded border border-stone-300/90 bg-[#F4F0EA]/70 p-3 space-y-1"
+                    >
+                      <EditableText
+                        value={sec.label}
+                        editMode={editMode}
+                        onChange={(v) =>
+                          updateContent((p) => {
+                            const nextSecs = [...p.poster.sections];
+                            nextSecs[idx] = { ...nextSecs[idx], label: v };
+                            return { ...p, poster: { ...p.poster, sections: nextSecs } };
+                          })
+                        }
+                        className="font-mono-tech text-[11px] font-bold text-amber-900"
+                      />
+                      <EditableText
+                        as="p"
+                        multiline
+                        value={sec.detail}
+                        editMode={editMode}
+                        onChange={(v) =>
+                          updateContent((p) => {
+                            const nextSecs = [...p.poster.sections];
+                            nextSecs[idx] = { ...nextSecs[idx], detail: v };
+                            return { ...p, poster: { ...p.poster, sections: nextSecs } };
+                          })
+                        }
+                        className="text-xs text-stone-700 leading-relaxed"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                {editMode && (
-                  <button
-                    onClick={() =>
-                      handleImageFileUpload((dataUrl) =>
-                        updateContent((p) => ({
-                          ...p,
-                          poster: { ...p.poster, imageUrl: dataUrl },
-                        }))
-                      )
-                    }
-                    className="inline-flex items-center gap-1.5 rounded border border-amber-900/40 bg-amber-50 px-3 py-2 text-xs font-mono-tech text-amber-900 hover:bg-amber-100 cursor-pointer"
-                  >
-                    <ImagePlus className="h-3.5 w-3.5" />
-                    Upload Poster Image
-                  </button>
-                )}
+              {/* Bottom Actions for Column 1 */}
+              <div className="pt-4 border-t border-stone-300 flex flex-wrap items-center justify-between gap-3">
                 <button
-                  onClick={() => setPosterLightboxOpen(true)}
-                  className="inline-flex items-center gap-1.5 rounded bg-stone-900 px-3.5 py-2 text-xs font-mono-tech text-stone-100 hover:bg-amber-900 transition-colors cursor-pointer"
+                  onClick={() => setLightboxMedia('poster')}
+                  className="inline-flex items-center gap-2 rounded bg-stone-900 px-4 py-2.5 text-xs font-mono-tech font-semibold text-stone-100 hover:bg-amber-900 transition-colors cursor-pointer"
                 >
                   <Maximize2 className="h-3.5 w-3.5" />
                   Open Poster Lightbox
                 </button>
+                <a
+                  href="/images/research/Poster.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded border border-stone-800/30 bg-white px-3.5 py-2 text-xs font-mono-tech text-stone-800 hover:border-amber-900 transition-colors"
+                >
+                  <FileText className="h-3.5 w-3.5 text-amber-900" />
+                  Open Original Poster PDF ↗
+                </a>
               </div>
             </div>
 
-            {content.poster.imageUrl && (
-              <div className="overflow-hidden rounded border border-stone-300 bg-white p-2">
-                <img
-                  src={content.poster.imageUrl}
-                  alt={content.poster.title}
-                  className="max-h-96 w-full object-contain mx-auto"
-                />
-              </div>
-            )}
-
-            <EditableText
-              as="p"
-              multiline
-              value={content.poster.abstract}
-              editMode={editMode}
-              onChange={(v) =>
-                updateContent((p) => ({ ...p, poster: { ...p.poster, abstract: v } }))
-              }
-              className="text-sm text-stone-700 leading-relaxed"
-            />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-              {content.poster.sections.map((sec, idx) => (
-                <div
-                  key={sec.id}
-                  className="rounded border border-stone-300/90 bg-[#F4F0EA]/70 p-4 space-y-1.5"
-                >
+            {/* COLUMN 2: IMPRESS ASTROBIOLOGY COVER PAPER */}
+            <div className="rounded-lg border-2 border-stone-800/25 bg-[#FAF8F5] p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-2xs">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between gap-2 border-b border-stone-300 pb-3">
                   <EditableText
-                    value={sec.label}
+                    value={impressPaper.plateNumber}
                     editMode={editMode}
                     onChange={(v) =>
-                      updateContent((p) => {
-                        const nextSecs = [...p.poster.sections];
-                        nextSecs[idx] = { ...nextSecs[idx], label: v };
-                        return { ...p, poster: { ...p.poster, sections: nextSecs } };
-                      })
+                      updateContent((p) => ({
+                        ...p,
+                        impressPaper: { ...impressPaper, plateNumber: v },
+                      }))
                     }
-                    className="font-mono-tech text-xs font-bold text-amber-900"
+                    className="text-[11px] font-mono-tech uppercase text-amber-900 font-semibold"
                   />
+                  {editMode && (
+                    <button
+                      onClick={() =>
+                        handleImageFileUpload((dataUrl) =>
+                          updateContent((p) => ({
+                            ...p,
+                            impressPaper: { ...impressPaper, imageUrl: dataUrl },
+                          }))
+                        )
+                      }
+                      className="inline-flex items-center gap-1 rounded border border-amber-900/40 bg-amber-50 px-2.5 py-1 text-[10px] font-mono-tech text-amber-900 hover:bg-amber-100 cursor-pointer shrink-0"
+                    >
+                      <ImagePlus className="h-3 w-3" /> Swap Artwork
+                    </button>
+                  )}
+                </div>
+
+                {/* IMPRESS Cover Artwork at Top of Column 2 */}
+                <div
+                  onClick={() => setLightboxMedia('impress')}
+                  className="group relative overflow-hidden rounded-lg border border-stone-300 bg-stone-950 cursor-pointer shadow-xs"
+                  title="Click to inspect IMPRESS cover artwork in Lightbox"
+                >
+                  <img
+                    src={impressPaper.imageUrl || '/images/research/impress-cover.jpg'}
+                    alt={impressPaper.title}
+                    className="h-72 sm:h-80 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/35 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-amber-100">
+                    <span>Astrobiology Cover Artwork • Planetary Penetrator Swarm</span>
+                    <Maximize2 className="h-4 w-4" />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <EditableText
+                    as="h3"
+                    value={impressPaper.title}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({
+                        ...p,
+                        impressPaper: { ...impressPaper, title: v },
+                      }))
+                    }
+                    className="font-serif-editorial text-2xl sm:text-3xl font-semibold text-stone-900 leading-tight"
+                  />
+                  <EditableText
+                    value={impressPaper.citation}
+                    editMode={editMode}
+                    onChange={(v) =>
+                      updateContent((p) => ({
+                        ...p,
+                        impressPaper: { ...impressPaper, citation: v },
+                      }))
+                    }
+                    className="text-xs font-mono-tech text-amber-900 font-medium block"
+                  />
+                </div>
+
+                <EditableText
+                  as="p"
+                  multiline
+                  value={impressPaper.summary}
+                  editMode={editMode}
+                  onChange={(v) =>
+                    updateContent((p) => ({
+                      ...p,
+                      impressPaper: { ...impressPaper, summary: v },
+                    }))
+                  }
+                  className="text-sm text-stone-700 leading-relaxed"
+                />
+
+                {/* Holden's Role Box (COO + Second Author) */}
+                <div className="rounded-lg border border-amber-900/25 bg-amber-900/[0.04] p-4 space-y-1.5">
+                  <div className="font-mono-tech text-[11px] uppercase font-bold text-amber-900">
+                    Leadership & Authorship Role • IMPRESS Spaceworks Co.
+                  </div>
                   <EditableText
                     as="p"
                     multiline
-                    value={sec.detail}
+                    value={impressPaper.roleSummary}
                     editMode={editMode}
                     onChange={(v) =>
-                      updateContent((p) => {
-                        const nextSecs = [...p.poster.sections];
-                        nextSecs[idx] = { ...nextSecs[idx], detail: v };
-                        return { ...p, poster: { ...p.poster, sections: nextSecs } };
-                      })
+                      updateContent((p) => ({
+                        ...p,
+                        impressPaper: { ...impressPaper, roleSummary: v },
+                      }))
                     }
                     className="text-xs text-stone-700 leading-relaxed"
                   />
                 </div>
-              ))}
+              </div>
+
+              {/* Bottom Link to Astrobiology Paper */}
+              <div className="pt-4 border-t border-stone-300 flex flex-wrap items-center justify-between gap-3">
+                <a
+                  href={impressPaper.doiUrl || 'https://doi.org/10.1177/15311074261471218'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded bg-amber-900 px-4 py-2.5 text-xs font-mono-tech font-semibold text-white hover:bg-amber-950 transition-colors"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  Read Paper in Astrobiology (Spacek et al. 2026)
+                </a>
+                <a
+                  href="https://impressmars.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded border border-stone-800/30 bg-white px-3.5 py-2 text-xs font-mono-tech text-stone-800 hover:border-amber-900 transition-colors"
+                >
+                  impressmars.com ↗
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Interactive Curriculum Vitae Timeline */}
-          <div className="space-y-4">
-            {content.resume.map((item, idx) => (
-              <div
-                key={item.id}
-                className="rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 flex flex-col md:flex-row md:items-start justify-between gap-4"
-              >
-                <div className="space-y-2 flex-1">
-                  <div className="flex items-center gap-3">
-                    <EditableText
-                      value={item.category}
-                      editMode={editMode}
-                      onChange={(v) =>
-                        updateContent((p) => {
-                          const next = [...p.resume];
-                          next[idx] = { ...next[idx], category: v };
-                          return { ...p, resume: next };
-                        })
-                      }
-                      className="font-mono-tech text-xs uppercase text-amber-900 font-semibold"
-                    />
+          {/* VERBATIM INTERACTIVE CURRICULUM VITAE SECTION */}
+          <div className="space-y-6 pt-6 border-t border-stone-800/15">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 bg-[#EBE5DC]/70 p-6 rounded-lg border border-stone-800/20">
+              <div className="space-y-1">
+                <div className="text-xs font-mono-tech uppercase tracking-widest text-amber-900 font-semibold">
+                  INTERACTIVE CURRICULUM VITAE • VERBATIM RECORD
+                </div>
+                <EditableText
+                  as="h3"
+                  value={resumeMeta.headerName}
+                  editMode={editMode}
+                  onChange={(v) =>
+                    updateContent((p) => ({
+                      ...p,
+                      resumeMeta: { ...resumeMeta, headerName: v },
+                    }))
+                  }
+                  className="font-serif-editorial text-3xl font-bold text-stone-900"
+                />
+                <EditableText
+                  value={resumeMeta.contactLine}
+                  editMode={editMode}
+                  onChange={(v) =>
+                    updateContent((p) => ({
+                      ...p,
+                      resumeMeta: { ...resumeMeta, contactLine: v },
+                    }))
+                  }
+                  className="text-xs font-mono-tech text-stone-600"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {editMode && (
+                  <button
+                    onClick={() =>
+                      updateContent((p) => ({
+                        ...p,
+                        resume: [
+                          ...p.resume,
+                          {
+                            id: `res-${Date.now()}`,
+                            category: 'Research Experience',
+                            role: 'New Role / Position Title',
+                            org: 'Organization / Lab Name',
+                            period: '2026',
+                            location: 'Gainesville, FL',
+                            highlights: ['Click to describe key accomplishment or responsibility.'],
+                          },
+                        ],
+                      }))
+                    }
+                    className="inline-flex items-center gap-1.5 rounded border border-amber-900 bg-amber-900/10 px-3 py-1.5 font-mono-tech text-xs text-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" /> Add CV Entry
+                  </button>
+                )}
+                <button
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-1.5 rounded border border-stone-800/30 bg-[#FAF8F5] px-3 py-1.5 font-mono-tech text-xs text-stone-800 hover:border-amber-900 cursor-pointer"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  Print / Save CV View
+                </button>
+              </div>
+            </div>
+
+            {/* Interactive Category Filter Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap gap-1.5">
+                {RESUME_CATEGORIES.map((cat) => {
+                  const active = activeResumeCategory === cat;
+                  const count =
+                    cat === 'All'
+                      ? content.resume.length
+                      : content.resume.filter((r) => r.category === cat).length;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveResumeCategory(cat)}
+                      className={`px-3 py-1.5 rounded text-xs font-mono-tech transition-colors cursor-pointer border ${
+                        active
+                          ? 'bg-amber-900 text-white border-amber-950 font-semibold'
+                          : 'bg-[#FAF8F5] text-stone-700 border-stone-800/20 hover:border-amber-900'
+                      }`}
+                    >
+                      {cat} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-mono-tech">
+                <button
+                  onClick={() => setCollapsedResumeIds({})}
+                  className="text-stone-600 hover:text-amber-900 underline cursor-pointer"
+                >
+                  Expand All
+                </button>
+                <span>•</span>
+                <button
+                  onClick={() => {
+                    const next: Record<string, boolean> = {};
+                    content.resume.forEach((r) => {
+                      next[r.id] = true;
+                    });
+                    setCollapsedResumeIds(next);
+                  }}
+                  className="text-stone-600 hover:text-amber-900 underline cursor-pointer"
+                >
+                  Compact View
+                </button>
+              </div>
+            </div>
+
+            {/* Resume Entries List */}
+            <div className="space-y-4">
+              {filteredResume.map((item) => {
+                const idx = content.resume.findIndex((r) => r.id === item.id);
+                const isCollapsed = !!collapsedResumeIds[item.id];
+                return (
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-5 sm:p-6 transition-all shadow-2xs"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
+                      <div className="space-y-1 flex-1">
+                        <div className="flex items-center gap-3">
+                          <EditableText
+                            value={item.category}
+                            editMode={editMode}
+                            onChange={(v) =>
+                              updateContent((p) => {
+                                const next = [...p.resume];
+                                next[idx] = { ...next[idx], category: v };
+                                return { ...p, resume: next };
+                              })
+                            }
+                            className="font-mono-tech text-[11px] uppercase text-amber-900 font-semibold"
+                          />
+                          {editMode && (
+                            <button
+                              onClick={() =>
+                                updateContent((p) => ({
+                                  ...p,
+                                  resume: p.resume.filter((_, i) => i !== idx),
+                                }))
+                              }
+                              className="text-stone-400 hover:text-red-700 cursor-pointer"
+                              title="Delete resume entry"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          )}
+                        </div>
+
+                        <EditableText
+                          as="h4"
+                          value={item.role}
+                          editMode={editMode}
+                          onChange={(v) =>
+                            updateContent((p) => {
+                              const next = [...p.resume];
+                              next[idx] = { ...next[idx], role: v };
+                              return { ...p, resume: next };
+                            })
+                          }
+                          className="font-serif-editorial text-2xl font-semibold text-stone-900"
+                        />
+
+                        <EditableText
+                          value={item.org}
+                          editMode={editMode}
+                          onChange={(v) =>
+                            updateContent((p) => {
+                              const next = [...p.resume];
+                              next[idx] = { ...next[idx], org: v };
+                              return { ...p, resume: next };
+                            })
+                          }
+                          className="text-xs font-mono-tech text-stone-600"
+                        />
+                      </div>
+
+                      <div className="flex md:flex-col items-center md:items-end justify-between gap-2 shrink-0">
+                        <div className="md:text-right font-mono-tech text-xs text-stone-600">
+                          <EditableText
+                            value={item.period}
+                            editMode={editMode}
+                            onChange={(v) =>
+                              updateContent((p) => {
+                                const next = [...p.resume];
+                                next[idx] = { ...next[idx], period: v };
+                                return { ...p, resume: next };
+                              })
+                            }
+                            className="font-mono-tech text-xs font-bold text-stone-900 md:text-right"
+                          />
+                        </div>
+                        <button
+                          onClick={() => toggleResumeCard(item.id)}
+                          className="inline-flex items-center gap-1 rounded border border-stone-300 bg-[#F4F0EA] px-2 py-1 text-[10px] font-mono-tech text-stone-600 hover:border-amber-900 cursor-pointer"
+                        >
+                          <span>
+                            {isCollapsed ? `Show (${item.highlights.length})` : 'Hide Details'}
+                          </span>
+                          {isCollapsed ? (
+                            <ChevronDown className="h-3 w-3" />
+                          ) : (
+                            <ChevronUp className="h-3 w-3" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    {!isCollapsed && (
+                      <div className="mt-3 pt-3 border-t border-stone-200/80">
+                        <ul className="space-y-1.5">
+                          {item.highlights.map((hl, hIdx) => (
+                            <li
+                              key={hIdx}
+                              className="flex items-start gap-2.5 text-sm text-stone-700"
+                            >
+                              <span className="text-amber-900 mt-0.5 select-none">‒</span>
+                              <div className="flex-1">
+                                <EditableText
+                                  multiline
+                                  value={hl}
+                                  editMode={editMode}
+                                  onChange={(v) =>
+                                    updateContent((p) => {
+                                      const next = [...p.resume];
+                                      const nextHl = [...next[idx].highlights];
+                                      nextHl[hIdx] = v;
+                                      next[idx] = { ...next[idx], highlights: nextHl };
+                                      return { ...p, resume: next };
+                                    })
+                                  }
+                                  className="text-sm text-stone-700 leading-relaxed"
+                                />
+                              </div>
+                              {editMode && item.highlights.length > 1 && (
+                                <button
+                                  onClick={() =>
+                                    updateContent((p) => {
+                                      const next = [...p.resume];
+                                      next[idx] = {
+                                        ...next[idx],
+                                        highlights: next[idx].highlights.filter(
+                                          (_, i) => i !== hIdx
+                                        ),
+                                      };
+                                      return { ...p, resume: next };
+                                    })
+                                  }
+                                  className="text-stone-400 hover:text-red-700 cursor-pointer mt-1"
+                                  title="Remove bullet"
+                                >
+                                  <X className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                        {editMode && (
+                          <button
+                            onClick={() =>
+                              updateContent((p) => {
+                                const next = [...p.resume];
+                                next[idx] = {
+                                  ...next[idx],
+                                  highlights: [...next[idx].highlights, 'New bullet point...'],
+                                };
+                                return { ...p, resume: next };
+                              })
+                            }
+                            className="text-[11px] font-mono-tech text-amber-900 hover:underline cursor-pointer pt-2 inline-block"
+                          >
+                            + Add Bullet Point
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Verbatim Publications, Awards, Technical Skills & Extracurriculars Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+              {/* Publications & Awards */}
+              <div className="lg:col-span-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-5">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-1.5 font-mono-tech text-xs uppercase text-amber-900 font-semibold">
+                    <BookOpen className="h-3.5 w-3.5" />
+                    Publications
+                  </div>
+                  {resumeMeta.publications.map((pub, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded border border-stone-300 bg-[#F4F0EA]/70 p-3 text-xs text-stone-800 leading-relaxed"
+                    >
+                      <EditableText
+                        multiline
+                        value={pub}
+                        editMode={editMode}
+                        onChange={(v) =>
+                          updateContent((p) => {
+                            const nextPubs = [...resumeMeta.publications];
+                            nextPubs[idx] = v;
+                            return {
+                              ...p,
+                              resumeMeta: { ...resumeMeta, publications: nextPubs },
+                            };
+                          })
+                        }
+                        className="text-xs text-stone-800 leading-relaxed"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-2 pt-3 border-t border-stone-200">
+                  <div className="inline-flex items-center gap-1.5 font-mono-tech text-xs uppercase text-amber-900 font-semibold">
+                    <Award className="h-3.5 w-3.5" />
+                    Awards and Certifications
+                  </div>
+                  <ul className="space-y-1.5">
+                    {resumeMeta.awards.map((award, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center gap-2 text-sm text-stone-800 font-medium"
+                      >
+                        <span className="text-amber-900">•</span>
+                        <EditableText
+                          value={award}
+                          editMode={editMode}
+                          onChange={(v) =>
+                            updateContent((p) => {
+                              const nextAwards = [...resumeMeta.awards];
+                              nextAwards[idx] = v;
+                              return {
+                                ...p,
+                                resumeMeta: { ...resumeMeta, awards: nextAwards },
+                              };
+                            })
+                          }
+                          className="text-sm text-stone-800"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Technical & Laboratory Skills + Hobbies, Interests, and Extracurriculars */}
+              <div className="lg:col-span-7 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-5">
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <div className="inline-flex items-center gap-1.5 font-mono-tech text-xs uppercase text-amber-900 font-semibold">
+                      <Wrench className="h-3.5 w-3.5" />
+                      Laboratory, Engineering & Field Skills
+                    </div>
                     {editMode && (
                       <button
                         onClick={() =>
                           updateContent((p) => ({
                             ...p,
-                            resume: p.resume.filter((_, i) => i !== idx),
+                            resumeMeta: {
+                              ...resumeMeta,
+                              skillsList: [...resumeMeta.skillsList, 'New Skill'],
+                            },
                           }))
                         }
-                        className="text-stone-400 hover:text-red-700 cursor-pointer"
-                        title="Delete resume entry"
+                        className="text-[11px] font-mono-tech text-amber-900 hover:underline cursor-pointer"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        + Add Skill
                       </button>
                     )}
                   </div>
-
-                  <EditableText
-                    as="h4"
-                    value={item.role}
-                    editMode={editMode}
-                    onChange={(v) =>
-                      updateContent((p) => {
-                        const next = [...p.resume];
-                        next[idx] = { ...next[idx], role: v };
-                        return { ...p, resume: next };
-                      })
-                    }
-                    className="font-serif-editorial text-2xl font-semibold text-stone-900"
-                  />
-
-                  <EditableText
-                    value={item.org}
-                    editMode={editMode}
-                    onChange={(v) =>
-                      updateContent((p) => {
-                        const next = [...p.resume];
-                        next[idx] = { ...next[idx], org: v };
-                        return { ...p, resume: next };
-                      })
-                    }
-                    className="text-xs font-mono-tech text-stone-600"
-                  />
-
-                  <ul className="space-y-1.5 pt-2">
-                    {item.highlights.map((hl, hIdx) => (
-                      <li key={hIdx} className="flex items-start gap-2 text-sm text-stone-700">
-                        <span className="text-amber-900 mt-1">•</span>
-                        <div className="flex-1">
-                          <EditableText
-                            multiline
-                            value={hl}
-                            editMode={editMode}
-                            onChange={(v) =>
-                              updateContent((p) => {
-                                const next = [...p.resume];
-                                const nextHl = [...next[idx].highlights];
-                                nextHl[hIdx] = v;
-                                next[idx] = { ...next[idx], highlights: nextHl };
-                                return { ...p, resume: next };
-                              })
+                  <div className="flex flex-wrap gap-1.5">
+                    {resumeMeta.skillsList.map((sk, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-flex items-center gap-1 rounded border border-stone-300 bg-[#F4F0EA] px-2.5 py-1 text-xs font-mono-tech text-stone-800"
+                      >
+                        <EditableText
+                          value={sk}
+                          editMode={editMode}
+                          onChange={(v) =>
+                            updateContent((p) => {
+                              const nextSkills = [...resumeMeta.skillsList];
+                              nextSkills[idx] = v;
+                              return {
+                                ...p,
+                                resumeMeta: { ...resumeMeta, skillsList: nextSkills },
+                              };
+                            })
+                          }
+                          className="text-xs font-mono-tech"
+                        />
+                        {editMode && (
+                          <button
+                            onClick={() =>
+                              updateContent((p) => ({
+                                ...p,
+                                resumeMeta: {
+                                  ...resumeMeta,
+                                  skillsList: resumeMeta.skillsList.filter((_, i) => i !== idx),
+                                },
+                              }))
                             }
-                            className="text-sm text-stone-700"
-                          />
-                        </div>
-                      </li>
+                            className="text-stone-400 hover:text-red-700 cursor-pointer"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        )}
+                      </span>
                     ))}
-                  </ul>
-                  {editMode && (
-                    <button
-                      onClick={() =>
-                        updateContent((p) => {
-                          const next = [...p.resume];
-                          next[idx] = {
-                            ...next[idx],
-                            highlights: [...next[idx].highlights, 'New bullet point...'],
-                          };
-                          return { ...p, resume: next };
-                        })
-                      }
-                      className="text-[11px] font-mono-tech text-amber-900 hover:underline cursor-pointer pt-1"
-                    >
-                      + Add Bullet Point
-                    </button>
-                  )}
+                  </div>
                 </div>
 
-                <div className="md:text-right font-mono-tech text-xs text-stone-600 shrink-0 md:w-44 space-y-1">
+                <div className="space-y-2 pt-3 border-t border-stone-200">
+                  <div className="font-mono-tech text-xs uppercase text-amber-900 font-semibold">
+                    Hobbies, Interests, and Extracurriculars
+                  </div>
                   <EditableText
-                    value={item.period}
+                    as="p"
+                    multiline
+                    value={resumeMeta.extracurriculars}
                     editMode={editMode}
                     onChange={(v) =>
-                      updateContent((p) => {
-                        const next = [...p.resume];
-                        next[idx] = { ...next[idx], period: v };
-                        return { ...p, resume: next };
-                      })
+                      updateContent((p) => ({
+                        ...p,
+                        resumeMeta: { ...resumeMeta, extracurriculars: v },
+                      }))
                     }
-                    className="font-mono-tech text-xs font-bold text-stone-900 md:text-right"
-                  />
-                  <EditableText
-                    value={item.location}
-                    editMode={editMode}
-                    onChange={(v) =>
-                      updateContent((p) => {
-                        const next = [...p.resume];
-                        next[idx] = { ...next[idx], location: v };
-                        return { ...p, resume: next };
-                      })
-                    }
-                    className="font-mono-tech text-xs text-stone-500 md:text-right"
+                    className="text-xs sm:text-sm text-stone-700 leading-relaxed"
                   />
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </section>
 
@@ -1069,10 +1473,10 @@ export const Concept4MuseumFolio: React.FC = () => {
                                   <img
                                     src={existingUrl}
                                     alt={slotLabel}
-                                    className="h-40 w-full object-cover rounded border border-stone-300"
+                                    className="h-44 w-full object-cover rounded border border-stone-300"
                                   />
                                 ) : (
-                                  <div className="h-32 rounded border border-dashed border-stone-400 bg-stone-200/50 flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 font-mono-tech">
+                                  <div className="h-36 rounded border border-dashed border-stone-400 bg-stone-200/50 flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 font-mono-tech">
                                     <span>Photo Plate 0{pIdx + 1}</span>
                                   </div>
                                 )}
@@ -1097,7 +1501,9 @@ export const Concept4MuseumFolio: React.FC = () => {
                                         handleImageFileUpload((dataUrl) =>
                                           updateContent((p) => {
                                             const next = [...p.experiences];
-                                            const nextUrls = [...(next[idx].photoUrls || ['', '', ''])];
+                                            const nextUrls = [
+                                              ...(next[idx].photoUrls || ['', '', '']),
+                                            ];
                                             nextUrls[pIdx] = dataUrl;
                                             next[idx] = { ...next[idx], photoUrls: nextUrls };
                                             return { ...p, experiences: next };
@@ -1146,7 +1552,7 @@ export const Concept4MuseumFolio: React.FC = () => {
           <div className="rounded-lg border-2 border-stone-800/30 bg-[#FAF8F5] p-8 sm:p-12 shadow-xs">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
-                FOLIO V • 06. FINAL REFLECTION ("SO WHAT? NOW WHAT?")
+                FOLIO V • 06. FINAL REFLECTION (&quot;SO WHAT? NOW WHAT?&quot;)
               </span>
               <span
                 className={`rounded border px-2.5 py-0.5 font-mono-tech text-xs ${
@@ -1190,7 +1596,10 @@ export const Concept4MuseumFolio: React.FC = () => {
 
             <div className="space-y-8">
               {content.reflection.pillars.map((pil, idx) => (
-                <div key={pil.id} className="space-y-2 border-b border-stone-200 pb-6 last:border-b-0">
+                <div
+                  key={pil.id}
+                  className="space-y-2 border-b border-stone-200 pb-6 last:border-b-0"
+                >
                   <div className="flex items-center justify-between">
                     <EditableText
                       as="h3"
@@ -1276,45 +1685,72 @@ export const Concept4MuseumFolio: React.FC = () => {
         </section>
       </main>
 
-      {/* Reykjavik Poster Fullscreen Lightbox Modal */}
-      {posterLightboxOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 p-6 backdrop-blur-xs">
-          <div className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-xl border border-stone-700 bg-[#FAF8F5] p-8 text-stone-900 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-stone-300 pb-4">
+      {/* Fullscreen Lightbox Modal for Reykjavik Poster OR IMPRESS Cover Artwork */}
+      {lightboxMedia && (
+        <div
+          onClick={() => setLightboxMedia(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/85 p-4 sm:p-6 backdrop-blur-xs"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-h-[92vh] w-full max-w-6xl overflow-y-auto rounded-xl border border-stone-700 bg-[#FAF8F5] p-6 sm:p-8 text-stone-900 shadow-2xl"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-stone-300 pb-4">
               <div>
                 <span className="font-mono-tech text-xs text-amber-900 font-semibold">
-                  {content.poster.plateNumber}
+                  {lightboxMedia === 'poster'
+                    ? content.poster.plateNumber
+                    : impressPaper.plateNumber}
                 </span>
-                <h3 className="font-serif-editorial text-3xl font-bold mt-0.5">
-                  {content.poster.title}
+                <h3 className="font-serif-editorial text-2xl sm:text-3xl font-bold mt-0.5">
+                  {lightboxMedia === 'poster' ? content.poster.title : impressPaper.title}
                 </h3>
               </div>
-              <button
-                onClick={() => setPosterLightboxOpen(false)}
-                className="rounded-lg border border-stone-300 p-2 hover:bg-stone-200 cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {lightboxMedia === 'poster' && (
+                  <a
+                    href="/images/research/Poster.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded bg-amber-900 px-3 py-1.5 text-xs font-mono-tech text-white hover:bg-amber-950"
+                  >
+                    <FileText className="h-3.5 w-3.5" />
+                    Open Vector PDF in New Tab ↗
+                  </a>
+                )}
+                {lightboxMedia === 'impress' && (
+                  <a
+                    href={impressPaper.doiUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded bg-amber-900 px-3 py-1.5 text-xs font-mono-tech text-white hover:bg-amber-950"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    Read Paper in Astrobiology ↗
+                  </a>
+                )}
+                <button
+                  onClick={() => setLightboxMedia(null)}
+                  className="rounded-lg border border-stone-300 p-2 hover:bg-stone-200 cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
             <div className="mt-6 space-y-6">
-              {content.poster.imageUrl ? (
-                <img
-                  src={content.poster.imageUrl}
-                  alt={content.poster.title}
-                  className="w-full rounded border border-stone-300"
-                />
-              ) : (
-                <div className="aspect-[16/10] rounded-lg border-2 border-dashed border-amber-900/40 bg-[#F4F0EA] flex flex-col items-center justify-center p-8 text-center">
-                  <p className="font-serif-editorial text-2xl font-semibold text-stone-800">
-                    Reykjavik Research Poster High-Resolution Canvas
-                  </p>
-                  <p className="text-xs font-mono-tech text-stone-500 mt-2 max-w-md">
-                    Click "Upload Poster Image" in Edit Mode to attach your Reykjavik conference poster PNG/JPG, or share the file in chat!
-                  </p>
-                </div>
-              )}
-              <p className="text-sm text-stone-700 leading-relaxed">{content.poster.abstract}</p>
+              <img
+                src={
+                  lightboxMedia === 'poster'
+                    ? content.poster.imageUrl || '/images/research/poster.jpg'
+                    : impressPaper.imageUrl || '/images/research/impress-cover.jpg'
+                }
+                alt={lightboxMedia === 'poster' ? content.poster.title : impressPaper.title}
+                className="w-full rounded border border-stone-300 bg-white"
+              />
+              <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-line">
+                {lightboxMedia === 'poster' ? content.poster.abstract : impressPaper.summary}
+              </p>
             </div>
           </div>
         </div>

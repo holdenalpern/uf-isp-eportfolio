@@ -1,89 +1,368 @@
 {
   "masthead": "UNIVERSITY OF FLORIDA • INTERNATIONAL SCHOLARS PROGRAM • CAPSTONE FOLIO",
-  "folioTitle": "Holden Mathew Alpern",
-  "name": "Holden",
-  "graduation": "2026 Graduating International Scholar",
+  "folioTitle": "The Holden Field & Historical Folio",
+  "name": "Holden Mathew Alpern",
+  "graduation": "December 2026 Graduating International Scholar",
   "majors": "B.S. Geology & B.S. Microbiology and Cell Science",
   "minor": "Minor in History",
+  "heroSliderImages": [
+    {
+      "url": "/images/slideshow/IMG_0180.jpg",
+      "caption": "Reykjavík, Iceland • Presenting the Agnostic Life Finder (ALF) Poster"
+    },
+    {
+      "url": "/images/slideshow/IcelandWaterfall.jpg",
+      "caption": "Iceland • Field Excursion Outside Reykjavík"
+    },
+    {
+      "url": "/images/slideshow/IMG_9818.jpg",
+      "caption": "Suesca, Colombia • Sandstone Crags & Andean Valley"
+    },
+    {
+      "url": "/images/slideshow/IMG_0412.jpg",
+      "caption": "Suesca, Colombia • Dusk Walk Through the Valley"
+    },
+    {
+      "url": "/images/slideshow/IMG_0720.jpg",
+      "caption": "Near Taos, New Mexico • UF Geology Capstone Field Mapping"
+    },
+    {
+      "url": "/images/slideshow/IMG_1819.jpg",
+      "caption": "Death Valley, California • Overlooking the Salt Flats"
+    },
+    {
+      "url": "/images/slideshow/e2dc265e.jpg",
+      "caption": "FfAME Lab, Alachua • Assembling the Agnostic Life Finder (ALF)"
+    }
+  ],
   "tagline": "Bridging Geology, Microbial Ecology, and Human History Across Borders.",
-  "homeIntro": "Earth and life sciences do not exist in a vacuum—they unfold inside human histories, languages, and cultures. From climbing the sandstone cliffs of Suesca and sharing family meals in Bogotá, Colombia, to presenting undergraduate scientific research in Reykjavik, Iceland, my time in the UF International Scholars Program shaped my mission: to pair rigorous geobiological inquiry with tangible cross-cultural service.",
-  "homeQuote": "\"I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things.\" — Reflection before a waterfall outside Reykjavik, Iceland",
+  "homeIntro": "Earth and life sciences do not exist in a vacuum—they unfold inside human histories, languages, and cultures. From climbing the sandstone cliffs of Suesca and sharing family meals in Bogotá, Colombia, to presenting undergraduate scientific research in Reykjavík, Iceland, my time in the UF International Scholars Program shaped my mission: to pair rigorous geobiological inquiry with tangible cross-cultural service.",
   "aboutTitle": "Who am I?",
   "aboutBio": "My name is Holden, and I'm a senior at the University of Florida, double-majoring in Geology and Microbiology & Cell Science with a minor in History. I aim to understand the world as best as I can, whether that be through testing out new theories and instruments in the lab, interpreting geological structures in the field, or meeting people in a completely new place. I aim to pursue astrobiology for my PhD, where I hope to work with cold-loving microbes in Antarctica. However, I also want to make an impact on others through science communication, so my future discoveries are not just for my isolated benefit, but rather help others learn to love science and chase the best version of themselves.\n\nOutside the lab, you can find me in another lab, the gym, triathalon training, doing Duolingo, hiking and canoeing, spending time with friends and family, or just lounging around. After graduation, I aim to work for the planetary exploration technology startup, IMPRESS Spaceworks Co., before going into my PhD, doing some international volunteering along the way.",
   "scientificLens": "I aim to achieve an in-depth understanding of how microbes interact with their geologic environments and the geochemical signatures they leave behind. In my graduate studies, I will use this knowledge to advance the field of astrobiology by studying how pyschrophiles' unique adaptations facilitate their survival in frigid, alien environments.",
   "humanitiesLens": "I came into college as a History major, and still have a deep appreciation for the story of how we got where we are. I got into science because I not only wanted to learn about history, but be a part of it. In a time of incredible change, it can be easy to feel insignificant, yet history is written by the insignificant and the significant alike. I want to learn more about extreme life to inspire the next generation of scientists to believe in themselves, chase their dreams, and continue pushing forward the boundaries of discoveries. I also want to conduct global service, science-related or not, to connect with people and help local-communities hands on.",
-  "hobbies": [
-    "Rock Climbing (Suesca & Crags)",
-    "Hydrology & Geobiology",
-    "Latin American & Global History",
-    "Spanish Language & Immersion",
-    "Peace Corps Preparation"
-  ],
   "poster": {
-    "plateNumber": "PLATE 01 • REYKJAVIK, ICELAND CONFERENCE PRESENTATION",
-    "title": "Integrating Geological Substrates & Microbial Dynamics",
-    "subtitle": "Presented at the International Research Conference • Reykjavik, Iceland (2025)",
-    "authors": "Holden et al. — University of Florida (Dept. of Geological Sciences & Microbiology)",
-    "abstract": "Click here in Edit Mode to paste your Reykjavik conference abstract, or upload your poster image/PDF into the project. This interactive plate allows advisors and reviewers to inspect each section of your research.",
-    "imageUrl": "",
+    "plateNumber": "COLUMN 01 • REYKJAVÍK, ICELAND CONFERENCE POSTER (JULY 2025)",
+    "title": "Agnostic Life Finder: To Search for Extant Life in Martian Ice",
+    "subtitle": "Frontiers in Astrobiology and Origins of Life Conference • Reykjavík, Iceland",
+    "authors": "Špaček, J.; Benner, S.; Temby, C.; Alpern, H.; Zeffren, J.; George, A.; Montaudon, E.; Rizzo, G.; Young, I.; Hunnewell, A.; Fuchs, L. (FfAME & NASA NIAC)",
+    "abstract": "Presented at the Frontiers in Astrobiology and Origins of Life Conference in Reykjavík, Iceland (July 2025), this poster summarizes laboratory validation of the Agnostic Life Finder (ALF)—an instrument concept funded by NASA Innovative Advanced Concepts (NIAC) at the Foundation for Applied Molecular Evolution (FfAME) to detect extant Martian life in subsurface ice extracted via Rodwell systems.\n\nGrounded in the polyelectrolyte theory of the gene, ALF targets repeating backbone charges universal to genetic polymers. My primary engineering focus was designing, assembling, and testing three iterations of ALF's cylindrical flow-through ultrasonic sonicator to lyse resilient cells (including E. coli and S. cerevisiae) and shear genomic DNA to <500 bp without chemical buffers. Paired with a 7-channel electrodialysis stack (microfiltration, 4 kDa ultrafiltration, and Na+ exchange membranes), the system extracted 75% of DNA during overnight runs—concentrating it from 317.3 ng/µL to 903.4 ng/µL—for downstream solid-state nanopore detection.",
+    "imageUrl": "/images/research/poster.jpg",
+    "pdfUrl": "/images/research/Poster.pdf",
     "sections": [
       {
         "id": "sec-1",
-        "label": "01. Abstract & Hypothesis",
-        "detail": "Investigating the coupled interactions between mineralogical substrates, hydrological flow paths, and microbial community function."
+        "label": "01. Rodwell Ice Extraction",
+        "detail": "Couples directly to Martian water-mining Rodwell systems planned for in-situ propellant electrolysis."
       },
       {
         "id": "sec-2",
-        "label": "02. Field & Lab Methodology",
-        "detail": "Geochemical characterization paired with microbiological assays and analytical microscopy."
+        "label": "02. Flow-Through Sonicator",
+        "detail": "Custom cylindrical ultrasonic sonicator lyses E. coli & yeast cells and shears 200 ng/µL DNA to <500 bp."
       },
       {
         "id": "sec-3",
-        "label": "03. Key Findings & Figures",
-        "detail": "Demonstrated measurable correlations between geological micro-environments and microbial resilience."
+        "label": "03. 7-Channel Electrodialysis",
+        "detail": "Concentrated DNA from 317.3 ng/µL to 903.4 ng/µL (75% extraction) across MFM, 4 kDa UFM, and Na+ membranes."
       },
       {
         "id": "sec-4",
-        "label": "04. Global & Career Impact",
-        "detail": "Presenting in Reykjavik catalyzed my realization that scientific discovery reaches its highest value when connected to human communities."
+        "label": "04. Nanopore Biosignatures",
+        "detail": "Routes concentrated polyanions and polycations to solid-state nanopores for single-molecule agnostic detection."
       }
     ]
+  },
+  "impressPaper": {
+    "plateNumber": "COLUMN 02 • ASTROBIOLOGY COVER ARTICLE (SEPTEMBER 2026)",
+    "title": "IMPRESS: A Planetary Penetrator Network for Astrobiology, Prospecting, and Exploration of Mars",
+    "citation": "Spacek J, Alpern H, Dineen T, et al. Astrobiology. 2026;26(9):688–699.",
+    "imageUrl": "/images/research/impress-cover.jpg",
+    "doiUrl": "https://doi.org/10.1177/15311074261471218",
+    "summary": "Published as the September 2026 cover story of Astrobiology, the International Mars Prospecting Ride-Share System (IMPRESS) introduces a scalable, democratized, and low-cost mission architecture for distributed measurements on the Martian surface and shallow subsurface (0.2–1 m) ahead of Mars sample return and human exploration. Instead of relying on expensive, infrequent soft landers and mechanical drills, IMPRESS deploys swarms of standardized ~2 kg planetary penetrators (IMPRESS-345, developed under a NASA TechLeap Prize award) that use descent kinetic energy to emplace a buried steel forebody connected via tether to a surface communications aftbody.\n\nBecause extant Martian life and habitable microenvironments may be patchily distributed, deploying dozens to thousands of probes across a landing ellipse provides spatial coverage, statistical replication, and tolerance to individual probe failure at an estimated delivery cost as low as ~$41,000 per probe. The paper also introduces a novel thermal regime leveraging InSight regolith conductivity data (0.039 W m⁻¹K⁻¹), showing that dry Martian regolith acts as both impact shock absorber and thermal insulator—allowing ~1 W of internal heat dissipation to keep buried instruments above 0°C.",
+    "roleSummary": "My Role — Second Author & Chief Operations Officer (COO) at IMPRESS Spaceworks Co.: Compiled the technical heritage review on NASA’s Deep Space 2 (DS2) Mars microprobes to evaluate experimental relevance for modern Mars astrobiology, analyzed candidate Martian landing sites and Hohmann transfer trajectories, manage company finances, serve as sole developer of impressmars.com, and support grant writing and scientific outreach."
+  },
+  "resumeMeta": {
+    "headerName": "Holden Mathew Alpern",
+    "contactLine": "(786) 848-1154 | alpern.h@ufl.edu | Gainesville, FL",
+    "publications": [
+      "Spacek J, Alpern H, Dineen T, et al. IMPRESS: A Planetary Penetrator Network for Astrobiology, Prospecting, and Exploration of Mars. Astrobiology. 2026;26(9):688-699."
+    ],
+    "awards": [
+      "2026 J. David Lowell Field Camp Scholar",
+      "Certified Excel Specialist (2023)",
+      "NASM Certified Personal Trainer (2022)",
+      "Florida Academic Scholar (2022)"
+    ],
+    "skillsList": [
+      "Experimental Design",
+      "Technical / Grant Writing",
+      "Project Management",
+      "Scientific Research",
+      "Team Leadership",
+      "Public Speaking",
+      "Science Communication",
+      "Field Geology",
+      "CAD (NX, Fusion)",
+      "Spectrophotometry",
+      "HPLC",
+      "Electrochemistry",
+      "Gel Electrophoresis",
+      "Lyophilization",
+      "Microbial Culturing",
+      "Aseptic Technique",
+      "Basic Lab Skills",
+      "Vacuum Chambers",
+      "CNC",
+      "3D Printing",
+      "Geophysical Data Analysis",
+      "Statistical Analysis (Minitab)",
+      "Python",
+      "Git/GitHub",
+      "HTML",
+      "Thin-Section Petrography",
+      "French"
+    ],
+    "extracurriculars": "A member of UF Astrobiology Club since its founding in Spring 2024, I strive to be a leader and mentor to those learning about astrobiology and a resource for those further along their journeys. I raised over $1,000 as treasurer: used for outreach and an Artemis II launch fieldtrip. In Fall 2025, I organized a speaker event on planetary protection that drew our highest turnout, and I recently tabled at a local science fair hosted by UF Physics, educating kids on potentially habitable worlds with stomp rockets. Additionally, I’m a founding member of UF’s SGE Geology Honors Society, which runs workshops helping students navigate the major.\n\nI have also been a member of the UF kickboxing club for four years, where I regularly attend sparring sessions, and I am an avid rock climber too. In my free time, I enjoy trips to local springs and islands in Florida, rock climbing parks in Alabama, and mountains in California. I appreciate international travel, such as during my conference in Reykjavík and trips to Colombia and France. Finally, I am currently training for an IRONMAN 70.3 Triathlon, scheduled for December 13th, the day after I graduate."
   },
   "resume": [
     {
       "id": "edu-uf",
       "category": "Education",
-      "role": "B.S. Geology & B.S. Microbiology | Minor in History",
-      "org": "University of Florida • International Scholars Program",
-      "period": "2022 – 2026",
+      "role": "B.S. in Geology and Microbiology; Minor in History",
+      "org": "University of Florida, Gainesville, FL",
+      "period": "8-2022 to Present",
       "location": "Gainesville, FL",
       "highlights": [
-        "Dual STEM degree pairing Earth systems and hydrology with microbial ecology, complemented by historical analysis.",
-        "International Scholars Program (ISP) Senior Capstone Candidate."
+        "3.84 GPA | Expected December 2026"
       ]
     },
     {
-      "id": "res-iceland",
-      "category": "Research & Fieldwork",
-      "role": "Undergraduate Researcher & International Conference Presenter",
-      "org": "University of Florida & Reykjavik Research Conference",
-      "period": "2024 – 2026",
-      "location": "Gainesville, FL & Reykjavik, Iceland",
+      "id": "res-ffame-2026",
+      "category": "Research Experience",
+      "role": "Researcher (under Dr. Jan Špaček, Dr. Steven Benner)",
+      "org": "Foundation for Applied Molecular Evolution (FfAME), Alachua, FL",
+      "period": "6-2026 to Present",
+      "location": "Alachua, FL",
       "highlights": [
-        "Conducted interdisciplinary research bridging geological sciences and microbiology.",
-        "Selected to present research findings to an international scientific audience in Reykjavik, Iceland."
+        "Performing sulfuric acid chemistry experiments to model atmospheric and organic chemistry in Venus clouds.",
+        "Continued development and refinement of the Agnostic Life Finder (ALF) flow-through ultrasonic sonicator over Summer 2026 (June to July 2026)."
       ]
     },
     {
-      "id": "exp-colombia",
-      "category": "Global Engagement",
-      "role": "Cross-Cultural Immersion & Historical Field Inquiry",
-      "org": "Bogotá & Suesca, Colombia | UF Center for African & Latin American Studies",
-      "period": "2025 – 2026",
-      "location": "Bogotá, Colombia / Gainesville, FL",
+      "id": "res-geology-williams",
+      "category": "Research Experience",
+      "role": "Researcher (under Dr. Amy Williams)",
+      "org": "Department of Geology, Gainesville, FL",
+      "period": "2-2024 to Present",
+      "location": "Gainesville, FL",
       "highlights": [
-        "Completed immersive cultural and linguistic stay in Bogotá and Suesca, Colombia.",
-        "Synthesized global colloquia on South African hydrology, Afro-Brazilian history, and comparative political sociology."
+        "Designing undergraduate Honor’s Thesis on Mars analogue organic geochemistry analysis for November 2026 submission.",
+        "Read and discuss important astrobiology papers: covering habitability, biosignature strategies, and organic preservation.",
+        "Attend weekly lab meetings discussing organic geochemistry and geobiology in the context of Martian biosignature detection.",
+        "Freeze-dried analogue sediments from Icelandic lake to assist graduate student with organic biomarker preservation thesis."
+      ]
+    },
+    {
+      "id": "res-microbio-rice",
+      "category": "Research Experience",
+      "role": "Researcher (11-2025 to 5-2026 under Dr. Kelly Rice | 6-2026 to Present independent)",
+      "org": "Department of Microbiology, Gainesville, FL",
+      "period": "11-2025 to Present",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Cultured D. radiodurans in TGY media and made glycerol stocks for Florida Space Grant Consortium balloon experiment.",
+        "Cultured B. subtilis anaerobically in various TSYG media variants for rocket club payload experiment, identifying optimal growth with supplemental glucose and pyruvate.",
+        "Characterized mid-log phase growth kinetics to estimate viable launch-pad hold times for payload bacteria.",
+        "Conducted RT-qPCR to test efficacy of DNA/RNA Shield injection for preserving transcriptome at apogee.",
+        "Identified constraints of resazurin dye reduction as metabolism proxy for B. subtilis in anaerobic conditions.",
+        "Designed and built sterile syringe-based reagent injection system for test / control groups in B. subtilis rocket experiment."
+      ]
+    },
+    {
+      "id": "res-ffame-niac",
+      "category": "Research Experience",
+      "role": "NIAC Intern (under Dr. Jan Špaček, Dr. Steven Benner)",
+      "org": "Foundation for Applied Molecular Evolution, Alachua, FL",
+      "period": "4-2024 to 2-2025",
+      "location": "Alachua, FL",
+      "highlights": [
+        "Built, adjusted, repaired, and disassembled prototype of Agnostic Life Finder (ALF) device to detect potential extant Martian life by sorting nucleic acid analogues via electrodialysis.",
+        "Measured pH and Ec of output channels; measured absorbance using spectrophotometer, NanoDrop One, and HPLC-UV.",
+        "Designed and assembled three iterations of ALF’s flow-through sonicator to provide ALF with free nucleic acids, capable of lysing E. coli and S. cerevisiae and shearing 200 ng/uL DNA to under 500 bp.",
+        "Conducted literature review on piezoelectrics, ultrasonics, and cavitation in microbiology to prepare for sonicator development.",
+        "Learned CAD (Autodesk Fusion), CNC machining, 3D printing to construct ALF and sonicator; electrical instrumentation (potentiostat, oscilloscope, ultrasonic driver) to test them by measuring voltage, current, power, and phase.",
+        "Cultivated and isolated Saccharomyces cerevisiae and Escherichia coli cells in YPD and EC broths with incubator and centrifuge.",
+        "Cast agarose gels and ran electrophoresis on sonicator output to determine degrees of cell and nucleic acid disruption.",
+        "Presented findings to senior scientists to demonstrate progress on deliverables and prepare for interim NASA report.",
+        "Wrote sonicator section of Phase II NIAC Grant for ALF project: summarizing progress, results, and future steps."
+      ]
+    },
+    {
+      "id": "res-glaciology",
+      "category": "Research Experience",
+      "role": "Researcher (under Dr. Emma MacKie)",
+      "org": "Gator Glaciology Lab, Gainesville, FL",
+      "period": "8-2024 to 7-2025",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Used Markov chain Monte Carlo and Sequential Gaussian Simulation to interpret NASA Operation IceBridge gravity data.",
+        "Created stochastic gravity inversions of Getz Ice Shelf bathymetry to predict grounding line retreat with measured uncertainty.",
+        "Independently troubleshot code in JupyterLab and Unix to overcome software issues and weaknesses in hardware.",
+        "Consolidated code on GitHub repository and summarized research into scientific poster."
+      ]
+    },
+    {
+      "id": "res-fci",
+      "category": "Research Experience",
+      "role": "Researcher, Intern, Volunteer (under Nicole Dan and Caroline Nickerson)",
+      "org": "Florida Community Innovation, Gainesville, FL",
+      "period": "1-2023 to 4-2024",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Performed statistical analysis of public data using Minitab and Excel, organized “data walk” conferences with city leaders, and publicized findings on public health and safety in community.",
+        "Raised over $15,000 through grant writing and relationship building with partner foundations to fund up to 30 future interns.",
+        "Coordinated initial writing team for historical education tool, the GoBituary.app, onboarding new interns through existing expertise and mentorship to maximize productivity, collaboration, engagement."
+      ]
+    },
+    {
+      "id": "work-impress",
+      "category": "Work Experience",
+      "role": "Chief Operations Officer, Programs and Operations Assistant",
+      "org": "IMPRESS Spaceworks Co., Alachua, FL",
+      "period": "12-2025 to Present",
+      "location": "Alachua, FL",
+      "highlights": [
+        "Second author on peer-reviewed IMPRESS planetary penetrator paper, published as cover story in Astrobiology September 2026.",
+        "Compiled literature review on NASA’s Deep Space 2 penetrator mission, assessing experiment relevance to current Mars science.",
+        "Analyzed potential landing sites and Hohmann transfer trajectories for IMPRESS—a penetrator mission concept.",
+        "Manage company finances, sole developer of IMPRESS website (impressmars.com), and support grant writing and outreach."
+      ]
+    },
+    {
+      "id": "work-ufit",
+      "category": "Work Experience",
+      "role": "Supervisor, Consultant, Account Specialist",
+      "org": "UF Information Technology, Gainesville, FL",
+      "period": "3-2023 to 2-2026",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Led team of up to seven consultants during six-hour shifts; was an available resource while handling email requests.",
+        "Solved complex, unfamiliar technical issues under high-pressure with patience and critical thinking to secure satisfaction.",
+        "Managed several concurrent cases, maintaining constant focus to minimize wait while upholding maximum service standard."
+      ]
+    },
+    {
+      "id": "work-novi",
+      "category": "Work Experience",
+      "role": "Content Specialist",
+      "org": "Novi Association Management System",
+      "period": "6-2023 to 1-2024",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Migrated the secure documents and pages of high-profile scientific associations to Novi site with HTML and custom-built software to concisely communicate complex ideas.",
+        "Handled communications between Novi colleagues and association leaders to ensure collaboration and cohesive vision."
+      ]
+    },
+    {
+      "id": "work-recsports",
+      "category": "Work Experience",
+      "role": "Certified Personal Trainer, Wellness Associate",
+      "org": "UF RecSports, Gainesville, FL",
+      "period": "1-2023 to 1-2024",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Established strong rapport with clients through curiosity, attentiveness, accountability.",
+        "Constructed personalized fitness plans by analyzing scientific literature on exercise to optimize progress and safety.",
+        "Adapted, improvised when faced with barriers like injuries or personal crises to ensure superior trainee experience."
+      ]
+    },
+    {
+      "id": "other-spacetrek",
+      "category": "Other Educational Experiences",
+      "role": "Lead Biologist",
+      "org": "Florida Space Grant Consortium, Space Trek Academy, Cape Canaveral, FL",
+      "period": "8-2026",
+      "location": "Cape Canaveral, FL",
+      "highlights": [
+        "Designed experiment to test effect of 100,000 ft weather balloon flight in both hydrated and desiccated D. radiodurans cells.",
+        "Cultured cells, made glycerol stocks, and prepared experimental groups on-site before launch; constructed rig to hold cells.",
+        "Collaborating with Space Trek team, tracked balloon flight, collected payload, and plated hydrated cells under flame."
+      ]
+    },
+    {
+      "id": "other-fieldcamp",
+      "category": "Other Educational Experiences",
+      "role": "Participant",
+      "org": "UF Geology Department, New Mexico Field Camp",
+      "period": "5-2026 to 6-2026",
+      "location": "Taos, NM",
+      "highlights": [
+        "Completed monthlong capstone field course for graduating geology majors, including three weeks in Taos, NM and one camping.",
+        "Independently mapped two sedimentary and two metamorphic areas, each increasing in difficulty, over multiple full days in-field.",
+        "Wrote two multi-page reports on mineralogy, petrography, structural geology, and predicted geologic history in mapped area."
+      ]
+    },
+    {
+      "id": "other-swamplaunch",
+      "category": "Other Educational Experiences",
+      "role": "Payload Principal Investigator",
+      "org": "UF Swamp Launch Rocket Team",
+      "period": "9-2025 to 8-2026",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Formulated detailed ten-page proposal for two-pronged microbiology experiment launching to 10,000 ft in student-built rocket.",
+        "Collaborated with engineers to ensure effective translation of design concepts to manufactured product with scientific utility.",
+        "Consulted numerous UF faculty on rigorously designed experiments to test gene expression / metabolism in anaerobic B. subtilis.",
+        "Presented preliminary experimental designs to UF Swamp Launch members and alumni during multiple design reviews."
+      ]
+    },
+    {
+      "id": "other-lspace-chief",
+      "category": "Other Educational Experiences",
+      "role": "Chief Scientist, Mission Concept Academy",
+      "org": "NASA L’Space, Workforce Preparation",
+      "period": "5-2025 to 8-2025",
+      "location": "Remote / NASA",
+      "highlights": [
+        "Led development of the science goals, objectives, and success criteria for mock Mars mission reviewed by NASA.",
+        "Managed iteration and development of eleven scientific spaceflight instruments from Pre-Phase A to Preliminary Design Review.",
+        "Coordinated regular meetings with four-person science team; managed workload to efficiently and effectively meet deliverables.",
+        "Facilitated interdisciplinary collaboration between sub teams to prevent siloing and achieve cohesive proposal."
+      ]
+    },
+    {
+      "id": "other-reykjavik",
+      "category": "Other Educational Experiences",
+      "role": "Presenter",
+      "org": "Frontiers in Astrobiology and Origins of Life Conference, Reykjavík, Iceland",
+      "period": "7-2025",
+      "location": "Reykjavík, Iceland",
+      "highlights": [
+        "Presented poster summarizing work on Agnostic Life Finder to an audience of early-career scientists and established academics."
+      ]
+    },
+    {
+      "id": "other-lspace-pm",
+      "category": "Other Educational Experiences",
+      "role": "Project Manager, Proposal Writing and Evaluation Experience",
+      "org": "NASA L’Space, Workforce Preparation",
+      "period": "5-2024 to 8-2024",
+      "location": "Remote / NASA",
+      "highlights": [
+        "Managed interdisciplinary team that wrote and submitted comprehensive NASA grant proposal.",
+        "Scheduled and led meetings; analyzed proposal logistics to maximize both feasibility and utility of technology to NASA.",
+        "Evaluated peer proposals using NASA rubric and gained experience with quad charts, Gantt charts, and NASA risk matrices."
+      ]
+    },
+    {
+      "id": "other-seminar",
+      "category": "Other Educational Experiences",
+      "role": "Participant",
+      "org": "Astrobiology Seminar, Gainesville, FL",
+      "period": "1-2024 to 5-2024",
+      "location": "Gainesville, FL",
+      "highlights": [
+        "Weekly research seminar featuring leading global academics on early Earth life, Mars habitability, ocean worlds, and more."
       ]
     }
   ],
@@ -97,7 +376,7 @@
         "situation": "In June 2025, after briefly meeting Lucia and her family at the Estéreo Picnic festival in March, I was invited to stay for a full week at their home and finca in Bogotá, Colombia—my first time traveling abroad independently without my own family.",
         "task": "Navigate an unfamiliar cultural environment, communicate across a language barrier in Spanish, and engage thoughtfully with Colombia’s complex social and political history.",
         "action": "Immersed myself fully in daily family life—sharing home-cooked meals and coffee, playing dominoes with Lucia’s brother and grandfather at their finca, rock climbing in Suesca, and touring historic sites like the Virgilio Barco Library while discussing Colombia’s civil conflict.",
-        "resolution": "Emerged with vastly improved conversational Spanish, a deep appreciation for Colombian warmth and hospitality over guarded individualism, and a life-changing commitment to join the Peace Corps after graduation."
+        "resolution": "Emerged with vastly improved conversational Spanish, a deep appreciation for Colombian warmth and hospitality over guarded individualism, and a life-changing commitment to international service and global scientific collaboration."
       }
     },
     {
@@ -109,18 +388,18 @@
         "situation": "Attended Dr. Tatenda Dalu’s Center for African Studies lecture on invasive alien plants and water-fire risks in Cape Town, South Africa, while pursuing dual majors in Geology and Microbiology.",
         "task": "Evaluate how biological invasions act as multipliers for hydrological scarcity and wildfire hazards across global watersheds.",
         "action": "Connected Dr. Dalu’s data on invasive pine and Red Gum transpiration near South African reservoirs ($400B+ global agricultural/economic cost) to my coursework in hydrology and microbial/plant ecology.",
-        "resolution": "Developed an integrated geobiological framework for evaluating watershed restoration through native bush (fynbos) re-establishment, reinforcing my goal to work at the intersection of hydrology and biology."
+        "resolution": "Developed an integrated geobiological framework for evaluating watershed restoration through native bush (fynbos) re-establishment, reinforcing my goal to work at the intersection of earth systems and biology."
       }
     },
     {
       "id": "communication",
       "badgeCode": "NACE COMPETENCY 03",
       "competency": "Communication Skills (Written & Verbal)",
-      "contextTitle": "International Scientific Presentation in Reykjavik & Cross-Cultural Dialogue",
+      "contextTitle": "International Scientific Presentation in Reykjavík & Cross-Cultural Dialogue",
       "star": {
-        "situation": "Presented specialized undergraduate scientific research at an international conference in Reykjavik, Iceland, immediately following my cultural immersion in Bogotá, Colombia.",
-        "task": "Communicate complex geological and microbiological methods clearly to international scientists while bridging linguistic and disciplinary boundaries.",
-        "action": "Synthesized technical data into a structured visual research poster and adapted my verbal explanations for peers from diverse academic and cultural backgrounds.",
+        "situation": "Presented specialized undergraduate scientific research on the Agnostic Life Finder (ALF) at the Frontiers in Astrobiology and Origins of Life Conference in Reykjavík, Iceland, immediately following my cultural immersion in Bogotá, Colombia.",
+        "task": "Communicate complex ultrasonic cell-lysis, electrodialysis, and biosignature detection methods clearly to international scientists while bridging disciplinary boundaries.",
+        "action": "Synthesized technical hardware and gel electrophoresis data into a structured visual research poster and adapted my verbal explanations for early-career researchers and established academics from around the world.",
         "resolution": "Successfully defended my research internationally while crystallizing my core philosophy: scientific communication must ultimately inspire and serve people across cultures."
       }
     },
@@ -128,12 +407,12 @@
       "id": "career-self-dev",
       "badgeCode": "NACE COMPETENCY 04",
       "competency": "Career & Self-Development",
-      "contextTitle": "Aligning Pure Scientific Inquiry with Human-Centered Global Service",
+      "contextTitle": "Aligning Planetary Science & Astrobiology with Human-Centered Global Service",
       "star": {
-        "situation": "As a double STEM major in Geology and Microbiology, I initially viewed scientific research primarily through an academic lens, separate from my History minor and global interests.",
-        "task": "Define a post-graduation career path that unites rigorous empirical research with direct human connection and ethical responsibility.",
-        "action": "Reflected deeply in front of an Icelandic waterfall after my Reykjavik conference, contrasting isolated academic prestige with the human warmth I experienced in Colombia and the human stories I studied at the Harn Museum.",
-        "resolution": "Pivoted my post-graduation trajectory toward joining the Peace Corps and pursuing applied environmental science that produces tangible positive impacts for global communities."
+        "situation": "As a double STEM major in Geology and Microbiology preparing for an astrobiology PhD and serving as COO of IMPRESS Spaceworks Co., I wanted to ensure my scientific career remained grounded in human connection.",
+        "task": "Define a post-graduation career path that unites rigorous planetary exploration and extremophile research with science communication and international volunteering.",
+        "action": "Reflected deeply in front of an Icelandic waterfall after my Reykjavík conference, contrasting isolated academic prestige with the human warmth I experienced in Colombia and the human stories I studied at the Harn Museum.",
+        "resolution": "Charted a cohesive post-graduation path combining planetary exploration leadership at IMPRESS Spaceworks Co., international volunteering, and an astrobiology PhD studying psychrophiles in Antarctica."
       }
     }
   ],
@@ -149,50 +428,40 @@
       "hasPersonalPhotos": true,
       "photoSlotLabels": [
         "Suesca Sandstone Climbing",
-        "Family Finca Dominoes & Coffee",
+        "Dusk Walk Through Suesca Valley",
         "Virgilio Barco Library & Bogotá"
       ],
       "photoUrls": [
-        "",
-        "",
+        "/images/slideshow/IMG_9818.jpg",
+        "/images/slideshow/IMG_0412.jpg",
         ""
       ],
       "curatedVisualTheme": "andes-climbing",
-      "tags": [
-        "Colombia Immersion",
-        "Spanish Language",
-        "History Minor",
-        "Rock Climbing"
-      ],
-      "body": "In June of 2025, I went to Bogotá, Colombia, where I spent the week with my friend Lucia and her family. To give some context, I first came to Colombia in March of that same year, for my cousin’s bachelor party (he’s half Colombian) at the music festival Estéreo Picnic. While I wouldn’t consider that an educational experience in the same way I would this, it was certainly cross-cultural. I met Lucia at the festival, and for that weekend, both of our families moved together in a pack. It was both incredibly fun and novel for me—culturally I see American families as much more guarded, and thus I was surprised at how open and accepting they were, given we had all just met a few days ago. After the festival, Lucia and I kept in touch, and she invited me to come stay the week a few months later (after I had finished my semester).\n\nThe following week I remember incredibly vividly. We toured Bogotá, played Dominoes with her brother and grandfather at their finca, and went rock climbing in Suesca. The number one thing that comes to mind is the kindness that family showed me. It wasn’t my first time spending a week away from home, but everything before had been with family or a long-time ex-girlfriend. This was different—I spent two days with them at a music festival. In spite of this, they took me into their home and went out of their way to make me feel comfortable. During (incredibly delicious) meals, I sat with them and discussed life, work, politics, and everything in between. Each meal came with a coffee, which I was a huge fan of. Also something about the way they cooked and seasoned their rice has not been replicated by my taste buds since. I came out of the experience with vastly improved Spanish and an abundance of meal ideas.\n\nI enjoyed spending time with everyone, but I also was enthralled with the culture and history of the country as a history minor. Lucia, who studies journalism and loves history too, spared no expense in educating me. She told me about the Civil War, which only ended a decade ago, between government and guerrilla forces, and how the current president at the time was part of the guerrilla forces, as well as how the conflict represented the contradicting interests of the different social classes. In my Bogotá tour, I visited historic sites like the Virgilio Barco library and drank classic drinks like coca leaf tea, all while learning the history of the city.\n\nOverall, my experience in Colombia made me more independent, more accepting, and more open-minded as a person. Seeing how accepting Lucia and her family were made me rethink my own biases toward relative strangers and the focus on safety/status-quo that Americans have. After leaving, I went to Reykjavik, Iceland to present my research at a conference. There, I distinctly remember staring at a waterfall and thinking about academia. I love science and research, but in that moment, I reflected on Colombia and realized that I didn’t want a career without a human element, even if I could make the most profound discoveries imaginable. I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things. Since then, I’ve been intent on joining the Peace Corps to build up a tangible positive impact on the world, something I never would’ve dreamed of without Lucia and her family."
+      "tags": ["Colombia Immersion", "Spanish Language", "History Minor", "Rock Climbing"],
+      "body": "In June of 2025, I went to Bogotá, Colombia, where I spent the week with my friend Lucia and her family. To give some context, I first came to Colombia in March of that same year, for my cousin’s bachelor party (he’s half Colombian) at the music festival Estéreo Picnic. While I wouldn’t consider that an educational experience in the same way I would this, it was certainly cross-cultural. I met Lucia at the festival, and for that weekend, both of our families moved together in a pack. It was both incredibly fun and novel for me—culturally I see American families as much more guarded, and thus I was surprised at how open and accepting they were, given we had all just met a few days ago. After the festival, Lucia and I kept in touch, and she invited me to come stay the week a few months later (after I had finished my semester).\n\nThe following week I remember incredibly vividly. We toured Bogotá, played Dominoes with her brother and grandfather at their finca, and went rock climbing in Suesca. The number one thing that comes to mind is the kindness that family showed me. It wasn’t my first time spending a week away from home, but everything before had been with family or a long-time ex-girlfriend. This was different—I spent two days with them at a music festival. In spite of this, they took me into their home and went out of their way to make me feel comfortable. During (incredibly delicious) meals, I sat with them and discussed life, work, politics, and everything in between. Each meal came with a coffee, which I was a huge fan of. Also something about the way they cooked and seasoned their rice has not been replicated by my taste buds since. I came out of the experience with vastly improved Spanish and an abundance of meal ideas.\n\nI enjoyed spending time with everyone, but I also was enthralled with the culture and history of the country as a history minor. Lucia, who studies journalism and loves history too, spared no expense in educating me. She told me about the Civil War, which only ended a decade ago, between government and guerrilla forces, and how the current president at the time was part of the guerrilla forces, as well as how the conflict represented the contradicting interests of the different social classes. In my Bogotá tour, I visited historic sites like the Virgilio Barco library and drank classic drinks like coca leaf tea, all while learning the history of the city.\n\nOverall, my experience in Colombia made me more independent, more accepting, and more open-minded as a person. Seeing how accepting Lucia and her family were made me rethink my own biases toward relative strangers and the focus on safety/status-quo that Americans have. After leaving, I went to Reykjavík, Iceland to present my research at a conference. There, I distinctly remember staring at a waterfall and thinking about academia. I love science and research, but in that moment, I reflected on Colombia and realized that I didn’t want a career without a human element, even if I could make the most profound discoveries imaginable. I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things. Since then, I’ve been intent on joining the Peace Corps to build up a tangible positive impact on the world, something I never would’ve dreamed of without Lucia and her family."
     },
     {
       "id": "iceland-reykjavik",
-      "title": "Reykjavik, Iceland: International Research Conference & Waterfall Epistemology",
-      "subtitle": "Presenting Scientific Research Abroad & Redefining Purpose in Science",
+      "title": "Reykjavík, Iceland: Frontiers in Astrobiology Conference & Waterfall Epistemology",
+      "subtitle": "Presenting the Agnostic Life Finder (ALF) Poster & Redefining Purpose in Science",
       "category": "International Research & Coursework",
-      "location": "Reykjavik, Iceland",
+      "location": "Reykjavík, Iceland",
       "coordinates": "64.1466° N, 21.9426° W",
-      "date": "Summer 2025",
+      "date": "July 2025",
       "hasPersonalPhotos": true,
       "photoSlotLabels": [
-        "Reykjavik Conference Poster Hall",
+        "Presenting the ALF Poster in Reykjavík",
         "Icelandic Waterfall Reflection",
-        "Volcanic & Glacial Landscape"
+        "ALF Sonicator & Electrodialysis Lab"
       ],
       "photoUrls": [
-        "",
-        "",
-        ""
+        "/images/slideshow/IMG_0180.jpg",
+        "/images/slideshow/IcelandWaterfall.jpg",
+        "/images/slideshow/e2dc265e.jpg"
       ],
       "curatedVisualTheme": "iceland-glacier",
-      "tags": [
-        "International Research",
-        "Geology & Microbiology",
-        "Reykjavik Poster",
-        "Career Turning Point"
-      ],
-      "body": "Immediately after departing Colombia in the summer of 2025, I traveled to Reykjavik, Iceland to present my undergraduate scientific research at an international conference. Surrounded by basalt columns, geothermal landscapes, and researchers from around the world, the conference was a milestone in my development as a Geology and Microbiology double major.\n\nYet the most transformative moment of my trip occurred outside the conference hall, standing in front of an Icelandic waterfall. Looking at the sheer geological scale of the landscape while still carrying the vivid memory of Lucia’s family and their generosity in Bogotá, I experienced a profound shift in how I viewed academia. I realized that even the most prestigious scientific discoveries would feel incomplete to me if they lacked a direct human element.\n\n[Click here in Edit Mode to expand on your specific Reykjavik conference presentation, interactions with international scientists, and geological observations in Iceland.]"
+      "tags": ["International Research", "Geology & Microbiology", "Reykjavík Poster", "Astrobiology"],
+      "body": "Immediately after departing Colombia in the summer of 2025, I traveled to Reykjavík, Iceland to present my research on the Agnostic Life Finder (ALF) at the Frontiers in Astrobiology and Origins of Life Conference. Surrounded by basalt columns, geothermal landscapes, and early-career and senior astrobiologists from around the world, presenting our work on ultrasonic cell lysis and electrodialysis was a major milestone in my development as a Geology and Microbiology double major.\n\nYet the most transformative moment of my trip occurred outside the conference hall, standing in front of an Icelandic waterfall. Looking at the sheer geological scale of the landscape while still carrying the vivid memory of Lucia’s family and their generosity in Bogotá, I experienced a profound shift in how I viewed academia. I realized that even the most prestigious scientific discoveries would feel incomplete to me if they lacked a direct human element.\n\n[Click here in Edit Mode to expand on your specific Reykjavík conference conversations, Icelandic lake analogue sediment work, and geological observations in Iceland.]"
     },
     {
       "id": "uf-south-africa-hydrology",
@@ -206,12 +475,7 @@
       "photoSlotLabels": [],
       "photoUrls": [],
       "curatedVisualTheme": "hydrology-pine",
-      "tags": [
-        "Hydrology",
-        "Geosciences & Biology",
-        "South Africa",
-        "Water Security"
-      ],
+      "tags": ["Hydrology", "Geosciences & Biology", "South Africa", "Water Security"],
       "body": "This event was super interesting—the focus on invasive plants combined my love of geology and microbiology (my two majors) with an understanding of the significant issues facing South Africa (and the whole world for that matter, but the presentation mainly focused on South Africa).\n\nAs the Director for the Centre for Invasion Biology at Stellenbosch University in Cape Town, South Africa, Dr. Tatenda Dalu provided a unique perspective on this issue, focusing on its worldwide economic cost and practical measures to combat alien plants at each stage. One thing I learned is that the economic cost of these invasive plants totals to over $400 billion worldwide, which I thought was huge, but sensible given the economic behemoth that is agriculture.\n\nHowever, I didn't know that one of the main risks of invasive plant infestations was the negative effect on water reservoirs. One example Dr. Dalu used was the pine, which when established next to water reservoirs, would consume significant amounts of water, to the point where it could not be sequestered to feed an ever-growing population. Another invasive tree he mentioned was the Red Gum, which I am curious to learn more about. Concerning the pine, he mentioned that positive results had been seen by cutting down pine in areas near reservoirs and reestablishing the native bush population. Overall, this talk connected with my professional interests of integrating the geosciences (hydrology in this case) and the biological sciences, and it was super fun and interesting to listen to."
     },
     {
@@ -226,12 +490,7 @@
       "photoSlotLabels": [],
       "photoUrls": [],
       "curatedVisualTheme": "harn-aperture",
-      "tags": [
-        "Visual Anthropology",
-        "Human Rights",
-        "Global Empathy",
-        "Harn Museum"
-      ],
+      "tags": ["Visual Anthropology", "Human Rights", "Global Empathy", "Harn Museum"],
       "body": "I visited the Harn Museum mainly to explore the \"One World\" Global Photography exhibit. This exhibit appealed to me because of its personal focus on stories separated temporally and geographically. In times as divisive as these, I wanted to take a look at these photos to see what makes us human; not just the qualities valued by my culture, but the values innate to us as a species. One modern anxiety is the fear of being replaced by machines. Through this exhibit, I wanted to see if there was such a thing as the \"indomitable human spirit,\" or if it is just wishful thinking by people wanting to feel important.\n\nEach photo was unique, but there were of course some that especially stood out to me. One was a large portrait of a soldier with his head on the side of a table. His wide eyes were clear, giving the classic \"thousand-yard stare\", but I wonder if what he really felt in that moment was confusion, as he was complying with an odd request and likely had a camera right in his face. Nevertheless, it was an interesting photo, as he had most definitely seen things. Some of the other photos showed crowds of civilians in Afghanistan, and I wondered if they had ever met this soldier.\n\nThis was the beginning of the connections I made between the pieces, and between the history shown within them and the events going on today. For example, a 2006 photograph showed a Palestinian man and his kids in the rubble of their former home. I realized the kids were now adults, and the man was now old. I wondered what lives they had lived since then and if they were still alive. Another striking photograph showed a lone boy on the top of a train, likely aiming to cross the US-Mexico border. I wondered if he had made it, and if he was still here, or deported. It is one thing to hear about death and deportation on the news, but it is another thing to look into the eyes of the people affected by that news.\n\nThese people were more than just victims though. I saw an old man in a UN refugee camp. When I looked at him, I saw a strong sense of defiant pride, resonating from every wrinkle on his face. I knew he had lived a life four times as long as mine, and that there was so much more to him than that one emotion, and yet in that image, that pride was all I could see. To me, that is how he would be remembered. Another photo that struck me was a lone man standing in front of several armored cars and armed personnel, protesting the Dakota Access Pipeline which was being built on Reservation land. I wondered how the men thought of themselves, facing a lone man with all that protection. How could they not see themselves as cowards? If you are armed facing the unarmed and courageous, how can you still think you are right? In the picture, it seems obvious, but maybe I'm oversimplifying.\n\nAnyways, I still don't know if there is an indomitable human spirit, but I know that there is a shared human world. These photos aren't isolated—they overlap each other and my own life. Many of the conflicts and situations shown in the photos continue to this day. New photos are being taken, capturing flashes of lives just as rich as mine. However, I will never meet these people, and I will never be able to see their lives, only these brief flashes. If anything, this makes me feel isolated. We're all connected, and yet I'm exposed to a tiny fraction of it all, and I worry about a lot of stupid things that only affect me. Viewing this exhibit motivates me to travel the world and gain new perspectives and hopefully make a tangible difference in the lives of others."
     },
     {
@@ -246,12 +505,7 @@
       "photoSlotLabels": [],
       "photoUrls": [],
       "curatedVisualTheme": "afro-brazil-archive",
-      "tags": [
-        "History Minor",
-        "Brazil",
-        "African Diaspora",
-        "Human Rights"
-      ],
+      "tags": ["History Minor", "Brazil", "African Diaspora", "Human Rights"],
       "body": "I attended this event because of my history minor. I learned a bit about Brazilian history in my senior year of high school, where my IB history course briefly covered the country's economy and how it changed during WWII. This talk provided the opportunity to learn more about Brazilian history, Brazilian figures, and how it is overall intertwined with the history of Africa.\n\nDuring the talk, Dr. Sant'Ana discussed the history of slavery in Brazil. I knew slavery was common in Latin America, as it was in North America, especially during the Spanish colonial era. However, I learned that Brazil was actually the last (or maybe one of the last) Latin American countries to eradicate slavery (in 1888). This followed the 1871 Law of the Free Womb, which meant that people born to slaves were considered free. However, Dr. Sant'Ana discussed how this initial step left many still reliant on their would-be masters because they lacked the means to live independently in a system based on slavery. She also discussed the establishment of hidden settlements in remote areas known as quilombos, where anti-slavery thought brewed. Finally, she went over four important thinkers who dismantled the framework of slavery that ran through Brazil, indicating the persistence of a racial caste system far after slavery itself was abolished.\n\nOverall, the activity connected to my wish to understand different cultures and their unique histories. It served to broaden my horizons beyond my geographic and cultural bubble in Florida, and for that, I am grateful."
     },
     {
@@ -266,11 +520,7 @@
       "photoSlotLabels": [],
       "photoUrls": [],
       "curatedVisualTheme": "populism-kaleidoscope",
-      "tags": [
-        "Political Sociology",
-        "Brazil & US Parallels",
-        "Critical Analysis"
-      ],
+      "tags": ["Political Sociology", "Brazil & US Parallels", "Critical Analysis"],
       "body": "This talk discussed the rise of far-right populism in Brazil, in the context of former President Jair Bolsonaro. Dr. Luz brought up the common traits of populism—a common enemy, pitting the masses against the elites, and positioning oneself as an outsider. Bolsonaro's rise contained all of these features. Despite his history in legislation, he used social media to position himself as an outsider to a Brazilian political institution widely considered corrupt. He pushed the idea that most Brazilians were pious, hardworking people that were being oppressed by an elite political class that only he could combat. With this us vs. them mentality, a clear enemy, an image as an outsider, and a strong command of social media, Bolsonaro won the election in 2018.\n\nI thought the talk was interesting because I definitely see parallels in the US, specifically with the rise of Trump and a lot of the left as well, regarding the populist rhetoric. In the end, I came to see populism as not a good or bad thing, but a tool. In some cases, the tool can be used to manipulate people tired of a corrupt system to accept a system just-as or even more corrupt, but that is not necessarily the case. To speak in generalities, as populists often do, is to lack nuance, glossing over the humanity of the \"enemy.\" Nevertheless, for people who are oppressed, the message of populism is strong and righteous, and who are we to argue that they shouldn't stand up. One must simply be careful who to trust, no matter how compelling their message. Otherwise, we may not know if we are standing up for ourselves, or using our strength to push up another for their own gain."
     }
   ],
@@ -286,13 +536,13 @@
       },
       {
         "id": "pil-2",
-        "heading": "II. Two Moments of Clarity: Bogotá’s Table & Reykjavik’s Waterfall",
-        "body": "The contrast between my week in Bogotá, Colombia, and my research conference in Reykjavik, Iceland, became the defining inflection point of my undergraduate years. In Colombia, Lucia and her family welcomed me—someone they had met for only two days at a music festival—into their home and finca with extraordinary warmth. Over home-cooked rice, Colombian coffee, games of dominoes, rock climbing in Suesca, and candid conversations about Colombia’s civil conflict, I saw how human generosity dissolves cultural guardedness. Weeks later, standing before a waterfall in Iceland after presenting my scientific research, I thought about academia. I loved the rigor of research, yet looking at that waterfall, I realized that even the most profound scientific discoveries would feel hollow to me without a human element."
+        "heading": "II. Two Moments of Clarity: Bogotá’s Table & Reykjavík’s Waterfall",
+        "body": "The contrast between my week in Bogotá, Colombia, and my research conference in Reykjavík, Iceland, became the defining inflection point of my undergraduate years. In Colombia, Lucia and her family welcomed me—someone they had met for only two days at a music festival—into their home and finca with extraordinary warmth. Over home-cooked rice, Colombian coffee, games of dominoes, rock climbing in Suesca, and candid conversations about Colombia’s civil conflict, I saw how human generosity dissolves cultural guardedness. Weeks later, standing before a waterfall in Iceland after presenting my scientific research, I thought about academia. I loved the rigor of research, yet looking at that waterfall, I realized that even the most profound scientific discoveries would feel hollow to me without a human element."
       },
       {
         "id": "pil-3",
-        "heading": "III. Now What? From the Lab Bench to the Peace Corps",
-        "body": "As I graduate from UF, the question of 'Now What?' has a clear answer. Just as the photographs in the Harn Museum’s 'One World' exhibit reminded me that we inhabit a single shared human world, my experiences in Colombia and Iceland convinced me to dedicate my post-graduation path to the Peace Corps and applied geobiological research. Rather than pursuing science in isolation, I want to bring hydrological and microbiological problem-solving directly to communities abroad—listening first, learning in their language, and using science to inspire people across cultures to do great things."
+        "heading": "III. Now What? Planetary Exploration, Astrobiology & Global Service",
+        "body": "As I graduate from UF, the question of 'Now What?' has a clear answer. Just as the photographs in the Harn Museum’s 'One World' exhibit reminded me that we inhabit a single shared human world, my experiences in Colombia and Iceland shaped my commitment to pair frontier astrobiology—at IMPRESS Spaceworks Co. and in my future PhD studying cold-loving microbes in Antarctica—with science communication and international volunteering that connect directly with communities around the globe."
       }
     ]
   }

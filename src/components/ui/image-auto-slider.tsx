@@ -15,30 +15,34 @@ export interface ImageAutoSliderProps {
   speedSeconds?: number;
 }
 
-const DEFAULT_IMAGES: SliderImageItem[] = [
+export const DEFAULT_SLIDER_IMAGES: SliderImageItem[] = [
   {
-    url: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=80',
-    caption: 'Iceland • Waterfall & Basalt Canyon',
+    url: '/images/slideshow/IMG_0180.jpg',
+    caption: 'Reykjavík, Iceland • Presenting the Agnostic Life Finder (ALF) Poster',
   },
   {
-    url: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=900&q=80',
-    caption: 'Suesca, Colombia • Sandstone Rock Climbing',
+    url: '/images/slideshow/IcelandWaterfall.jpg',
+    caption: 'Iceland • Field Excursion Outside Reykjavík',
   },
   {
-    url: 'https://images.unsplash.com/photo-1536300099515-6c61b290b654?auto=format&fit=crop&w=900&q=80',
-    caption: 'Bogotá & Andes • Cultural Immersion',
+    url: '/images/slideshow/IMG_9818.jpg',
+    caption: 'Suesca, Colombia • Sandstone Crags & Andean Valley',
   },
   {
-    url: 'https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=900&q=80',
-    caption: 'Reykjavik • Geothermal & Glacial Field',
+    url: '/images/slideshow/IMG_0412.jpg',
+    caption: 'Suesca, Colombia • Dusk Walk Through the Valley',
   },
   {
-    url: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=900&q=80',
-    caption: 'UF Lab • Microbiology & Geobiology',
+    url: '/images/slideshow/IMG_0720.jpg',
+    caption: 'Near Taos, New Mexico • UF Geology Capstone Field Mapping',
   },
   {
-    url: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=900&q=80',
-    caption: 'History Minor • Archival & Global Context',
+    url: '/images/slideshow/IMG_1819.jpg',
+    caption: 'Death Valley, California • Overlooking the Salt Flats',
+  },
+  {
+    url: '/images/slideshow/e2dc265e.jpg',
+    caption: 'FfAME Lab, Alachua • Assembling the Agnostic Life Finder (ALF)',
   },
 ];
 
@@ -48,10 +52,12 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
   onReplaceImage,
   onAddImage,
   onRemoveImage,
-  speedSeconds = 26,
+  speedSeconds = 52,
 }) => {
-  const normalizedImages: SliderImageItem[] = (images && images.length > 0 ? images : DEFAULT_IMAGES).map(
-    (item, idx) => (typeof item === 'string' ? { url: item, caption: `Field Plate 0${idx + 1}` } : item)
+  const normalizedImages: SliderImageItem[] = (
+    images && images.length > 0 ? images : DEFAULT_SLIDER_IMAGES
+  ).map((item, idx) =>
+    typeof item === 'string' ? { url: item, caption: `Field Plate 0${idx + 1}` } : item
   );
 
   // Duplicate images for seamless infinite scroll loop
@@ -123,7 +129,7 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
                       loading="lazy"
                     />
                     {image.caption && (
-                      <div className=" inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/80 via-black/40 to-transparent px-2.5 py-1.5 text-[10px] font-mono-tech text-stone-100 truncate">
+                      <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/45 to-transparent px-3 py-2 text-xs font-mono-tech text-stone-100 leading-snug">
                         {image.caption}
                       </div>
                     )}
@@ -134,7 +140,7 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
                           type="button"
                           onClick={() => onReplaceImage(originalIndex)}
                           className="inline-flex items-center gap-1 rounded bg-amber-900/90 px-2 py-1 text-[10px] font-mono-tech text-white shadow cursor-pointer hover:bg-amber-800"
-                          title="Replace slide photo"
+                          title="Replace slide photo or edit caption"
                         >
                           <ImagePlus className="h-3 w-3" />
                           Swap
@@ -161,7 +167,7 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
         {/* Optional Edit Mode Slide Controls */}
         {editMode && onAddImage && (
           <div className="mt-2.5 flex items-center justify-between border-t border-stone-800/15 px-3 pt-2 text-[10px] font-mono-tech text-stone-600">
-            <span>Hover any slide to pause & swap photo ({normalizedImages.length} slides)</span>
+            <span>Hover any slide to pause & swap photo ({normalizedImages.length} slides • 52s cycle)</span>
             <button
               type="button"
               onClick={onAddImage}
