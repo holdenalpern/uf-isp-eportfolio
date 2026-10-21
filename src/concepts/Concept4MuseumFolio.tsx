@@ -628,7 +628,7 @@ export const Concept4MuseumFolio: React.FC = () => {
                     className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                   />
                   <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/35 to-transparent p-3 flex items-center justify-between text-xs font-mono-tech text-amber-100">
-                    <span>Astrobiology Cover Artwork • Planetary Penetrator Swarm</span>
+                    <span>Penetrator Landing Concept Art by Micah Dale Alpern</span>
                     <Maximize2 className="h-4 w-4 shrink-0" />
                   </div>
                 </div>
