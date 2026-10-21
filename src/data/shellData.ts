@@ -50,7 +50,14 @@ export interface ExperienceShellItem {
   date: string;
   hasPersonalPhotos: boolean;
   photoSlotLabels?: string[];
-  curatedVisualTheme: 'hydrology-pine' | 'afro-brazil-archive' | 'harn-aperture' | 'populism-kaleidoscope' | 'andes-climbing' | 'iceland-glacier';
+  curatedVisualTheme:
+    | 'hydrology-pine'
+    | 'afro-brazil-archive'
+    | 'harn-aperture'
+    | 'populism-kaleidoscope'
+    | 'andes-climbing'
+    | 'iceland-glacier'
+    | 'cross-cultural-symposia';
   summaryPlaceholder: string;
   tags: string[];
 }

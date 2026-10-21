@@ -29,7 +29,7 @@ import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider'
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v2';
+const STORAGE_KEY = 'uf_isp_folio_content_v4';
 
 const RESUME_CATEGORIES = [
   'All',
@@ -55,16 +55,16 @@ export const Concept4MuseumFolio: React.FC = () => {
   const [editMode, setEditMode] = useState<boolean>(true);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved' | 'error'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<string>('Synced with repo');
-  const [lightboxMedia, setLightboxMedia] = useState<'poster' | 'impress' | null>(null);
+  const [lightboxMedia, setLightboxMedia] = useState<
+    'poster' | 'impress' | { title: string; subtitle: string; imageUrl: string; caption: string } | null
+  >(null);
   const [activeResumeCategory, setActiveResumeCategory] = useState<string>('All');
   const [collapsedResumeIds, setCollapsedResumeIds] = useState<Record<string, boolean>>({});
   const [expandedExhibits, setExpandedExhibits] = useState<Record<string, boolean>>({
-    'colombia-bogota': true,
     'iceland-reykjavik': true,
-    'uf-south-africa-hydrology': true,
+    'colombia-bogota': true,
     'uf-harn-one-world': true,
-    'uf-brazil-quilombos': false,
-    'uf-brazil-populism': false,
+    'uf-cross-cultural-talks': true,
   });
 
   const saveTimerRef = useRef<number | null>(null);
@@ -832,177 +832,210 @@ export const Concept4MuseumFolio: React.FC = () => {
               </div>
             </div>
 
-            {/* Resume Entries List */}
-            <div className="space-y-4">
-              {filteredResume.map((item) => {
-                const idx = content.resume.findIndex((r) => r.id === item.id);
-                const isCollapsed = !!collapsedResumeIds[item.id];
+            {/* Resume Entries Grouped by Section Heading */}
+            <div className="space-y-8">
+              {Array.from(new Set(filteredResume.map((r) => r.category))).map((categoryGroup) => {
+                const groupItems = filteredResume.filter((r) => r.category === categoryGroup);
                 return (
-                  <div
-                    key={item.id}
-                    className="rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-5 sm:p-6 transition-all shadow-2xs"
-                  >
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
-                      <div className="space-y-1 flex-1">
-                        <div className="flex items-center gap-3">
-                          <EditableText
-                            value={item.category}
-                            editMode={editMode}
-                            onChange={(v) =>
-                              updateContent((p) => {
-                                const next = [...p.resume];
-                                next[idx] = { ...next[idx], category: v };
-                                return { ...p, resume: next };
-                              })
-                            }
-                            className="font-mono-tech text-[11px] uppercase text-amber-900 font-semibold"
-                          />
-                          {editMode && (
-                            <button
-                              onClick={() =>
-                                updateContent((p) => ({
-                                  ...p,
-                                  resume: p.resume.filter((_, i) => i !== idx),
-                                }))
-                              }
-                              className="text-stone-400 hover:text-red-700 cursor-pointer"
-                              title="Delete resume entry"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </button>
-                          )}
-                        </div>
-
-                        <EditableText
-                          as="h4"
-                          value={item.role}
-                          editMode={editMode}
-                          onChange={(v) =>
-                            updateContent((p) => {
-                              const next = [...p.resume];
-                              next[idx] = { ...next[idx], role: v };
-                              return { ...p, resume: next };
-                            })
-                          }
-                          className="font-serif-editorial text-2xl font-semibold text-stone-900"
-                        />
-
-                        <EditableText
-                          value={item.org}
-                          editMode={editMode}
-                          onChange={(v) =>
-                            updateContent((p) => {
-                              const next = [...p.resume];
-                              next[idx] = { ...next[idx], org: v };
-                              return { ...p, resume: next };
-                            })
-                          }
-                          className="text-xs font-mono-tech text-stone-600"
-                        />
-                      </div>
-
-                      <div className="flex md:flex-col items-center md:items-end justify-between gap-2 shrink-0">
-                        <div className="md:text-right font-mono-tech text-xs text-stone-600">
-                          <EditableText
-                            value={item.period}
-                            editMode={editMode}
-                            onChange={(v) =>
-                              updateContent((p) => {
-                                const next = [...p.resume];
-                                next[idx] = { ...next[idx], period: v };
-                                return { ...p, resume: next };
-                              })
-                            }
-                            className="font-mono-tech text-xs font-bold text-stone-900 md:text-right"
-                          />
-                        </div>
-                        <button
-                          onClick={() => toggleResumeCard(item.id)}
-                          className="inline-flex items-center gap-1 rounded border border-stone-300 bg-[#F4F0EA] px-2 py-1 text-[10px] font-mono-tech text-stone-600 hover:border-amber-900 cursor-pointer"
-                        >
-                          <span>
-                            {isCollapsed ? `Show (${item.highlights.length})` : 'Hide Details'}
-                          </span>
-                          {isCollapsed ? (
-                            <ChevronDown className="h-3 w-3" />
-                          ) : (
-                            <ChevronUp className="h-3 w-3" />
-                          )}
-                        </button>
-                      </div>
+                  <div key={categoryGroup} className="space-y-4">
+                    <div className="flex items-baseline justify-between border-b-2 border-stone-800/20 pb-2 pt-2">
+                      <h4 className="font-serif-editorial text-2xl sm:text-3xl font-bold text-stone-900">
+                        {categoryGroup}
+                      </h4>
+                      <span className="font-mono-tech text-xs uppercase text-amber-900">
+                        {groupItems.length} {groupItems.length === 1 ? 'Entry' : 'Entries'}
+                      </span>
                     </div>
 
-                    {!isCollapsed && (
-                      <div className="mt-3 pt-3 border-t border-stone-200/80">
-                        <ul className="space-y-1.5">
-                          {item.highlights.map((hl, hIdx) => (
-                            <li
-                              key={hIdx}
-                              className="flex items-start gap-2.5 text-sm text-stone-700"
-                            >
-                              <span className="text-amber-900 mt-0.5 select-none">‒</span>
-                              <div className="flex-1">
+                    <div className="space-y-4">
+                      {groupItems.map((item) => {
+                        const idx = content.resume.findIndex((r) => r.id === item.id);
+                        const isCollapsed = !!collapsedResumeIds[item.id];
+                        return (
+                          <div
+                            key={item.id}
+                            className="rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-5 sm:p-6 transition-all shadow-2xs"
+                          >
+                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-3">
+                              <div className="space-y-1 flex-1">
+                                <div className="flex items-center gap-3">
+                                  <EditableText
+                                    value={item.category}
+                                    editMode={editMode}
+                                    onChange={(v) =>
+                                      updateContent((p) => {
+                                        const next = [...p.resume];
+                                        next[idx] = { ...next[idx], category: v };
+                                        return { ...p, resume: next };
+                                      })
+                                    }
+                                    className="font-mono-tech text-[11px] uppercase text-amber-900 font-semibold"
+                                  />
+                                  {editMode && (
+                                    <button
+                                      onClick={() =>
+                                        updateContent((p) => ({
+                                          ...p,
+                                          resume: p.resume.filter((_, i) => i !== idx),
+                                        }))
+                                      }
+                                      className="text-stone-400 hover:text-red-700 cursor-pointer"
+                                      title="Delete resume entry"
+                                    >
+                                      <Trash2 className="h-3.5 w-3.5" />
+                                    </button>
+                                  )}
+                                </div>
+
                                 <EditableText
-                                  multiline
-                                  value={hl}
+                                  as="h4"
+                                  value={item.role}
                                   editMode={editMode}
                                   onChange={(v) =>
                                     updateContent((p) => {
                                       const next = [...p.resume];
-                                      const nextHl = [...next[idx].highlights];
-                                      nextHl[hIdx] = v;
-                                      next[idx] = { ...next[idx], highlights: nextHl };
+                                      next[idx] = { ...next[idx], role: v };
                                       return { ...p, resume: next };
                                     })
                                   }
-                                  className="text-sm text-stone-700 leading-relaxed"
+                                  className="font-serif-editorial text-2xl font-semibold text-stone-900"
                                 />
-                              </div>
-                              {editMode && item.highlights.length > 1 && (
-                                <button
-                                  onClick={() =>
+
+                                <EditableText
+                                  value={item.org}
+                                  editMode={editMode}
+                                  onChange={(v) =>
                                     updateContent((p) => {
                                       const next = [...p.resume];
-                                      next[idx] = {
-                                        ...next[idx],
-                                        highlights: next[idx].highlights.filter(
-                                          (_, i) => i !== hIdx
-                                        ),
-                                      };
+                                      next[idx] = { ...next[idx], org: v };
                                       return { ...p, resume: next };
                                     })
                                   }
-                                  className="text-stone-400 hover:text-red-700 cursor-pointer mt-1"
-                                  title="Remove bullet"
+                                  className="text-xs font-mono-tech text-stone-600"
+                                />
+                              </div>
+
+                              <div className="flex md:flex-col items-center md:items-end justify-between gap-2 shrink-0">
+                                <div className="md:text-right font-mono-tech text-xs text-stone-600">
+                                  <EditableText
+                                    value={item.period}
+                                    editMode={editMode}
+                                    onChange={(v) =>
+                                      updateContent((p) => {
+                                        const next = [...p.resume];
+                                        next[idx] = { ...next[idx], period: v };
+                                        return { ...p, resume: next };
+                                      })
+                                    }
+                                    className="font-mono-tech text-xs font-bold text-stone-900 md:text-right"
+                                  />
+                                </div>
+                                <button
+                                  onClick={() => toggleResumeCard(item.id)}
+                                  className="inline-flex items-center gap-1 rounded border border-stone-300 bg-[#F4F0EA] px-2 py-1 text-[10px] font-mono-tech text-stone-600 hover:border-amber-900 cursor-pointer"
                                 >
-                                  <X className="h-3.5 w-3.5" />
+                                  <span>
+                                    {isCollapsed
+                                      ? `Show (${item.highlights.length})`
+                                      : 'Hide Details'}
+                                  </span>
+                                  {isCollapsed ? (
+                                    <ChevronDown className="h-3 w-3" />
+                                  ) : (
+                                    <ChevronUp className="h-3 w-3" />
+                                  )}
                                 </button>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                        {editMode && (
-                          <button
-                            onClick={() =>
-                              updateContent((p) => {
-                                const next = [...p.resume];
-                                next[idx] = {
-                                  ...next[idx],
-                                  highlights: [...next[idx].highlights, 'New bullet point...'],
-                                };
-                                return { ...p, resume: next };
-                              })
-                            }
-                            className="text-[11px] font-mono-tech text-amber-900 hover:underline cursor-pointer pt-2 inline-block"
-                          >
-                            + Add Bullet Point
-                          </button>
-                        )}
-                      </div>
-                    )}
+                              </div>
+                            </div>
+
+                            {!isCollapsed && (
+                              <div className="mt-3 pt-3 border-t border-stone-200/80">
+                                <ul className="space-y-1.5">
+                                  {item.highlights.map((hl, hIdx) => (
+                                    <li
+                                      key={hIdx}
+                                      className="flex items-start gap-2.5 text-sm text-stone-700"
+                                    >
+                                      <span className="text-amber-900 mt-0.5 select-none">‒</span>
+                                      <div className="flex-1">
+                                        <EditableText
+                                          multiline
+                                          value={hl}
+                                          editMode={editMode}
+                                          onChange={(v) =>
+                                            updateContent((p) => {
+                                              const next = [...p.resume];
+                                              const nextHl = [...next[idx].highlights];
+                                              nextHl[hIdx] = v;
+                                              next[idx] = { ...next[idx], highlights: nextHl };
+                                              return { ...p, resume: next };
+                                            })
+                                          }
+                                          className="text-sm text-stone-700 leading-relaxed"
+                                        />
+                                      </div>
+                                      {editMode && item.highlights.length > 1 && (
+                                        <button
+                                          onClick={() =>
+                                            updateContent((p) => {
+                                              const next = [...p.resume];
+                                              next[idx] = {
+                                                ...next[idx],
+                                                highlights: next[idx].highlights.filter(
+                                                  (_, i) => i !== hIdx
+                                                ),
+                                              };
+                                              return { ...p, resume: next };
+                                            })
+                                          }
+                                          className="text-stone-400 hover:text-red-700 cursor-pointer mt-1"
+                                          title="Remove bullet"
+                                        >
+                                          <X className="h-3.5 w-3.5" />
+                                        </button>
+                                      )}
+                                    </li>
+                                  ))}
+                                </ul>
+                                {editMode && (
+                                  <button
+                                    onClick={() =>
+                                      updateContent((p) => {
+                                        const next = [...p.resume];
+                                        next[idx] = {
+                                          ...next[idx],
+                                          highlights: [
+                                            ...next[idx].highlights,
+                                            'New bullet point...',
+                                          ],
+                                        };
+                                        return { ...p, resume: next };
+                                      })
+                                    }
+                                    className="text-[11px] font-mono-tech text-amber-900 hover:underline cursor-pointer pt-2 inline-block"
+                                  >
+                                    + Add Bullet Point
+                                  </button>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 );
               })}
+            </div>
+
+            {/* Section Heading for Awards, Skills, and Extracurriculars */}
+            <div className="flex items-baseline justify-between border-b-2 border-stone-800/20 pb-2 pt-6">
+              <h4 className="font-serif-editorial text-2xl sm:text-3xl font-bold text-stone-900">
+                Awards, Skills, and Extracurriculars
+              </h4>
+              <span className="font-mono-tech text-xs uppercase text-amber-900">
+                Publications • Honors • Technical Competencies • Leadership
+              </span>
             </div>
 
             {/* Verbatim Publications, Awards, Technical Skills & Extracurriculars Grid */}
@@ -1451,7 +1484,8 @@ export const Concept4MuseumFolio: React.FC = () => {
                             | 'harn-aperture'
                             | 'populism-kaleidoscope'
                             | 'andes-climbing'
-                            | 'iceland-glacier',
+                            | 'iceland-glacier'
+                            | 'cross-cultural-symposia',
                           mapX: 30,
                           mapY: 50,
                           summaryPlaceholder: '',
@@ -1459,66 +1493,120 @@ export const Concept4MuseumFolio: React.FC = () => {
                         variant="museum"
                       />
 
-                      {/* Uploaded Personal Photos Preview/Uploader for Colombia & Iceland */}
+                      {/* Uploaded Personal / Exhibition Photos Gallery for Iceland, Colombia & Harn One World */}
                       {exp.hasPersonalPhotos && (
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                          {(exp.photoSlotLabels || []).map((slotLabel, pIdx) => {
-                            const existingUrl = exp.photoUrls?.[pIdx] || '';
-                            return (
-                              <div
-                                key={pIdx}
-                                className="rounded border border-stone-300 bg-[#F4F0EA]/60 p-3 flex flex-col justify-between gap-2"
-                              >
-                                {existingUrl ? (
-                                  <img
-                                    src={existingUrl}
-                                    alt={slotLabel}
-                                    className="h-44 w-full object-cover rounded border border-stone-300"
-                                  />
-                                ) : (
-                                  <div className="h-36 rounded border border-dashed border-stone-400 bg-stone-200/50 flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 font-mono-tech">
-                                    <span>Photo Plate 0{pIdx + 1}</span>
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {(exp.photoSlotLabels || []).map((slotLabel, pIdx) => {
+                              const existingUrl = exp.photoUrls?.[pIdx] || '';
+                              const isHarnGallery = exp.id === 'uf-harn-one-world';
+                              return (
+                                <div
+                                  key={pIdx}
+                                  className="rounded-lg border border-stone-300 bg-[#F4F0EA]/80 p-3 flex flex-col justify-between gap-2.5 shadow-2xs"
+                                >
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between text-[10px] font-mono-tech uppercase text-amber-900">
+                                      <span>PLATE 0{pIdx + 1}</span>
+                                      {existingUrl && (
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setLightboxMedia({
+                                              title: exp.title,
+                                              subtitle: `PLATE 0${pIdx + 1} • ${exp.location}`,
+                                              imageUrl: existingUrl,
+                                              caption: slotLabel,
+                                            })
+                                          }
+                                          className="inline-flex items-center gap-1 text-stone-600 hover:text-amber-900 cursor-pointer"
+                                        >
+                                          <Maximize2 className="h-3 w-3" /> Enlarge
+                                        </button>
+                                      )}
+                                    </div>
+
+                                    {existingUrl ? (
+                                      <div
+                                        onClick={() =>
+                                          setLightboxMedia({
+                                            title: exp.title,
+                                            subtitle: `PLATE 0${pIdx + 1} • ${exp.location}`,
+                                            imageUrl: existingUrl,
+                                            caption: slotLabel,
+                                          })
+                                        }
+                                        className="overflow-hidden rounded border border-stone-300 bg-stone-900/5 cursor-pointer group"
+                                      >
+                                        <img
+                                          src={existingUrl}
+                                          alt={slotLabel}
+                                          className={`w-full transition-transform duration-300 group-hover:scale-[1.03] ${
+                                            isHarnGallery
+                                              ? 'h-56 object-contain bg-stone-950/90 p-1'
+                                              : 'h-48 object-cover'
+                                          }`}
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div className="h-44 rounded border border-dashed border-stone-400 bg-stone-200/50 flex flex-col items-center justify-center p-3 text-center text-xs text-stone-500 font-mono-tech">
+                                        <span>Photo Plate 0{pIdx + 1}</span>
+                                        <span className="text-[10px] opacity-75 mt-1">
+                                          Click Upload below to attach photo
+                                        </span>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
-                                <div className="flex items-center justify-between gap-2">
-                                  <EditableText
-                                    value={slotLabel}
-                                    editMode={editMode}
-                                    onChange={(v) =>
-                                      updateContent((p) => {
-                                        const next = [...p.experiences];
-                                        const nextLabels = [...(next[idx].photoSlotLabels || [])];
-                                        nextLabels[pIdx] = v;
-                                        next[idx] = { ...next[idx], photoSlotLabels: nextLabels };
-                                        return { ...p, experiences: next };
-                                      })
-                                    }
-                                    className="text-xs font-mono-tech text-stone-700"
-                                  />
-                                  {editMode && (
-                                    <button
-                                      onClick={() =>
-                                        handleImageFileUpload((dataUrl) =>
+
+                                  <div className="flex items-start justify-between gap-2 pt-1">
+                                    <div className="flex-1">
+                                      <EditableText
+                                        as="p"
+                                        multiline
+                                        value={slotLabel}
+                                        editMode={editMode}
+                                        onChange={(v) =>
                                           updateContent((p) => {
                                             const next = [...p.experiences];
-                                            const nextUrls = [
-                                              ...(next[idx].photoUrls || ['', '', '']),
+                                            const nextLabels = [
+                                              ...(next[idx].photoSlotLabels || []),
                                             ];
-                                            nextUrls[pIdx] = dataUrl;
-                                            next[idx] = { ...next[idx], photoUrls: nextUrls };
+                                            nextLabels[pIdx] = v;
+                                            next[idx] = {
+                                              ...next[idx],
+                                              photoSlotLabels: nextLabels,
+                                            };
                                             return { ...p, experiences: next };
                                           })
-                                        )
-                                      }
-                                      className="inline-flex items-center gap-1 rounded bg-amber-900/10 px-2 py-1 text-[10px] font-mono-tech text-amber-900 hover:bg-amber-900 hover:text-white cursor-pointer shrink-0"
-                                    >
-                                      <ImagePlus className="h-3 w-3" /> Upload
-                                    </button>
-                                  )}
+                                        }
+                                        className="text-xs text-stone-700 leading-relaxed"
+                                      />
+                                    </div>
+                                    {editMode && (
+                                      <button
+                                        onClick={() =>
+                                          handleImageFileUpload((dataUrl) =>
+                                            updateContent((p) => {
+                                              const next = [...p.experiences];
+                                              const nextUrls = [
+                                                ...(next[idx].photoUrls || []),
+                                              ];
+                                              nextUrls[pIdx] = dataUrl;
+                                              next[idx] = { ...next[idx], photoUrls: nextUrls };
+                                              return { ...p, experiences: next };
+                                            })
+                                          )
+                                        }
+                                        className="inline-flex items-center gap-1 rounded bg-amber-900/10 px-2 py-1 text-[10px] font-mono-tech text-amber-900 hover:bg-amber-900 hover:text-white cursor-pointer shrink-0"
+                                      >
+                                        <ImagePlus className="h-3 w-3" /> Upload
+                                      </button>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
                         </div>
                       )}
 
@@ -1685,7 +1773,7 @@ export const Concept4MuseumFolio: React.FC = () => {
         </section>
       </main>
 
-      {/* Fullscreen Lightbox Modal for Reykjavik Poster OR IMPRESS Cover Artwork */}
+      {/* Fullscreen Lightbox Modal for Reykjavik Poster, IMPRESS Cover Artwork, or Gallery Plates */}
       {lightboxMedia && (
         <div
           onClick={() => setLightboxMedia(null)}
@@ -1700,10 +1788,16 @@ export const Concept4MuseumFolio: React.FC = () => {
                 <span className="font-mono-tech text-xs text-amber-900 font-semibold">
                   {lightboxMedia === 'poster'
                     ? content.poster.plateNumber
-                    : impressPaper.plateNumber}
+                    : lightboxMedia === 'impress'
+                    ? impressPaper.plateNumber
+                    : lightboxMedia.subtitle}
                 </span>
                 <h3 className="font-serif-editorial text-2xl sm:text-3xl font-bold mt-0.5">
-                  {lightboxMedia === 'poster' ? content.poster.title : impressPaper.title}
+                  {lightboxMedia === 'poster'
+                    ? content.poster.title
+                    : lightboxMedia === 'impress'
+                    ? impressPaper.title
+                    : lightboxMedia.title}
                 </h3>
               </div>
               <div className="flex items-center gap-2">
@@ -1743,13 +1837,25 @@ export const Concept4MuseumFolio: React.FC = () => {
                 src={
                   lightboxMedia === 'poster'
                     ? content.poster.imageUrl || '/images/research/poster.jpg'
-                    : impressPaper.imageUrl || '/images/research/impress-cover.jpg'
+                    : lightboxMedia === 'impress'
+                    ? impressPaper.imageUrl || '/images/research/impress-cover.jpg'
+                    : lightboxMedia.imageUrl
                 }
-                alt={lightboxMedia === 'poster' ? content.poster.title : impressPaper.title}
-                className="w-full rounded border border-stone-300 bg-white"
+                alt={
+                  lightboxMedia === 'poster'
+                    ? content.poster.title
+                    : lightboxMedia === 'impress'
+                    ? impressPaper.title
+                    : lightboxMedia.caption
+                }
+                className="max-h-[72vh] w-full object-contain rounded border border-stone-300 bg-white mx-auto"
               />
               <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-line">
-                {lightboxMedia === 'poster' ? content.poster.abstract : impressPaper.summary}
+                {lightboxMedia === 'poster'
+                  ? content.poster.abstract
+                  : lightboxMedia === 'impress'
+                  ? impressPaper.summary
+                  : lightboxMedia.caption}
               </p>
             </div>
           </div>

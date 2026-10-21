@@ -1,17 +1,92 @@
 import React from 'react';
-import { Camera, Compass, Droplets, Eye, Globe2, Layers, Mountain, Scale } from 'lucide-react';
+import { Camera, Compass, Droplets, Eye, Globe2, Mountain, Scale } from 'lucide-react';
 import { ExperienceShellItem } from '../data/shellData';
 
 /**
  * Renders bespoke typographic / cartographic / scientific visual headers
- * for UF Campus Events (which have no personal photos) and structured
- * multi-slot photo frames for Colombia & Iceland (which will hold personal photos).
+ * for UF Campus Events and structured multi-slot headers for travel/research exhibits.
  */
 export const ExperienceVisualHeader: React.FC<{
   item: ExperienceShellItem;
   variant?: 'swiss' | 'cinema' | 'atlas' | 'museum';
 }> = ({ item, variant = 'swiss' }) => {
   const isDark = variant === 'cinema' || variant === 'atlas';
+
+  if (item.curatedVisualTheme === 'harn-aperture') {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-lg border p-4 ${
+          isDark
+            ? 'border-amber-400/25 bg-gradient-to-r from-stone-900 via-neutral-900 to-stone-950 text-stone-100'
+            : 'border-stone-800/15 bg-gradient-to-r from-stone-100 via-amber-50/40 to-stone-100 text-stone-900'
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono-tech uppercase tracking-widest opacity-75">
+              <Eye className="h-3.5 w-3.5" />
+              Curated Exhibition Plaque & Photo Gallery • Harn Museum of Art
+            </div>
+            <p className="mt-1 font-serif-editorial italic text-base">
+              “Is there an indomitable human spirit—or a shared human world?”
+            </p>
+          </div>
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-current/30 font-mono-tech text-[10px]">
+            35mm
+          </div>
+        </div>
+        <div className="mt-2.5 flex flex-wrap gap-2 text-[10px] font-mono-tech uppercase opacity-75">
+          <span>• Soldier Portrait</span>
+          <span>• Afghanistan Community</span>
+          <span>• Palestine Rubble (2006)</span>
+          <span>• Migrant Train</span>
+          <span>• UN Refugee Camp</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (item.curatedVisualTheme === 'cross-cultural-symposia') {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-lg border p-4 ${
+          isDark
+            ? 'border-teal-500/30 bg-gradient-to-r from-teal-950/40 via-stone-900 to-slate-950 text-teal-100'
+            : 'border-amber-900/20 bg-gradient-to-r from-amber-50/70 via-stone-100 to-emerald-50/50 text-stone-900'
+        }`}
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-mono-tech uppercase tracking-widest opacity-80">
+            <Globe2 className="h-3.5 w-3.5 text-amber-900" />
+            UF Center for Latin American Studies (Coloquios) × Center for African Studies (Baraza)
+          </div>
+          <span className="rounded border border-current/25 px-2 py-0.5 text-[10px] font-mono-tech">
+            3 SYMPOSIA • SEPT 2026
+          </span>
+        </div>
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2.5 border-t border-current/15 pt-3 font-mono-tech text-[11px]">
+          <div className="rounded bg-white/60 p-2 border border-stone-300/80">
+            <span className="block font-bold text-amber-900">01. Afro-Brazilian History</span>
+            <span className="opacity-80 text-[10px]">
+              Dr. Sant’Ana • 1871 Free Womb Law, Quilombos & 1888 Abolition
+            </span>
+          </div>
+          <div className="rounded bg-white/60 p-2 border border-stone-300/80">
+            <span className="block font-bold text-amber-900">02. Populist Discourse</span>
+            <span className="opacity-80 text-[10px]">
+              Dr. Luz • Bolsonarist Rhetoric, Digital Mobilization & U.S. Parallels
+            </span>
+          </div>
+          <div className="rounded bg-white/60 p-2 border border-stone-300/80">
+            <span className="block font-bold text-emerald-900">03. Day Zero Hydrology</span>
+            <span className="opacity-80 text-[10px]">
+              Dr. Dalu • Invasive Pines, Reservoir Drawdown & Fynbos Restoration
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (item.hasPersonalPhotos) {
     const isColombia = item.id === 'colombia-bogota';
@@ -51,31 +126,12 @@ export const ExperienceVisualHeader: React.FC<{
           />
         </svg>
 
-        <div className="relative z-10 flex items-center justify-between text-xs font-mono-tech uppercase tracking-wider opacity-80 mb-3">
+        <div className="relative z-10 flex items-center justify-between text-xs font-mono-tech uppercase tracking-wider opacity-80">
           <span className="inline-flex items-center gap-1.5">
             <Camera className="h-3.5 w-3.5" />
-            Personal Photo Gallery Slot ({item.photoSlotLabels?.length || 3} Frames)
+            Field Photography & Archival Plates ({item.photoSlotLabels?.length || 3} Frames)
           </span>
           <span>{item.coordinates}</span>
-        </div>
-
-        <div className="relative z-10 grid grid-cols-3 gap-2">
-          {(item.photoSlotLabels || []).map((slotLabel, idx) => (
-            <div
-              key={idx}
-              className={`group flex flex-col justify-between rounded border border-dashed p-2.5 transition-all ${
-                isDark
-                  ? 'border-white/20 bg-black/30 hover:border-white/50'
-                  : 'border-stone-400/50 bg-white/70 hover:border-stone-700'
-              }`}
-            >
-              <div className="flex items-center justify-between opacity-60 text-[10px] font-mono-tech">
-                <span>IMG_0{idx + 1}</span>
-                <Mountain className="h-3 w-3" />
-              </div>
-              <p className="mt-4 text-[11px] font-medium leading-tight">{slotLabel}</p>
-            </div>
-          ))}
         </div>
       </div>
     );
@@ -123,38 +179,6 @@ export const ExperienceVisualHeader: React.FC<{
               WATER TABLE DRAWDOWN vs. NATIVE FYNBOS RESTORATION
             </text>
           </svg>
-        </div>
-      );
-
-    case 'harn-aperture':
-      return (
-        <div
-          className={`relative overflow-hidden rounded-lg border p-4 ${
-            isDark
-              ? 'border-amber-400/25 bg-gradient-to-r from-stone-900 via-neutral-900 to-stone-950 text-stone-100'
-              : 'border-stone-800/15 bg-gradient-to-r from-stone-100 via-amber-50/40 to-stone-100 text-stone-900'
-          }`}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="inline-flex items-center gap-1.5 text-[11px] font-mono-tech uppercase tracking-widest opacity-75">
-                <Eye className="h-3.5 w-3.5" />
-                Curated Exhibition Plaque • Harn Museum
-              </div>
-              <p className="mt-1 font-serif-editorial italic text-base">
-                “Is there an indomitable human spirit—or a shared human world?”
-              </p>
-            </div>
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-current/30 font-mono-tech text-[10px]">
-              35mm
-            </div>
-          </div>
-          <div className="mt-2.5 flex flex-wrap gap-2 text-[10px] font-mono-tech uppercase opacity-75">
-            <span>• Afghanistan Portrait</span>
-            <span>• Palestine (2006)</span>
-            <span>• UN Refugee Camp</span>
-            <span>• Standing Rock</span>
-          </div>
         </div>
       );
 
