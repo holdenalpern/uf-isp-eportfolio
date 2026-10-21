@@ -5,39 +5,13 @@
   "graduation": "2026 Graduating International Scholar",
   "majors": "B.S. Geology & B.S. Microbiology and Cell Science",
   "minor": "Minor in History",
-  "heroSliderImages": [
-    {
-      "url": "https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=900&q=80",
-      "caption": "Iceland • Waterfall & Basalt Canyon"
-    },
-    {
-      "url": "https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=900&q=80",
-      "caption": "Suesca, Colombia • Sandstone Rock Climbing"
-    },
-    {
-      "url": "https://images.unsplash.com/photo-1536300099515-6c61b290b654?auto=format&fit=crop&w=900&q=80",
-      "caption": "Bogotá & Andes • Cultural Immersion"
-    },
-    {
-      "url": "https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=900&q=80",
-      "caption": "Reykjavik • Geothermal & Glacial Field"
-    },
-    {
-      "url": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=900&q=80",
-      "caption": "UF Lab • Microbiology & Geobiology"
-    },
-    {
-      "url": "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=900&q=80",
-      "caption": "History Minor • Archival & Global Context"
-    }
-  ],
-  "tagline": "Bridging Earth Systems, Microbial Ecology, and Human History Across Borders.",
+  "tagline": "Bridging Geology, Microbial Ecology, and Human History Across Borders.",
   "homeIntro": "Earth and life sciences do not exist in a vacuum—they unfold inside human histories, languages, and cultures. From climbing the sandstone cliffs of Suesca and sharing family meals in Bogotá, Colombia, to presenting undergraduate scientific research in Reykjavik, Iceland, my time in the UF International Scholars Program shaped my mission: to pair rigorous geobiological inquiry with tangible cross-cultural service.",
   "homeQuote": "\"I want to be a scientist, but I want to use science to inspire people, across cultures, to do great things.\" — Reflection before a waterfall outside Reykjavik, Iceland",
-  "aboutTitle": "The Geoscientist Who Reads History",
-  "aboutBio": "I am a senior at the University of Florida double-majoring in Geology and Microbiology & Cell Science with a minor in History. While my laboratory and field training focus on hydrology, earth materials, and microbial systems, my humanities coursework and international experiences taught me that scientific challenges are inseparable from the people who live on the landscape.\n\nOutside the lab, you can find me rock climbing, exploring global history, practicing Spanish, or planning my next field expedition. After graduation, I aim to pursue applied scientific research and serve in the Peace Corps—using science to build cross-cultural trust and tangible community resilience.",
-  "scientificLens": "Investigating how geological substrates, hydrology, and microbial ecosystems interact under climate and anthropogenic stress—from invasive plant transpiration in South African reservoirs to geothermal microbiology.",
-  "humanitiesLens": "Understanding colonial history, diaspora resilience, and lived community realities so scientific solutions serve people directly rather than remaining isolated in academia.",
+  "aboutTitle": "Who am I?",
+  "aboutBio": "My name is Holden, and I'm a senior at the University of Florida, double-majoring in Geology and Microbiology & Cell Science with a minor in History. I aim to understand the world as best as I can, whether that be through testing out new theories and instruments in the lab, interpreting geological structures in the field, or meeting people in a completely new place. I aim to pursue astrobiology for my PhD, where I hope to work with cold-loving microbes in Antarctica. However, I also want to make an impact on others through science communication, so my future discoveries are not just for my isolated benefit, but rather help others learn to love science and chase the best version of themselves.\n\nOutside the lab, you can find me in another lab, the gym, triathalon training, doing Duolingo, hiking and canoeing, spending time with friends and family, or just lounging around. After graduation, I aim to work for the planetary exploration technology startup, IMPRESS Spaceworks Co., before going into my PhD, doing some international volunteering along the way.",
+  "scientificLens": "I aim to achieve an in-depth understanding of how microbes interact with their geologic environments and the geochemical signatures they leave behind. In my graduate studies, I will use this knowledge to advance the field of astrobiology by studying how pyschrophiles' unique adaptations facilitate their survival in frigid, alien environments.",
+  "humanitiesLens": "I came into college as a History major, and still have a deep appreciation for the story of how we got where we are. I got into science because I not only wanted to learn about history, but be a part of it. In a time of incredible change, it can be easy to feel insignificant, yet history is written by the insignificant and the significant alike. I want to learn more about extreme life to inspire the next generation of scientists to believe in themselves, chase their dreams, and continue pushing forward the boundaries of discoveries. I also want to conduct global service, science-related or not, to connect with people and help local-communities hands on.",
   "hobbies": [
     "Rock Climbing (Suesca & Crags)",
     "Hydrology & Geobiology",

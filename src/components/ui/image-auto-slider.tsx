@@ -104,17 +104,17 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
         }
       `}</style>
 
-      <div className="w-full relative overflow-hidden rounded-xl border border-stone-800/20 bg-[#EAE3D5]/75 py-4 px-2 shadow-inner">
+      <div className="w-full relative overflow-hidden rounded-xl border border-stone-800/20 bg-[#EAE3D5]/75 py-6 px-3 shadow-inner">
         {/* Scrolling images container */}
         <div className="relative z-10 w-full flex items-center justify-center">
           <div className="scroll-container w-full overflow-hidden">
-            <div className="infinite-scroll flex gap-4 w-max py-1">
+            <div className="infinite-scroll flex gap-6 w-max py-2">
               {duplicatedImages.map((image, index) => {
                 const originalIndex = index % normalizedImages.length;
                 return (
                   <div
                     key={index}
-                    className="image-item group relative flex-shrink-0 w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-lg overflow-hidden border border-stone-800/25 bg-stone-900 shadow-md"
+                    className="image-item group relative flex-shrink-0 w-72 h-72 sm:w-88 sm:h-88 md:w-[26rem] md:h-[26rem] rounded-xl overflow-hidden border border-stone-800/25 bg-stone-900 shadow-lg"
                   >
                     <img
                       src={image.url}
