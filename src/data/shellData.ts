@@ -14,12 +14,12 @@ export interface RubricSectionMeta {
 }
 
 export const RUBRIC_SECTIONS: RubricSectionMeta[] = [
-  { id: 'home', label: '01. Home', shortLabel: 'Home', rubricRequirement: '< 400w Intro, Hook & Rubric Wayfinding' },
-  { id: 'about', label: '02. About Me', shortLabel: 'About Me', rubricRequirement: '< 400w Bio, Academic & Career Philosophy' },
+  { id: 'home', label: '01. Home', shortLabel: 'Home', rubricRequirement: 'Introduction, Hook & Portfolio Wayfinding' },
+  { id: 'about', label: '02. About Me', shortLabel: 'About Me', rubricRequirement: 'Bio, Academic & Career Philosophy' },
   { id: 'resume', label: '03. Resume & Research', shortLabel: 'Resume & Poster', rubricRequirement: 'Interactive CV + PDF + Reykjavik Poster' },
-  { id: 'skills', label: '04. NACE Skills (STAR)', shortLabel: 'NACE Skills', rubricRequirement: 'Min. 4 NACE Competencies via STAR Method' },
-  { id: 'experiences', label: '05. Global Experiences', shortLabel: 'Global Experiences', rubricRequirement: 'Min. 3 Global Experiences (300w+ each)' },
-  { id: 'reflection', label: '06. Final Reflection', shortLabel: 'Final Reflection', rubricRequirement: '700+ Word "So What? Now What?" Synthesis' },
+  { id: 'skills', label: '04. NACE Skills (STAR)', shortLabel: 'NACE Skills', rubricRequirement: 'Four NACE Competencies via STAR Method' },
+  { id: 'experiences', label: '05. Global Experiences', shortLabel: 'Global Experiences', rubricRequirement: 'International & Campus Exhibit Catalog' },
+  { id: 'reflection', label: '06. Final Reflection', shortLabel: 'Final Reflection', rubricRequirement: '"So What? Now What?" Capstone Essay' },
 ];
 
 export const PROFILE_SHELL = {

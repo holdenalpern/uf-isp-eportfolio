@@ -24,12 +24,15 @@ import {
 import initialPortfolioData from '../data/portfolioContent.json';
 import { RUBRIC_SECTIONS } from '../data/shellData';
 import { ExperienceVisualHeader } from '../components/CuratedVisuals';
-import { countWords, EditableText } from '../components/EditableText';
+import { EditableText } from '../components/EditableText';
 import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider';
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v4';
+const STORAGE_KEY = 'uf_isp_folio_content_v5';
+
+// Set to true in code to re-enable the live editor toolbar & keyboard shortcut
+const ENABLE_LIVE_EDITOR = false;
 
 const RESUME_CATEGORIES = [
   'All',
@@ -52,7 +55,7 @@ export const Concept4MuseumFolio: React.FC = () => {
     return initialPortfolioData;
   });
 
-  const [editMode, setEditMode] = useState<boolean>(true);
+  const [editMode, setEditMode] = useState<boolean>(ENABLE_LIVE_EDITOR);
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved' | 'error'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<string>('Synced with repo');
   const [lightboxMedia, setLightboxMedia] = useState<
@@ -115,8 +118,9 @@ export const Concept4MuseumFolio: React.FC = () => {
     });
   };
 
-  // Keyboard shortcut Cmd/Ctrl + E to toggle Edit Mode
+  // Keyboard shortcut Cmd/Ctrl + E to toggle Edit Mode (when ENABLE_LIVE_EDITOR is true)
   useEffect(() => {
+    if (!ENABLE_LIVE_EDITOR) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e') {
         e.preventDefault();
@@ -147,10 +151,6 @@ export const Concept4MuseumFolio: React.FC = () => {
     const el = document.getElementById(`c4-${id}`);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-
-  const totalReflectionWords =
-    countWords(content.reflection.leadPullQuote) +
-    content.reflection.pillars.reduce((acc, p) => acc + countWords(p.body), 0);
 
   const handleImageFileUpload = (callback: (dataUrl: string) => void) => {
     const input = document.createElement('input');
@@ -255,7 +255,7 @@ export const Concept4MuseumFolio: React.FC = () => {
             <div className="lg:col-span-7 space-y-5">
               <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest text-amber-900">
                 <Stamp className="h-3.5 w-3.5" />
-                <span>FOLIO I • 01. HOME & INTRODUCTION (RUBRIC: &lt; 400 WORDS)</span>
+                <span>FOLIO I • 01. HOME & INTRODUCTION</span>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono-tech text-stone-600">
@@ -333,8 +333,6 @@ export const Concept4MuseumFolio: React.FC = () => {
               <EditableText
                 as="p"
                 multiline
-                showWordCount
-                wordCountTarget={{ max: 400, label: 'Under 400w' }}
                 value={content.homeIntro}
                 editMode={editMode}
                 onChange={(v) => updateContent((p) => ({ ...p, homeIntro: v }))}
@@ -372,7 +370,6 @@ export const Concept4MuseumFolio: React.FC = () => {
             >
               <div className="flex items-center justify-between text-xs font-mono-tech uppercase tracking-wider text-stone-500 border-b border-stone-300 pb-2">
                 <span>CURATORIAL BIO • 02. ABOUT ME</span>
-                <span className="text-amber-900">&lt; 400 WORDS</span>
               </div>
 
               <EditableText
@@ -386,8 +383,6 @@ export const Concept4MuseumFolio: React.FC = () => {
               <EditableText
                 as="p"
                 multiline
-                showWordCount
-                wordCountTarget={{ max: 400, label: 'Under 400w' }}
                 value={content.aboutBio}
                 editMode={editMode}
                 onChange={(v) => updateContent((p) => ({ ...p, aboutBio: v }))}
@@ -1291,7 +1286,7 @@ export const Concept4MuseumFolio: React.FC = () => {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
-                FOLIO IV • 05. GLOBAL EXPERIENCES (3+ REQUIRED • 300+ WORDS EACH)
+                FOLIO IV • 05. GLOBAL EXPERIENCES
               </span>
               <h2 className="font-serif-editorial text-4xl font-semibold mt-1">
                 Curated Exhibit Catalog ({content.experiences.length} Field & Campus Exhibits)
@@ -1332,7 +1327,7 @@ export const Concept4MuseumFolio: React.FC = () => {
                           photoUrls: [],
                           curatedVisualTheme: 'afro-brazil-archive',
                           tags: ['Global Learning'],
-                          body: 'Write your 300+ word reflection here...',
+                          body: 'Write your reflection here...',
                         },
                       ],
                     }));
@@ -1349,7 +1344,6 @@ export const Concept4MuseumFolio: React.FC = () => {
           <div className="space-y-5">
             {content.experiences.map((exp, idx) => {
               const isOpen = !!expandedExhibits[exp.id];
-              const wordCount = countWords(exp.body);
               return (
                 <div
                   key={exp.id}
@@ -1385,15 +1379,6 @@ export const Concept4MuseumFolio: React.FC = () => {
                           }
                           className="font-mono-tech text-xs text-stone-600"
                         />
-                        <span
-                          className={`px-2 py-0.5 rounded text-[10px] ${
-                            wordCount >= 300
-                              ? 'bg-emerald-100 text-emerald-900'
-                              : 'bg-amber-100 text-amber-900'
-                          }`}
-                        >
-                          {wordCount} words
-                        </span>
                       </div>
 
                       <EditableText
@@ -1607,8 +1592,6 @@ export const Concept4MuseumFolio: React.FC = () => {
                       <EditableText
                         as="div"
                         multiline
-                        showWordCount
-                        wordCountTarget={{ min: 300, label: '300+ words recommended' }}
                         value={exp.body}
                         editMode={editMode}
                         onChange={(v) =>
@@ -1748,15 +1731,6 @@ export const Concept4MuseumFolio: React.FC = () => {
               <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
                 FOLIO V • 06. FINAL REFLECTION (&quot;SO WHAT? NOW WHAT?&quot;)
               </span>
-              <span
-                className={`rounded border px-2.5 py-0.5 font-mono-tech text-xs ${
-                  totalReflectionWords >= 700
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
-                    : 'border-amber-500 bg-amber-50 text-amber-900'
-                }`}
-              >
-                Total Reflection Length: {totalReflectionWords} / 700+ words
-              </span>
             </div>
 
             <EditableText
@@ -1772,109 +1746,21 @@ export const Concept4MuseumFolio: React.FC = () => {
               className="font-serif-editorial text-4xl sm:text-5xl font-semibold mt-2 text-stone-900"
             />
 
-            <blockquote className="my-8 border-y border-stone-300 py-6 font-serif-editorial italic text-2xl text-stone-800 text-center">
+            <div className="mt-6">
               <EditableText
-                as="span"
+                as="div"
                 multiline
-                value={content.reflection.leadPullQuote}
+                value={content.reflection.body}
                 editMode={editMode}
                 onChange={(v) =>
                   updateContent((p) => ({
                     ...p,
-                    reflection: { ...p.reflection, leadPullQuote: v },
+                    reflection: { ...p.reflection, body: v },
                   }))
                 }
-                className="font-serif-editorial italic text-2xl text-stone-800 text-center"
+                className="text-stone-800 leading-relaxed font-serif-editorial text-[19px]"
               />
-            </blockquote>
-
-            <div className="space-y-8">
-              {content.reflection.pillars.map((pil, idx) => (
-                <div
-                  key={pil.id}
-                  className="space-y-2 border-b border-stone-200 pb-6 last:border-b-0"
-                >
-                  <div className="flex items-center justify-between">
-                    <EditableText
-                      as="h3"
-                      value={pil.heading}
-                      editMode={editMode}
-                      onChange={(v) =>
-                        updateContent((p) => {
-                          const nextPillars = [...p.reflection.pillars];
-                          nextPillars[idx] = { ...nextPillars[idx], heading: v };
-                          return {
-                            ...p,
-                            reflection: { ...p.reflection, pillars: nextPillars },
-                          };
-                        })
-                      }
-                      className="font-serif-editorial text-2xl font-bold text-stone-900"
-                    />
-                    {editMode && content.reflection.pillars.length > 1 && (
-                      <button
-                        onClick={() =>
-                          updateContent((p) => ({
-                            ...p,
-                            reflection: {
-                              ...p.reflection,
-                              pillars: p.reflection.pillars.filter((_, i) => i !== idx),
-                            },
-                          }))
-                        }
-                        className="text-stone-400 hover:text-red-700 cursor-pointer"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                  <EditableText
-                    as="p"
-                    multiline
-                    showWordCount
-                    value={pil.body}
-                    editMode={editMode}
-                    onChange={(v) =>
-                      updateContent((p) => {
-                        const nextPillars = [...p.reflection.pillars];
-                        nextPillars[idx] = { ...nextPillars[idx], body: v };
-                        return {
-                          ...p,
-                          reflection: { ...p.reflection, pillars: nextPillars },
-                        };
-                      })
-                    }
-                    className="text-stone-800 leading-relaxed font-serif-editorial text-[19px]"
-                  />
-                </div>
-              ))}
             </div>
-
-            {editMode && (
-              <div className="mt-6">
-                <button
-                  onClick={() =>
-                    updateContent((p) => ({
-                      ...p,
-                      reflection: {
-                        ...p.reflection,
-                        pillars: [
-                          ...p.reflection.pillars,
-                          {
-                            id: `pil-${Date.now()}`,
-                            heading: 'IV. New Reflection Section',
-                            body: 'Continue your reflection synthesis here...',
-                          },
-                        ],
-                      },
-                    }))
-                  }
-                  className="inline-flex items-center gap-1.5 rounded border border-amber-900 bg-amber-900/10 px-3.5 py-2 font-mono-tech text-xs text-amber-900 hover:bg-amber-900 hover:text-white cursor-pointer"
-                >
-                  <Plus className="h-3.5 w-3.5" /> Add Reflection Section
-                </button>
-              </div>
-            )}
           </div>
         </section>
       </main>
@@ -1968,7 +1854,8 @@ export const Concept4MuseumFolio: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Interactive Editor & Auto-Save Control Bar */}
+      {/* Floating Interactive Editor & Auto-Save Control Bar (hidden unless ENABLE_LIVE_EDITOR is true) */}
+      {ENABLE_LIVE_EDITOR && (
       <div className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 w-[95%] max-w-3xl rounded-2xl border border-stone-700/80 bg-[#1C1917]/95 px-4 py-3 text-stone-100 shadow-2xl backdrop-blur-md">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -2047,6 +1934,7 @@ export const Concept4MuseumFolio: React.FC = () => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };
