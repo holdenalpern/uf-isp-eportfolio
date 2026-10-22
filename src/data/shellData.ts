@@ -19,7 +19,7 @@ export const RUBRIC_SECTIONS: RubricSectionMeta[] = [
   { id: 'resume', label: '03. Resume & Research', shortLabel: 'Resume & Poster', rubricRequirement: 'Interactive CV + PDF + Reykjavik Poster' },
   { id: 'skills', label: '04. NACE Skills (STAR)', shortLabel: 'NACE Skills', rubricRequirement: 'Four NACE Competencies via STAR Method' },
   { id: 'experiences', label: '05. Global Experiences', shortLabel: 'Global Experiences', rubricRequirement: 'International & Campus Exhibit Catalog' },
-  { id: 'reflection', label: '06. Final Reflection', shortLabel: 'Final Reflection', rubricRequirement: '"So What? Now What?" Capstone Essay' },
+  { id: 'reflection', label: '06. Final Reflection', shortLabel: 'Final Reflection', rubricRequirement: 'Capstone Reflection Essay' },
 ];
 
 export const PROFILE_SHELL = {

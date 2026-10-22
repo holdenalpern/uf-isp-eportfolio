@@ -29,7 +29,7 @@ import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider'
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v5';
+const STORAGE_KEY = 'uf_isp_folio_content_v6';
 
 // Set to true in code to re-enable the live editor toolbar & keyboard shortcut
 const ENABLE_LIVE_EDITOR = false;
@@ -1729,7 +1729,7 @@ export const Concept4MuseumFolio: React.FC = () => {
           <div className="rounded-lg border-2 border-stone-800/30 bg-[#FAF8F5] p-8 sm:p-12 shadow-xs">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
-                FOLIO V • 06. FINAL REFLECTION (&quot;SO WHAT? NOW WHAT?&quot;)
+                FOLIO V • 06. FINAL REFLECTION
               </span>
             </div>
 

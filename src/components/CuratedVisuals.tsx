@@ -22,16 +22,11 @@ export const ExperienceVisualHeader: React.FC<{
         }`}
       >
         <div className="flex items-center justify-between">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono-tech uppercase tracking-widest opacity-75">
-              <Eye className="h-3.5 w-3.5" />
-              Curated Exhibition Plaque & Photo Gallery • Harn Museum of Art
-            </div>
-            <p className="mt-1 font-serif-editorial italic text-base">
-              “Is there an indomitable human spirit—or a shared human world?”
-            </p>
+          <div className="inline-flex items-center gap-1.5 text-[11px] font-mono-tech uppercase tracking-widest opacity-75">
+            <Eye className="h-3.5 w-3.5" />
+            Curated Exhibition Plaque & Photo Gallery • Harn Museum of Art
           </div>
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-current/30 font-mono-tech text-[10px]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-current/30 font-mono-tech text-[10px]">
             35mm
           </div>
         </div>
