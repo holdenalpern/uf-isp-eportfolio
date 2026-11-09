@@ -29,10 +29,10 @@ import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider'
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v9';
+const STORAGE_KEY = 'uf_isp_folio_content_v11';
 
 // Set to true in code to re-enable the live editor toolbar & keyboard shortcut
-const ENABLE_LIVE_EDITOR = true;
+const ENABLE_LIVE_EDITOR = false;
 
 const RESUME_CATEGORIES = [
   'All',
@@ -1420,15 +1420,18 @@ export const Concept4MuseumFolio: React.FC = () => {
               FOLIO III • 04. NACE COMPETENCIES
             </span>
             <h2 className="font-serif-editorial text-4xl font-semibold mt-1">
-              Four Pillars of Career & Global Readiness
+              Five Pillars of Career & Global Readiness
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {content.skills.map((skill, idx) => (
+          {(() => {
+            const renderSkillCard = (
+              skill: PortfolioContent['skills'][number],
+              idx: number
+            ) => (
               <div
                 key={skill.id}
-                className="rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-3 shadow-2xs"
+                className="h-fit rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-3 shadow-2xs"
               >
                 <div className="flex items-center justify-between text-xs font-mono-tech text-amber-900">
                   <EditableText
@@ -1496,8 +1499,50 @@ export const Concept4MuseumFolio: React.FC = () => {
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
+            );
+
+            const leftColumn: { skill: PortfolioContent['skills'][number]; idx: number }[] = [];
+            const rightColumn: { skill: PortfolioContent['skills'][number]; idx: number }[] = [];
+            let leftWeight = 0;
+            let rightWeight = 0;
+
+            content.skills.forEach((skill, idx) => {
+              const weight =
+                220 +
+                skill.competency.length +
+                skill.contextTitle.length +
+                skill.star.situation.length +
+                skill.star.task.length +
+                skill.star.action.length +
+                skill.star.resolution.length;
+              if (leftWeight <= rightWeight) {
+                leftColumn.push({ skill, idx });
+                leftWeight += weight;
+              } else {
+                rightColumn.push({ skill, idx });
+                rightWeight += weight;
+              }
+            });
+
+            return (
+              <>
+                {/* Mobile 1-Column Sequential Stack */}
+                <div className="grid grid-cols-1 gap-6 md:hidden">
+                  {content.skills.map((skill, idx) => renderSkillCard(skill, idx))}
+                </div>
+
+                {/* Desktop 2-Column Height-Balanced Masonry (no trailing white space inside or below cards) */}
+                <div className="hidden md:grid md:grid-cols-2 md:gap-6 md:items-start">
+                  <div className="space-y-6">
+                    {leftColumn.map(({ skill, idx }) => renderSkillCard(skill, idx))}
+                  </div>
+                  <div className="space-y-6">
+                    {rightColumn.map(({ skill, idx }) => renderSkillCard(skill, idx))}
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </section>
 
         {/* FOLIO IV: GLOBAL EXPERIENCES (Expandable Museum Exhibit Plaques) */}
