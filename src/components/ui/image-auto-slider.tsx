@@ -13,6 +13,9 @@ export interface ImageAutoSliderProps {
   onAddImage?: () => void;
   onRemoveImage?: (index: number) => void;
   speedSeconds?: number;
+  variant?: 'default' | 'hero-fullbleed';
+  heightClassName?: string;
+  overlayContent?: React.ReactNode;
 }
 
 export const DEFAULT_SLIDER_IMAGES: SliderImageItem[] = [
@@ -53,6 +56,9 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
   onAddImage,
   onRemoveImage,
   speedSeconds = 52,
+  variant = 'default',
+  heightClassName,
+  overlayContent,
 }) => {
   const normalizedImages: SliderImageItem[] = (
     images && images.length > 0 ? images : DEFAULT_SLIDER_IMAGES
@@ -62,6 +68,8 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
 
   // Duplicate images for seamless infinite scroll loop
   const duplicatedImages = [...normalizedImages, ...normalizedImages];
+
+  const isFullBleed = variant === 'hero-fullbleed';
 
   return (
     <>
@@ -101,58 +109,60 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
         }
 
         .image-item {
-          transition: transform 0.3s ease, filter 0.3s ease;
+          transition: transform 0.4s ease, filter 0.4s ease;
         }
 
         .image-item:hover {
-          transform: scale(1.04);
-          filter: brightness(1.06);
+          transform: scale(1.03);
+          filter: brightness(1.05);
         }
       `}</style>
 
-      <div className="w-full relative overflow-hidden rounded-xl border border-stone-800/20 bg-[#EAE3D5]/75 py-6 px-3 shadow-inner">
-        {/* Scrolling images container */}
-        <div className="relative z-10 w-full flex items-center justify-center">
-          <div className="scroll-container w-full overflow-hidden">
-            <div className="infinite-scroll flex gap-6 w-max py-2">
+      {isFullBleed ? (
+        <div className="relative w-full overflow-hidden bg-stone-950 border-b-2 border-stone-900/30 select-none">
+          {/* Massive Full-Webpage Horizontal Photo Scroller */}
+          <div className="relative w-full overflow-hidden">
+            <div className="infinite-scroll flex gap-3 sm:gap-4 w-max py-3 px-2">
               {duplicatedImages.map((image, index) => {
                 const originalIndex = index % normalizedImages.length;
                 return (
                   <div
                     key={index}
-                    className="image-item group relative flex-shrink-0 w-72 h-72 sm:w-88 sm:h-88 md:w-[26rem] md:h-[26rem] rounded-xl overflow-hidden border border-stone-800/25 bg-stone-900 shadow-lg"
+                    className={`image-item group relative flex-shrink-0 ${
+                      heightClassName || 'h-[72vh] sm:h-[80vh] min-h-[480px] max-h-[820px]'
+                    } w-[82vw] sm:w-[60vw] md:w-[46vw] lg:w-[38vw] rounded-xl overflow-hidden border border-white/15 bg-stone-900 shadow-2xl`}
                   >
                     <img
                       src={image.url}
                       alt={image.caption || `Gallery image ${originalIndex + 1}`}
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      loading={index < 4 ? 'eager' : 'lazy'}
                     />
                     {image.caption && (
-                      <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/45 to-transparent px-3 py-2 text-xs font-mono-tech text-stone-100 leading-snug">
+                      <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/40 to-transparent px-4 py-3 text-xs font-mono-tech text-stone-200/90 leading-snug">
                         {image.caption}
                       </div>
                     )}
 
                     {editMode && onReplaceImage && (
-                      <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute top-3 right-3 z-30 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
                           type="button"
                           onClick={() => onReplaceImage(originalIndex)}
-                          className="inline-flex items-center gap-1 rounded bg-amber-900/90 px-2 py-1 text-[10px] font-mono-tech text-white shadow cursor-pointer hover:bg-amber-800"
+                          className="inline-flex items-center gap-1 rounded bg-amber-900/95 px-2.5 py-1.5 text-xs font-mono-tech text-white shadow-lg cursor-pointer hover:bg-amber-800"
                           title="Replace slide photo or edit caption"
                         >
-                          <ImagePlus className="h-3 w-3" />
-                          Swap
+                          <ImagePlus className="h-3.5 w-3.5" />
+                          Swap Photo
                         </button>
                         {onRemoveImage && normalizedImages.length > 2 && (
                           <button
                             type="button"
                             onClick={() => onRemoveImage(originalIndex)}
-                            className="inline-flex items-center justify-center rounded bg-stone-900/90 p-1 text-red-300 hover:text-red-200 cursor-pointer"
+                            className="inline-flex items-center justify-center rounded bg-stone-900/95 p-1.5 text-red-300 hover:text-red-200 cursor-pointer shadow-lg"
                             title="Remove slide"
                           >
-                            <Trash2 className="h-3 w-3" />
+                            <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         )}
                       </div>
@@ -162,22 +172,100 @@ export const Component: React.FC<ImageAutoSliderProps> = ({
               })}
             </div>
           </div>
-        </div>
 
-        {/* Optional Edit Mode Slide Controls */}
-        {editMode && onAddImage && (
-          <div className="mt-2.5 flex items-center justify-between border-t border-stone-800/15 px-3 pt-2 text-[10px] font-mono-tech text-stone-600">
-            <span>Hover any slide to pause & swap photo ({normalizedImages.length} slides • 52s cycle)</span>
-            <button
-              type="button"
-              onClick={onAddImage}
-              className="inline-flex items-center gap-1 rounded border border-amber-900/40 bg-amber-50 px-2 py-0.5 text-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
-            >
-              <Plus className="h-3 w-3" /> Add Slide Photo
-            </button>
+          {/* Superimposed Title / Identity Overlay */}
+          {overlayContent && (
+            <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-center">
+              {overlayContent}
+            </div>
+          )}
+
+          {/* Optional Edit Mode Slide Controls Bar */}
+          {editMode && onAddImage && (
+            <div className="relative z-30 flex items-center justify-between bg-stone-950/95 border-t border-stone-800 px-6 py-2 text-[11px] font-mono-tech text-stone-300">
+              <span>
+                Hover any background photo card to pause & swap ({normalizedImages.length} slides • {speedSeconds}s cycle)
+              </span>
+              <button
+                type="button"
+                onClick={onAddImage}
+                className="inline-flex items-center gap-1 rounded border border-amber-500/50 bg-amber-500/20 px-2.5 py-1 text-amber-300 hover:bg-amber-500 hover:text-stone-950 transition-colors cursor-pointer"
+              >
+                <Plus className="h-3 w-3" /> Add Slide Photo
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="w-full relative overflow-hidden rounded-xl border border-stone-800/20 bg-[#EAE3D5]/75 py-6 px-3 shadow-inner">
+          {/* Scrolling images container */}
+          <div className="relative z-10 w-full flex items-center justify-center">
+            <div className="scroll-container w-full overflow-hidden">
+              <div className="infinite-scroll flex gap-6 w-max py-2">
+                {duplicatedImages.map((image, index) => {
+                  const originalIndex = index % normalizedImages.length;
+                  return (
+                    <div
+                      key={index}
+                      className="image-item group relative flex-shrink-0 w-72 h-72 sm:w-88 sm:h-88 md:w-[26rem] md:h-[26rem] rounded-xl overflow-hidden border border-stone-800/25 bg-stone-900 shadow-lg"
+                    >
+                      <img
+                        src={image.url}
+                        alt={image.caption || `Gallery image ${originalIndex + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                      {image.caption && (
+                        <div className="inset-x-0 bottom-0 absolute bg-gradient-to-t from-black/85 via-black/45 to-transparent px-3 py-2 text-xs font-mono-tech text-stone-100 leading-snug">
+                          {image.caption}
+                        </div>
+                      )}
+
+                      {editMode && onReplaceImage && (
+                        <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button
+                            type="button"
+                            onClick={() => onReplaceImage(originalIndex)}
+                            className="inline-flex items-center gap-1 rounded bg-amber-900/90 px-2 py-1 text-[10px] font-mono-tech text-white shadow cursor-pointer hover:bg-amber-800"
+                            title="Replace slide photo or edit caption"
+                          >
+                            <ImagePlus className="h-3 w-3" />
+                            Swap
+                          </button>
+                          {onRemoveImage && normalizedImages.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={() => onRemoveImage(originalIndex)}
+                              className="inline-flex items-center justify-center rounded bg-stone-900/90 p-1 text-red-300 hover:text-red-200 cursor-pointer"
+                              title="Remove slide"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Optional Edit Mode Slide Controls */}
+          {editMode && onAddImage && (
+            <div className="mt-2.5 flex items-center justify-between border-t border-stone-800/15 px-3 pt-2 text-[10px] font-mono-tech text-stone-600">
+              <span>Hover any slide to pause & swap photo ({normalizedImages.length} slides • 52s cycle)</span>
+              <button
+                type="button"
+                onClick={onAddImage}
+                className="inline-flex items-center gap-1 rounded border border-amber-900/40 bg-amber-50 px-2 py-0.5 text-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
+              >
+                <Plus className="h-3 w-3" /> Add Slide Photo
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

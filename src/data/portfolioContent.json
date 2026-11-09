@@ -37,6 +37,51 @@
   ],
   "tagline": "Bridging Geology, Microbial Ecology, and Human History Across Borders.",
   "homeIntro": "Earth and life sciences do not exist in a vacuum—they unfold in the context of their observer—humanity. Our histories, languages, and cultures make the acquisition and dissemination of scientific knowledge possible. Additionally, it is both human appreciation for knowledge, and our ability to use it to benefit and inspire others, that makes this knowledge meaningful.\n\nFrom climbing the sandstone cliffs of Suesca and experiencing local hospitality in Bogotá, Colombia, to presenting undergraduate scientific research in Reykjavík, Iceland, my time in the UF International Scholars Program shaped my mission: to pair geobiological inquiry with tangible cross-cultural service in an effort to make the world a better place.",
+  "homeButtonLabel": "Enter Full ePortfolio →",
+  "homeGuideTitle": "How to Navigate This ePortfolio",
+  "homeGuideSubtitle": "Designed for UF International Scholars Program Capstone Review",
+  "homeReviewerTips": [
+    "Sticky Top Navigation: Use the chapter bar at the top of the screen at any point to jump directly to any of the six ISP ePortfolio sections.",
+    "Interactive Research & Photo Plates: Click the Reykjavík conference poster, the Astrobiology cover article, or any gallery photo to open full-resolution views and PDF links.",
+    "Expandable Sections: Use the category filters in the CV (Section 03) and the Expand/Collapse toggles in Global Experiences (Section 05) to inspect individual entries."
+  ],
+  "homeDirectoryCards": [
+    {
+      "id": "about",
+      "sectionNumber": "02",
+      "title": "About Me",
+      "tag": "Academic & Personal Bio",
+      "description": "My background in Geology, Microbiology, and History, my path toward an Antarctica astrobiology PhD, and my dual scientific and humanities lenses."
+    },
+    {
+      "id": "resume",
+      "sectionNumber": "03",
+      "title": "Resume & Research",
+      "tag": "Poster • Publication • Full CV",
+      "description": "Interactive showcase of my Reykjavík ALF conference poster, our September 2026 Astrobiology cover paper (IMPRESS), and my complete curriculum vitae."
+    },
+    {
+      "id": "skills",
+      "sectionNumber": "04",
+      "title": "NACE Skills",
+      "tag": "4 Core Competencies",
+      "description": "Reflections on Teamwork (NASA L'Space & Swamp Launch), Technology (ALF sonicator & ice-sheet modeling), Communication, and Career Development."
+    },
+    {
+      "id": "experiences",
+      "sectionNumber": "05",
+      "title": "Global Experiences",
+      "tag": "4 Field & Campus Exhibits",
+      "description": "In-depth reflections and photo galleries from Reykjavík (Iceland), Bogotá & Suesca (Colombia), the Harn Museum 'One World' exhibit, and UF global symposia."
+    },
+    {
+      "id": "reflection",
+      "sectionNumber": "06",
+      "title": "Final Reflection",
+      "tag": "Capstone Synthesis Essay",
+      "description": "A personal essay tracing my journey from the Midwest and Miami to UF, synthesizing childhood scientific curiosity with cross-cultural connection."
+    }
+  ],
   "aboutTitle": "Who am I?",
   "aboutBio": "My name is Holden, and I'm a senior at the University of Florida, double-majoring in Geology and Microbiology & Cell Science with a minor in History. I aim to understand the world as best as I can, whether that be through testing out new theories and instruments in the lab, interpreting geological structures in the field, or meeting people in a completely new place. I aim to pursue astrobiology for my PhD, where I hope to work with cold-loving microbes in Antarctica. However, I also want to make an impact on others through science communication, so my future discoveries are not just for my isolated benefit, but rather help others learn to love science and chase the best version of themselves.\n\nOutside the lab, you can find me in another lab, the gym, triathalon training, doing Duolingo, hiking and canoeing, spending time with friends and family, or just lounging around. After graduation, I aim to work for the planetary exploration technology startup, IMPRESS Spaceworks Co., before going into my PhD, doing some international volunteering along the way.",
   "scientificLens": "I aim to achieve an in-depth understanding of how microbes interact with their geologic environments and the geochemical signatures they leave behind. In my graduate studies, I will use this knowledge to advance the field of astrobiology by studying how pyschrophiles' unique adaptations facilitate their survival in frigid, alien environments.",

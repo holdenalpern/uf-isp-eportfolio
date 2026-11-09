@@ -29,10 +29,10 @@ import { Component as ImageAutoSlider } from '@/components/ui/image-auto-slider'
 
 export type PortfolioContent = typeof initialPortfolioData;
 
-const STORAGE_KEY = 'uf_isp_folio_content_v6';
+const STORAGE_KEY = 'uf_isp_folio_content_v9';
 
 // Set to true in code to re-enable the live editor toolbar & keyboard shortcut
-const ENABLE_LIVE_EDITOR = false;
+const ENABLE_LIVE_EDITOR = true;
 
 const RESUME_CATEGORIES = [
   'All',
@@ -56,6 +56,8 @@ export const Concept4MuseumFolio: React.FC = () => {
   });
 
   const [editMode, setEditMode] = useState<boolean>(ENABLE_LIVE_EDITOR);
+  const [activePage, setActivePage] = useState<'home' | 'portfolio'>('home');
+  const [activeSectionId, setActiveSectionId] = useState<string>('home');
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved' | 'error'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<string>('Synced with repo');
   const [lightboxMedia, setLightboxMedia] = useState<
@@ -131,6 +133,43 @@ export const Concept4MuseumFolio: React.FC = () => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  // Track active section while scrolling on the main portfolio page
+  useEffect(() => {
+    if (activePage !== 'portfolio') {
+      setActiveSectionId('home');
+      return;
+    }
+
+    const sectionIds = ['about', 'resume', 'skills', 'experiences', 'reflection'];
+
+    const updateActiveOnScroll = () => {
+      // If scrolled near the very bottom of the page, highlight Final Reflection
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 80
+      ) {
+        setActiveSectionId('reflection');
+        return;
+      }
+
+      const triggerLine = 180;
+      let current = 'about';
+      for (const id of sectionIds) {
+        const el = document.getElementById(`c4-${id}`);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= triggerLine) {
+            current = id;
+          }
+        }
+      }
+      setActiveSectionId(current);
+    };
+
+    window.addEventListener('scroll', updateActiveOnScroll, { passive: true });
+    return () => window.removeEventListener('scroll', updateActiveOnScroll);
+  }, [activePage]);
+
   const toggleExhibit = (id: string) => {
     setExpandedExhibits((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -147,8 +186,40 @@ export const Concept4MuseumFolio: React.FC = () => {
     setCollapsedResumeIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const enterPortfolio = (targetSectionId?: string) => {
+    const target = targetSectionId && targetSectionId !== 'home' ? targetSectionId : 'about';
+    setActivePage('portfolio');
+    setActiveSectionId(target);
+    window.setTimeout(() => {
+      if (target !== 'about') {
+        const el = document.getElementById(`c4-${target}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 40);
+  };
+
   const jumpTo = (id: string) => {
+    if (id === 'home') {
+      setActivePage('home');
+      setActiveSectionId('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (activePage !== 'portfolio') {
+      enterPortfolio(id);
+      return;
+    }
+    setActiveSectionId(id);
     const el = document.getElementById(`c4-${id}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToHomeSummary = () => {
+    const el = document.getElementById('home-summary-section');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -182,6 +253,83 @@ export const Concept4MuseumFolio: React.FC = () => {
 
   const impressPaper = content.impressPaper || initialPortfolioData.impressPaper;
   const resumeMeta = content.resumeMeta || initialPortfolioData.resumeMeta;
+  const heroSlides = content.heroSliderImages || initialPortfolioData.heroSliderImages;
+  const homeButtonLabel = content.homeButtonLabel || initialPortfolioData.homeButtonLabel;
+  const homeGuideTitle = content.homeGuideTitle || initialPortfolioData.homeGuideTitle;
+  const homeGuideSubtitle = content.homeGuideSubtitle || initialPortfolioData.homeGuideSubtitle;
+  const homeReviewerTips = content.homeReviewerTips || initialPortfolioData.homeReviewerTips;
+  const homeDirectoryCards = content.homeDirectoryCards || initialPortfolioData.homeDirectoryCards;
+
+  const updateReviewerTip = (idx: number, val: string) => {
+    updateContent((p) => {
+      const nextTips = [...(p.homeReviewerTips || initialPortfolioData.homeReviewerTips)];
+      nextTips[idx] = val;
+      return { ...p, homeReviewerTips: nextTips };
+    });
+  };
+
+  const updateDirectoryCard = (
+    idx: number,
+    field: 'title' | 'tag' | 'description',
+    val: string
+  ) => {
+    updateContent((p) => {
+      const nextCards = [...(p.homeDirectoryCards || initialPortfolioData.homeDirectoryCards)];
+      nextCards[idx] = { ...nextCards[idx], [field]: val };
+      return { ...p, homeDirectoryCards: nextCards };
+    });
+  };
+
+  const renderFullBleedHeroSlider = (
+    overlayContent: React.ReactNode,
+    heightClassName = 'h-[78vh] sm:h-[84vh] min-h-[520px] max-h-[860px]'
+  ) => (
+    <ImageAutoSlider
+      images={heroSlides}
+      editMode={editMode}
+      speedSeconds={52}
+      variant="hero-fullbleed"
+      heightClassName={heightClassName}
+      overlayContent={overlayContent}
+      onReplaceImage={(idx) =>
+        handleImageFileUpload((dataUrl) => {
+          const captionPrompt = window.prompt(
+            'Optional slide caption:',
+            heroSlides[idx]?.caption || ''
+          );
+          updateContent((p) => {
+            const currentList = [...(p.heroSliderImages || initialPortfolioData.heroSliderImages)];
+            currentList[idx] = {
+              url: dataUrl,
+              caption: captionPrompt ?? currentList[idx]?.caption ?? '',
+            };
+            return { ...p, heroSliderImages: currentList };
+          });
+        })
+      }
+      onAddImage={() =>
+        handleImageFileUpload((dataUrl) => {
+          const caption =
+            window.prompt('Caption for this new slide:', 'Field Photo') || 'Field Photo';
+          updateContent((p) => ({
+            ...p,
+            heroSliderImages: [
+              ...(p.heroSliderImages || initialPortfolioData.heroSliderImages),
+              { url: dataUrl, caption },
+            ],
+          }));
+        })
+      }
+      onRemoveImage={(idx) =>
+        updateContent((p) => ({
+          ...p,
+          heroSliderImages: (
+            p.heroSliderImages || initialPortfolioData.heroSliderImages
+          ).filter((_, i) => i !== idx),
+        }))
+      }
+    />
+  );
 
   const filteredResume = content.resume.filter(
     (item) => activeResumeCategory === 'All' || item.category === activeResumeCategory
@@ -202,7 +350,12 @@ export const Concept4MuseumFolio: React.FC = () => {
       {/* Sticky Editorial Chapter Index */}
       <header className="sticky top-0 z-30 border-b border-stone-900/20 bg-[#F4F0EA]/95 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <div
+            onClick={() => {
+              if (!editMode) jumpTo('home');
+            }}
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <Feather className="h-5 w-5 text-amber-900 shrink-0" />
             <EditableText
               as="span"
@@ -213,15 +366,24 @@ export const Concept4MuseumFolio: React.FC = () => {
             />
           </div>
           <nav className="flex flex-wrap gap-1.5" aria-label="ISP Rubric Sections">
-            {RUBRIC_SECTIONS.map((sec) => (
-              <button
-                key={sec.id}
-                onClick={() => jumpTo(sec.id)}
-                className="px-3 py-1.5 rounded border border-stone-800/20 bg-[#FAF8F5] text-xs font-mono-tech text-stone-800 hover:border-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
-              >
-                {sec.label}
-              </button>
-            ))}
+            {RUBRIC_SECTIONS.map((sec) => {
+              const isActive =
+                (activePage === 'home' && sec.id === 'home') ||
+                (activePage === 'portfolio' && activeSectionId === sec.id);
+              return (
+                <button
+                  key={sec.id}
+                  onClick={() => jumpTo(sec.id)}
+                  className={`px-3 py-1.5 rounded border text-xs font-mono-tech transition-colors cursor-pointer ${
+                    isActive
+                      ? 'border-amber-900 bg-amber-900 text-white shadow-2xs'
+                      : 'border-stone-800/20 bg-[#FAF8F5] text-stone-800 hover:border-amber-900 hover:bg-amber-900 hover:text-white'
+                  }`}
+                >
+                  {sec.label}
+                </button>
+              );
+            })}
           </nav>
         </div>
       </header>
@@ -247,176 +409,237 @@ export const Concept4MuseumFolio: React.FC = () => {
         </div>
       )}
 
-      <main className="mx-auto max-w-6xl px-6 py-12 space-y-20">
-        {/* FOLIO I: HOME & ABOUT ME (Editorial Double-Column Spread) */}
-        <section id="c4-home" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-            {/* Left Column: 01. Home */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 text-xs font-mono-tech uppercase tracking-widest text-amber-900">
-                <Stamp className="h-3.5 w-3.5" />
-                <span>FOLIO I • 01. HOME & INTRODUCTION</span>
-              </div>
+      {/* ==================== STANDALONE HOME PAGE VIEW (activePage === 'home') ==================== */}
+      {activePage === 'home' && (
+        <div id="c4-home" className="w-full">
+          {/* 1. Full-Webpage Horizontal Scroller with Cinematic Lower-Third Editorial Overlay */}
+          {renderFullBleedHeroSlider(
+            <div className="relative h-full w-full flex flex-col justify-end bg-gradient-to-t from-stone-950 via-stone-950/60 to-stone-950/10 p-6 sm:p-12 md:p-16">
+              <div className="mx-auto w-full max-w-6xl flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="pointer-events-auto space-y-3 max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2 font-mono-tech text-xs">
+                    <span className="rounded border border-amber-700/60 bg-amber-900 px-3 py-1 font-bold text-amber-50 uppercase tracking-wider shadow-sm">
+                      <EditableText
+                        value={content.graduation}
+                        editMode={editMode}
+                        onChange={(v) => updateContent((p) => ({ ...p, graduation: v }))}
+                        className="font-mono-tech text-xs font-bold text-amber-50"
+                      />
+                    </span>
+                    <span className="rounded border border-white/25 bg-stone-900/85 px-3 py-1 text-stone-100 backdrop-blur-xs">
+                      <EditableText
+                        value={content.majors}
+                        editMode={editMode}
+                        onChange={(v) => updateContent((p) => ({ ...p, majors: v }))}
+                        className="font-mono-tech text-xs text-stone-100"
+                      />
+                    </span>
+                    <span className="rounded border border-white/20 bg-stone-900/80 px-3 py-1 text-stone-200 backdrop-blur-xs">
+                      <EditableText
+                        value={content.minor}
+                        editMode={editMode}
+                        onChange={(v) => updateContent((p) => ({ ...p, minor: v }))}
+                        className="font-mono-tech text-xs text-stone-200"
+                      />
+                    </span>
+                  </div>
 
-              <div className="flex flex-wrap items-center gap-2 text-xs font-mono-tech text-stone-600">
-                <EditableText
-                  value={content.majors}
-                  editMode={editMode}
-                  onChange={(v) => updateContent((p) => ({ ...p, majors: v }))}
-                  className="font-mono-tech text-xs font-semibold text-stone-800"
-                />
-                <span>•</span>
-                <EditableText
-                  value={content.minor}
-                  editMode={editMode}
-                  onChange={(v) => updateContent((p) => ({ ...p, minor: v }))}
-                  className="font-mono-tech text-xs text-amber-900"
-                />
-              </div>
+                  <EditableText
+                    as="h1"
+                    value={content.name}
+                    editMode={editMode}
+                    onChange={(v) => updateContent((p) => ({ ...p, name: v }))}
+                    className="font-serif-editorial text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
+                  />
 
-              {/* Infinite Auto-Slider (52s cycle - slowed by 2x, using ISP pics / Intro Slideshow) */}
-              <ImageAutoSlider
-                images={content.heroSliderImages || initialPortfolioData.heroSliderImages}
-                editMode={editMode}
-                speedSeconds={52}
-                onReplaceImage={(idx) =>
-                  handleImageFileUpload((dataUrl) => {
-                    const captionPrompt = window.prompt(
-                      'Optional slide caption:',
-                      (content.heroSliderImages || initialPortfolioData.heroSliderImages)[idx]
-                        ?.caption || ''
-                    );
-                    updateContent((p) => {
-                      const currentList = [
-                        ...(p.heroSliderImages || initialPortfolioData.heroSliderImages),
-                      ];
-                      currentList[idx] = {
-                        url: dataUrl,
-                        caption: captionPrompt ?? currentList[idx]?.caption ?? '',
-                      };
-                      return { ...p, heroSliderImages: currentList };
-                    });
-                  })
-                }
-                onAddImage={() =>
-                  handleImageFileUpload((dataUrl) => {
-                    const caption =
-                      window.prompt('Caption for this new slide:', 'Field Photo') || 'Field Photo';
-                    updateContent((p) => ({
-                      ...p,
-                      heroSliderImages: [
-                        ...(p.heroSliderImages || initialPortfolioData.heroSliderImages),
-                        { url: dataUrl, caption },
-                      ],
-                    }));
-                  })
-                }
-                onRemoveImage={(idx) =>
-                  updateContent((p) => ({
-                    ...p,
-                    heroSliderImages: (
-                      p.heroSliderImages || initialPortfolioData.heroSliderImages
-                    ).filter((_, i) => i !== idx),
-                  }))
-                }
-              />
-
-              <EditableText
-                as="h1"
-                multiline
-                value={content.tagline}
-                editMode={editMode}
-                onChange={(v) => updateContent((p) => ({ ...p, tagline: v }))}
-                className="font-serif-editorial text-4xl sm:text-6xl font-semibold leading-[1.06] text-stone-900"
-              />
-
-              <EditableText
-                as="p"
-                multiline
-                value={content.homeIntro}
-                editMode={editMode}
-                onChange={(v) => updateContent((p) => ({ ...p, homeIntro: v }))}
-                className="leading-relaxed text-stone-700 font-serif-editorial text-xl"
-              />
-
-              {/* Quick Rubric Directory for Advisor */}
-              <div className="pt-4">
-                <div className="text-[11px] font-mono-tech uppercase tracking-wider text-stone-500 mb-2.5">
-                  Folio Index • Direct Advisor Navigation
+                  <EditableText
+                    as="p"
+                    multiline
+                    value={content.tagline}
+                    editMode={editMode}
+                    onChange={(v) => updateContent((p) => ({ ...p, tagline: v }))}
+                    className="font-serif-editorial text-xl sm:text-3xl text-stone-200 max-w-2xl leading-snug drop-shadow"
+                  />
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {RUBRIC_SECTIONS.filter((s) => s.id !== 'home').map((sec) => (
+
+                <button
+                  type="button"
+                  onClick={scrollToHomeSummary}
+                  className="pointer-events-auto self-start md:self-end inline-flex items-center gap-2 rounded-xl border border-amber-700/70 bg-amber-900/95 px-5 py-3 font-mono-tech text-xs uppercase tracking-widest text-amber-50 hover:bg-amber-800 transition-colors cursor-pointer shadow-lg backdrop-blur-md"
+                >
+                  <span>Read Summary Below</span>
+                  <ChevronDown className="h-4 w-4 animate-bounce" />
+                </button>
+              </div>
+            </div>,
+            'h-[80vh] sm:h-[86vh] min-h-[540px] max-h-[880px]'
+          )}
+
+          {/* 2. Summary Text + Enter Website Button Section Below Scroller */}
+          <div id="home-summary-section" className="bg-[#1C1917] text-stone-100 border-b border-stone-800">
+            <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24 space-y-12">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <div className="lg:col-span-4 space-y-3 border-l-2 border-amber-800 pl-5">
+                  <div className="font-mono-tech text-xs uppercase tracking-widest text-[#D97757] font-semibold">
+                    UF INTERNATIONAL SCHOLARS PROGRAM
+                  </div>
+                  <EditableText
+                    as="h2"
+                    multiline
+                    value={content.tagline}
+                    editMode={editMode}
+                    onChange={(v) => updateContent((p) => ({ ...p, tagline: v }))}
+                    className="font-serif-editorial text-3xl sm:text-4xl font-semibold text-white leading-tight"
+                  />
+                </div>
+
+                <div className="lg:col-span-8 space-y-8">
+                  <EditableText
+                    as="div"
+                    multiline
+                    value={content.homeIntro}
+                    editMode={editMode}
+                    onChange={(v) => updateContent((p) => ({ ...p, homeIntro: v }))}
+                    className="leading-relaxed text-stone-200 font-serif-editorial text-xl sm:text-2xl"
+                  />
+
+                  {/* 3. Prominent Button Under the Summary Text */}
+                  <div className="pt-4 flex flex-wrap items-center gap-4">
                     <button
-                      key={sec.id}
-                      onClick={() => jumpTo(sec.id)}
-                      className="text-left p-2.5 rounded border border-stone-800/15 bg-[#FAF8F5] hover:border-amber-900 transition-colors cursor-pointer"
+                      type="button"
+                      onClick={() => enterPortfolio('about')}
+                      className="inline-flex items-center justify-center gap-3 rounded-xl border border-amber-700/60 bg-amber-900 px-8 py-4 text-sm sm:text-base font-mono-tech uppercase tracking-wider font-bold text-amber-50 shadow-xl hover:bg-amber-800 transition-all cursor-pointer"
                     >
-                      <div className="font-mono-tech text-xs font-semibold text-amber-900">
-                        {sec.label} →
-                      </div>
-                      <div className="text-[10px] text-stone-500 truncate mt-0.5">
-                        {sec.rubricRequirement}
-                      </div>
+                      <EditableText
+                        as="span"
+                        value={homeButtonLabel}
+                        editMode={editMode}
+                        onChange={(v) => updateContent((p) => ({ ...p, homeButtonLabel: v }))}
+                        className="font-mono-tech text-sm sm:text-base font-bold text-amber-50"
+                      />
                     </button>
-                  ))}
+                  </div>
                 </div>
+              </div>
+
+              {/* Direct Chapter Cards */}
+              <div className="pt-8 border-t border-stone-800 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                {homeDirectoryCards.map((card, idx) => (
+                  <div
+                    key={card.id}
+                    onClick={() => {
+                      if (!editMode) enterPortfolio(card.id);
+                    }}
+                    className="text-left rounded-lg border border-stone-800 bg-stone-900/90 p-4 hover:border-amber-800 transition-colors cursor-pointer flex flex-col justify-between gap-2"
+                  >
+                    <div>
+                      <div className="font-mono-tech text-xs font-bold text-[#D97757]">
+                        {card.sectionNumber}.{' '}
+                        <EditableText
+                          as="span"
+                          value={card.title}
+                          editMode={editMode}
+                          onChange={(v) => updateDirectoryCard(idx, 'title', v)}
+                          className="font-mono-tech text-xs font-bold text-[#D97757]"
+                        />
+                      </div>
+                      <EditableText
+                        as="p"
+                        multiline
+                        value={card.description}
+                        editMode={editMode}
+                        onChange={(v) => updateDirectoryCard(idx, 'description', v)}
+                        className="text-xs text-stone-400 mt-1 leading-relaxed"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        enterPortfolio(card.id);
+                      }}
+                      className="text-left font-mono-tech text-[10px] uppercase text-[#E29578] pt-2 border-t border-stone-800 hover:underline cursor-pointer"
+                    >
+                      Open Section →
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
+        </div>
+      )}
 
-            {/* Right Column: 02. About Me */}
-            <div
-              id="c4-about"
-              className="scroll-mt-24 lg:col-span-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 space-y-4 shadow-2xs self-start"
-            >
-              <div className="flex items-center justify-between text-xs font-mono-tech uppercase tracking-wider text-stone-500 border-b border-stone-300 pb-2">
-                <span>CURATORIAL BIO • 02. ABOUT ME</span>
-              </div>
+      {/* ==================== MAIN SCROLLING PORTFOLIO VIEW (activePage === 'portfolio') ==================== */}
+      {activePage === 'portfolio' && (
+      <main className="mx-auto max-w-6xl px-6 py-10 space-y-20">
+        {/* Return to Standalone Home Page Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-800/15 pb-4">
+          <button
+            type="button"
+            onClick={() => jumpTo('home')}
+            className="inline-flex items-center gap-2 rounded-lg border border-stone-800/25 bg-[#FAF8F5] px-4 py-2 font-mono-tech text-xs text-stone-800 hover:border-amber-900 hover:bg-amber-900 hover:text-white transition-colors cursor-pointer"
+          >
+            ← Back to 01. Home Page
+          </button>
+          <span className="font-mono-tech text-xs text-stone-500">
+            Main Portfolio View • Scroll continuously through Sections 02–06
+          </span>
+        </div>
 
+        {/* FOLIO I-B: 02. ABOUT ME (Dedicated Standalone Section) */}
+        <section id="c4-about" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14 space-y-6">
+          <div className="space-y-1">
+            <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
+              FOLIO I-B • 02. ABOUT ME
+            </span>
+            <EditableText
+              as="h2"
+              value={content.aboutTitle}
+              editMode={editMode}
+              onChange={(v) => updateContent((p) => ({ ...p, aboutTitle: v }))}
+              className="font-serif-editorial text-4xl font-semibold text-stone-900"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-7 rounded-lg border border-stone-800/20 bg-[#FAF8F5] p-6 sm:p-8 shadow-2xs">
               <EditableText
-                as="h2"
-                value={content.aboutTitle}
-                editMode={editMode}
-                onChange={(v) => updateContent((p) => ({ ...p, aboutTitle: v }))}
-                className="font-serif-editorial text-2xl font-bold text-stone-900"
-              />
-
-              <EditableText
-                as="p"
+                as="div"
                 multiline
                 value={content.aboutBio}
                 editMode={editMode}
                 onChange={(v) => updateContent((p) => ({ ...p, aboutBio: v }))}
-                className="text-sm text-stone-700 leading-relaxed"
+                className="text-base sm:text-lg text-stone-800 leading-relaxed font-serif-editorial"
               />
+            </div>
 
-              {/* Dual Lenses */}
-              <div className="grid grid-cols-1 gap-3 pt-2">
-                <div className="p-3.5 rounded border border-stone-300/80 bg-[#F4F0EA]/60">
-                  <div className="font-mono-tech text-[10px] uppercase font-bold text-amber-900 mb-1">
-                    Earth & Microbial Science Lens
-                  </div>
-                  <EditableText
-                    as="p"
-                    multiline
-                    value={content.scientificLens}
-                    editMode={editMode}
-                    onChange={(v) => updateContent((p) => ({ ...p, scientificLens: v }))}
-                    className="text-xs text-stone-700 leading-relaxed"
-                  />
+            <div className="lg:col-span-5 grid grid-cols-1 gap-4">
+              <div className="p-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] shadow-2xs">
+                <div className="font-mono-tech text-xs uppercase font-bold text-amber-900 mb-2">
+                  Earth & Microbial Science Lens
                 </div>
-                <div className="p-3.5 rounded border border-stone-300/80 bg-[#F4F0EA]/60">
-                  <div className="font-mono-tech text-[10px] uppercase font-bold text-amber-900 mb-1">
-                    Historical & Global Service Lens
-                  </div>
-                  <EditableText
-                    as="p"
-                    multiline
-                    value={content.humanitiesLens}
-                    editMode={editMode}
-                    onChange={(v) => updateContent((p) => ({ ...p, humanitiesLens: v }))}
-                    className="text-xs text-stone-700 leading-relaxed"
-                  />
+                <EditableText
+                  as="p"
+                  multiline
+                  value={content.scientificLens}
+                  editMode={editMode}
+                  onChange={(v) => updateContent((p) => ({ ...p, scientificLens: v }))}
+                  className="text-sm text-stone-700 leading-relaxed"
+                />
+              </div>
+              <div className="p-5 rounded-lg border border-stone-800/20 bg-[#FAF8F5] shadow-2xs">
+                <div className="font-mono-tech text-xs uppercase font-bold text-amber-900 mb-2">
+                  Historical & Global Service Lens
                 </div>
+                <EditableText
+                  as="p"
+                  multiline
+                  value={content.humanitiesLens}
+                  editMode={editMode}
+                  onChange={(v) => updateContent((p) => ({ ...p, humanitiesLens: v }))}
+                  className="text-sm text-stone-700 leading-relaxed"
+                />
               </div>
             </div>
           </div>
@@ -1190,11 +1413,11 @@ export const Concept4MuseumFolio: React.FC = () => {
           </div>
         </section>
 
-        {/* FOLIO III: NACE COMPETENCIES (STAR METHOD) */}
+        {/* FOLIO III: NACE COMPETENCIES */}
         <section id="c4-skills" className="scroll-mt-24 border-b-2 border-stone-900/20 pb-14 space-y-6">
           <div>
             <span className="font-mono-tech text-xs uppercase tracking-widest text-amber-900">
-              FOLIO III • 04. NACE COMPETENCIES (MINIMUM 4 VIA STAR METHOD)
+              FOLIO III • 04. NACE COMPETENCIES
             </span>
             <h2 className="font-serif-editorial text-4xl font-semibold mt-1">
               Four Pillars of Career & Global Readiness
@@ -1220,7 +1443,6 @@ export const Concept4MuseumFolio: React.FC = () => {
                     }
                     className="font-mono-tech text-xs text-amber-900 font-semibold"
                   />
-                  <span>STAR METHOD</span>
                 </div>
 
                 <EditableText
@@ -1253,9 +1475,6 @@ export const Concept4MuseumFolio: React.FC = () => {
                 <div className="space-y-2.5 text-xs text-stone-700 pt-3 border-t border-stone-200">
                   {(['situation', 'task', 'action', 'resolution'] as const).map((starKey) => (
                     <div key={starKey} className="rounded bg-[#F4F0EA]/70 p-2.5 border border-stone-200">
-                      <span className="font-mono-tech text-[10px] uppercase font-bold text-amber-900 block mb-1">
-                        {starKey.toUpperCase()}
-                      </span>
                       <EditableText
                         as="p"
                         multiline
@@ -1764,6 +1983,7 @@ export const Concept4MuseumFolio: React.FC = () => {
           </div>
         </section>
       </main>
+      )}
 
       {/* Fullscreen Lightbox Modal for Reykjavik Poster, IMPRESS Cover Artwork, or Gallery Plates */}
       {lightboxMedia && (
